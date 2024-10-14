@@ -39,4 +39,8 @@ public class Card {
 		return colorArray;
 	}
 	
+	public void toString(){
+		System.out.println("Card, Color: " + color + " , Value: " + value);
+	}
+	
 } //end Card Class
