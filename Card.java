@@ -8,7 +8,10 @@ public class Card {
 	private final String[] colorArray = {"Red", "Blue", "Green", "Yellow"};
 	
 	
-	public Card() {}
+	public Card() {
+		value = 0;
+		color = "";
+	}
 	
 	public Card(int value, String color) {
 		this.value = value;
@@ -40,7 +43,7 @@ public class Card {
 	}
 	
 	public void toString2(){
-		System.out.println("Card, Color: " + color + " , Value: " + value);
+		System.out.println("Card: Color: " + color + ", Value: " + value);
 	}
 	
 } //end Card Class
