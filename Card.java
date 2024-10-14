@@ -39,7 +39,7 @@ public class Card {
 		return colorArray;
 	}
 	
-	public void toString(){
+	public void toString2(){
 		System.out.println("Card, Color: " + color + " , Value: " + value);
 	}
 	
