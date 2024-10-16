@@ -6,7 +6,7 @@ public class Deck {
 
 private static ArrayList<Card> deck1 = new ArrayList<>(40);
 private final String[] colorArray = {"Red", "Blue", "Green", "Yellow"};
-
+private int deckCount;
 
 public Deck() { //automatically creates a default deck with standard cards
 	for(int j = 0; j <= 3; j++) { // i iterates between integer 0 thru 3 including 3 to represent color
@@ -15,6 +15,8 @@ public Deck() { //automatically creates a default deck with standard cards
 	deck1.add(newCard(i,colorArray[j]));
 		
 	} 
+	
+	deckCount = 40;
 }
 	
 	
@@ -37,11 +39,15 @@ public void printDeck() {
 
 public Card getRandomCard() { //returns random card and removes it from the deck, presumable to put it in a hand
 	Card c = new Card();
+	int randomInt; 
 	
-	int randomInt = ranInt(deck1.size(),0);
-	
+	if(!deck1.isEmpty()) {
+	randomInt = ranInt(deck1.size()-1,0);
 	c = deck1.get(randomInt);
 	deck1.remove(randomInt);
+	deckCount--;
+	}
+	else {System.out.println("Deck is empty!");}
 	
 	return c;
 }
@@ -55,6 +61,10 @@ public static int ranInt(int max, int min) {
 	
 	return returnNum;
 }	
+
+public int getDeckCount() {
+	return deckCount;
+}
 
 	
 }//end class deck
