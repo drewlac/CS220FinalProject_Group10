@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Deck {
 
-private static ArrayList<Card> deck1 = new ArrayList<>(40);
+private static ArrayList<Card> deck1 = new ArrayList<>(76);
 private final String[] colorArray = {"Red", "Blue", "Green", "Yellow"};
 private int deckCount;
 
@@ -12,13 +12,18 @@ public Deck() { //automatically creates a default deck with standard cards
 	for(int j = 0; j <= 3; j++) { // i iterates between integer 0 thru 3 including 3 to represent color
 	for(int i = 0; i <= 9; i++) { //i iterates between integers 0 thru 9 including 9
 	
+	if(i != 0) {
 	deck1.add(newCard(i,colorArray[j]));
-		
-	} 
+	deck1.add(newCard(i,colorArray[j]));
+	} // end if	
+	else {
+	deck1.add(newCard(i,colorArray[j]));	
+	}
 	
-	deckCount = 40;
-}
 	
+	}//end for (nested) 
+}// end for 
+	deckCount = 76;
 	
 }//end construct
 
@@ -70,5 +75,28 @@ public void printDeckCount() {
 	System.out.println("There are " + deckCount + " cards left in the deck");
 }
 
+public boolean isEmpty() {
+	boolean b = false;
+	if(deckCount == 0) {b = true;}		
+	return b;
+}
+
+public void reshuffle() {
+	for(int j = 0; j <= 3; j++) { // i iterates between integer 0 thru 3 including 3 to represent color
+		for(int i = 0; i <= 9; i++) { //i iterates between integers 0 thru 9 including 9
+		
+		if(i != 0) {
+		deck1.add(newCard(i,colorArray[j]));
+		deck1.add(newCard(i,colorArray[j]));
+		} // end if	
+		else {
+		deck1.add(newCard(i,colorArray[j]));	
+		}
+		
+		
+		}//end for (nested) 
+	}// end for 
+		deckCount = 76;
+}
 	
 }//end class deck
