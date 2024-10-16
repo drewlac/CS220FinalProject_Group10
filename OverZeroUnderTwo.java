@@ -9,6 +9,8 @@ public class OverZeroUnderTwo {
 
 	public static void main(String[] args) { // start main method
 	
+		System.out.println("Hello");
+		
 	startGame();
 		
 	do { //game will be played inside of this do while loop, and to end the game we will need to mark gameComplete as true
