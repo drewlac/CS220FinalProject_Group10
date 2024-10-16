@@ -45,5 +45,6 @@ public class OverZeroUnderTwo {
 	
 	public static void playerGameplay() {} //use to code player turn
 	public static void cpuGameplay() {} //use to code cpu turn
+	private static void userInput() {} // user inputs
 
 } // end OverZeroUnderTwo Class
