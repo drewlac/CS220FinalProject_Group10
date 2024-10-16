@@ -66,5 +66,9 @@ public int getDeckCount() {
 	return deckCount;
 }
 
+public void printDeckCount() {
+	System.out.println("There are " + deckCount + " cards left in the deck");
+}
+
 	
 }//end class deck
