@@ -42,7 +42,7 @@ public void printDeck() {
 	}
 }
 
-public Card getRandomCard() { //returns random card and removes it from the deck, presumable to put it in a hand
+public Card getRandomCard() { //returns random card and removes it from the deck, presumed to put it in a hand
 	Card c = new Card();
 	int randomInt; 
 	
@@ -82,14 +82,14 @@ public boolean isEmpty() {
 }
 
 public void reshuffle() {
-	for(int j = 0; j <= 3; j++) { // i iterates between integer 0 thru 3 including 3 to represent color
-		for(int i = 0; i <= 9; i++) { //i iterates between integers 0 thru 9 including 9
+	for(int j = 0; j <= 3; j++) { // i iterates between integer 0 through 3 including 3 to represent color
+		for(int i = 0; i <= 9; i++) { //i iterates between integers 0 through 9, including 9
 		
-		if(i != 0) {
+		if(i != 0) { // If the card value is not 0, ensure that there are two of each number card for each color.
 		deck1.add(newCard(i,colorArray[j]));
 		deck1.add(newCard(i,colorArray[j]));
 		} // end if	
-		else {
+		else { // If the card value is 0, ensure that there is only one 0 card for each color.
 		deck1.add(newCard(i,colorArray[j]));	
 		}
 		
