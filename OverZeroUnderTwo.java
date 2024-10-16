@@ -28,14 +28,17 @@ public class OverZeroUnderTwo {
 	} // end main method
 	
 	public static void startGame() {
+		System.out.println("Game is starting");
 		Random rand = new Random();
 		int coinflip = 0;
 		coinflip = rand.nextInt(2)+1;
 		
-		if(coinflip == 1)
+		if(coinflip == 1) {
 			playerTurn = true;
-		else if(coinflip == 2)
+			System.out.println("Player turn is first!");}
+		else if(coinflip == 2) {
 			cpuTurn = true;
+			System.out.println("CPU turn is first!");}
 		else {
 			System.out.println("Some sorta error, must have got the coinflip wrong");
 		}//end else
