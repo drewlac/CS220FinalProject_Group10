@@ -45,6 +45,8 @@ public class OverZeroUnderTwo {
 	
 	public static void playerGameplay() {} //use to code player turn
 	public static void cpuGameplay() {} //use to code cpu turn
-	private static void userInput() {} // user inputs
+	private static void userInput() {
+		System.out.println("If you would like to DRAW, press D. If you would like to place a card, type the card you want to place. (Ex. Blue 5 or B5)");
+	} // user inputs
 
 } // end OverZeroUnderTwo Class
