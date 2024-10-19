@@ -19,7 +19,7 @@ public class Hand {
 
 	public void printHand() {
 		for (int i = 0; i < hand1.size(); i++) {
-			hand1.get(i).toString2();
+			hand1.get(i).toString();
 		}
 	}
 

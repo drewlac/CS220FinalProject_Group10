@@ -42,7 +42,7 @@ public class Deck {
 	public void printDeck() {
 
 		for (int i = 0; i < deck1.size(); i++) {
-			deck1.get(i).toString2();
+			deck1.get(i).toString();
 		}
 	}
 
