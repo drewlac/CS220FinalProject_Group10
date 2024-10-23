@@ -69,6 +69,7 @@ public class OverZeroUnderTwo {
 		
 	} // end method startGame
 
+	//class Card has a method match() which checks if another card has equal value or color
 	public static void playerGameplay() { // use to code player turn
 		System.out.println("\nThe top of the card on the pile is:\n " + gamePile.getTopCard() + "\n");
 		System.out.println("The player's hand is: \n");
