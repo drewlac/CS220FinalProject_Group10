@@ -12,6 +12,23 @@ public class Hand {
 			hand1.add(c);
 		}
 	}
+	
+	public void add(ArrayList<Card> cards) {
+		Card c;
+		
+		for(int i = 0; i < cards.size(); i++) {
+		c = cards.get(i);
+		
+		if (c.getColor() == "" && c.getValue() == 0) {
+			System.out.println("Deck is empty! Cannot add to hand.");
+			} 
+		
+		else {
+			hand1.add(c);
+			}
+		
+		}
+	}//end add overload method
 
 	public void remove(Card c) {
 		hand1.remove(c);
@@ -19,7 +36,7 @@ public class Hand {
 
 	public void printHand() {
 		for (int i = 0; i < hand1.size(); i++) {
-			hand1.get(i).toString();
+			System.out.println(hand1.get(i).toString());
 		}
 	}
 

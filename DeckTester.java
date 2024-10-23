@@ -9,15 +9,9 @@ public class DeckTester {
 
 		hand1.add(deck1.getRandomCard());
 		hand1.add(deck1.getRandomCard());
-		hand1.add(deck1.getRandomCard());
-		hand1.add(deck1.getRandomCard());
-		hand1.add(deck1.getRandomCard());
-		hand1.add(deck1.getRandomCard());
-		hand1.add(deck1.getRandomCard());
-		hand1.add(deck1.getRandomCard());
-		hand1.add(deck1.getRandomCard());
+		hand1.add(deck1.getRandomCards(5));
 
-		deck1.printDeckCount();
+		//deck1.printDeckCount();
 
 		hand1.printHand();
 

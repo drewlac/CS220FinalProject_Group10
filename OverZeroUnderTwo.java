@@ -8,9 +8,14 @@ public class OverZeroUnderTwo {
 	public static boolean gameComplete = false;
 	public static boolean playerTurn = false;
 	public static boolean cpuTurn = false;
-
+	private static Hand playerHand = new Hand(); // static variable for playerHand, placed here so all methods can use it
+	private static Hand cpuHand = new Hand(); //static variable for cpuHand, placed here so all methods can use it
+	
+	
 	public static void main(String[] args) { // start main method
 
+		
+		
 		startGame();
 
 		do { // game will be played inside of this do while loop, and to end the game we will

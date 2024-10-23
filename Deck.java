@@ -62,7 +62,29 @@ public class Deck {
 		}
 
 		return c;
-	}
+	}//end method getRandomCard
+	
+	public ArrayList<Card> getRandomCards(int i){
+		ArrayList<Card> returnList = new ArrayList<Card>(i);
+		Card c = new Card();
+		int randomInt;
+
+		for(int j = 0; j < i; j++) {
+		
+		if (!deck1.isEmpty()) {
+			randomInt = ranInt(deck1.size() - 1, 0);
+			c = deck1.get(randomInt);
+			returnList.add(c);
+			deck1.remove(randomInt);
+			deckCount--;
+			} 
+		
+		else {
+			System.out.println("Deck is empty!");
+			}
+		} // end for loop
+		return returnList;
+	} // end getRandomCards method
 
 	public static int ranInt(int max, int min) {
 		int returnNum = 0;
