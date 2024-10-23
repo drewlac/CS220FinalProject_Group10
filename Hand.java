@@ -14,10 +14,9 @@ public class Hand {
 	}
 	
 	public void add(ArrayList<Card> cards) {
-		Card c;
 		
-		for(int i = 0; i < cards.size(); i++) {
-		c = cards.get(i);
+		for(Card c: cards) {
+		
 		
 		if (c.getColor() == "" && c.getValue() == 0) {
 			System.out.println("Deck is empty! Cannot add to hand.");
@@ -38,6 +37,10 @@ public class Hand {
 		for (int i = 0; i < hand1.size(); i++) {
 			System.out.println(hand1.get(i).toString());
 		}
+	}
+	
+	public int getSize() {
+		return hand1.size();
 	}
 
 } // end class hand

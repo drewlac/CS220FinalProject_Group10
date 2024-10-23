@@ -64,6 +64,7 @@ public class Deck {
 		return c;
 	}//end method getRandomCard
 	
+	//this method is always returning 7 extra cards
 	public ArrayList<Card> getRandomCards(int i){
 		ArrayList<Card> returnList = new ArrayList<Card>(i);
 		Card c = new Card();

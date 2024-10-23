@@ -10,7 +10,8 @@ public class OverZeroUnderTwo {
 	public static boolean cpuTurn = false;
 	private static Hand playerHand = new Hand(); // static variable for playerHand, placed here so all methods can use it
 	private static Hand cpuHand = new Hand(); //static variable for cpuHand, placed here so all methods can use it
-	
+	private static Deck gameDeck = new Deck(); //static variable for the deck the game is played on
+	private static DiscardPile gamePile = new DiscardPile(); // static variable for game discard pile 
 	
 	public static void main(String[] args) { // start main method
 
@@ -31,6 +32,8 @@ public class OverZeroUnderTwo {
 			} // catch errors and exceptions
 
 		} while (!gameComplete);
+		
+		System.out.println("\nGame is over!");
 
 	} // end main method
 
@@ -51,10 +54,34 @@ public class OverZeroUnderTwo {
 		} else {
 			System.out.println("Some sorta error, must have got the coinflip wrong");
 		} // end else
+		
+		//adds seven random cards to playerHand
+		playerHand.add(gameDeck.getRandomCards(7));
+		
+		//adds seven random cards to cpuHand
+		cpuHand.add(gameDeck.getRandomCards(7));
+		
+		//adds one random card to discard pile so there is one card to start with
+		gamePile.addCard(gameDeck.getRandomCard());
+		
+		//player hand is getting 14 cards instead of 7, currently investigating
+		System.out.println("The player has " + playerHand.getSize() + " cards. ");
+		
 	} // end method startGame
 
-	public static void playerGameplay() {
-	} // use to code player turn
+	public static void playerGameplay() { // use to code player turn
+		System.out.println("\nThe top of the card on the pile is:\n " + gamePile.getTopCard() + "\n");
+		System.out.println("The player's hand is: \n");
+		playerHand.printHand();
+		
+		System.out.println("The player has " + playerHand.getSize() + " cards. ");
+		
+		userInput();
+		
+		if(playerHand.getSize() == 0) {gameComplete = true;}
+		playerTurn = false;
+		cpuTurn = true;
+	} 
 
 	public static void cpuGameplay() {
 	} // use to code CPU turn
@@ -67,6 +94,7 @@ public class OverZeroUnderTwo {
 		// If the user types d or D, allow the user to draw a card.
 		if (choice.equalsIgnoreCase("d")) {
 			// (Put the code here to add a card to hand.)
+			gameComplete = true;
 		}
 		// (Write this else...if later. Check the user input to determine if it matches
 		// a card that he or she currently has. Possibly convert choice to lower case,
@@ -80,5 +108,7 @@ public class OverZeroUnderTwo {
 
 		input.close();
 	} // user inputs
+	
+	
 
 } // end OverZeroUnderTwo Class

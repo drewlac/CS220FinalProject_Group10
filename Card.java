@@ -44,5 +44,14 @@ public class Card {
 	public String toString() {
 		return "Card: Color: " + color + ", Value: " + value;
 	}
+	
+	public boolean match(Card c) {
+		boolean returnBool = false;
+		
+		if(value == c.getValue()) {returnBool = true;}
+		else if(color == c.getColor()) {returnBool = true;}
+		
+		return returnBool;
+	}
 
 } // end Card Class
