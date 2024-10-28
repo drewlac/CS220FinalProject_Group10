@@ -85,7 +85,8 @@ public class OverZeroUnderTwo {
 	} 
 
 	public static void cpuGameplay() {
-		/*empty array list of cards
+		/*Possible behavior blueprint below:
+		 * empty array list of cards
 		 * for each card in CpuHand{
 		 * if card == topCard
 		 * add to array list
