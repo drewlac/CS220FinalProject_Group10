@@ -52,7 +52,7 @@ public class OverZeroUnderTwo {
 			cpuTurn = true;
 			System.out.println("CPU turn is first!");
 		} else {
-			System.out.println("Some sorta error, must have got the coinflip wrong");
+			System.out.println("Some sorta error, must have got the coinflip wrong :( ");
 		} // end else
 		
 		//adds seven random cards to playerHand
@@ -85,6 +85,26 @@ public class OverZeroUnderTwo {
 	} 
 
 	public static void cpuGameplay() {
+		/*empty array list of cards
+		 * for each card in CpuHand{
+		 * if card == topCard
+		 * add to array list
+		 * else if card color equals topCard
+		 * add to array list
+		 * else if card value equals topCard
+		 * add to array list
+		 *}
+		 *if array list.length ==0{
+		 *draw card}
+		 *else{
+		 * play random card from array list of playable cards
+		 * }
+		 * 
+		 * if CpuHand == 0 end the game
+		 * 
+		 * cpuTurn == false;
+		 * playerTurn = true;
+		 */
 	} // use to code CPU turn
 
 	private static void userInput() {
