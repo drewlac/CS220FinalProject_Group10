@@ -56,22 +56,27 @@ public class OverZeroUnderTwo {
 		} // end else
 		
 		//adds seven random cards to playerHand
-		playerHand.add(gameDeck.getRandomCards(7));
+		for(int i = 0; i < 7; i++) {
+			playerHand.add(gameDeck.getRandomCard());
+		}
+		
 		
 		//adds seven random cards to cpuHand
-		cpuHand.add(gameDeck.getRandomCards(7));
+		for(int i = 0; i < 7; i++) {
+			cpuHand.add(gameDeck.getRandomCard());
+		}
 		
 		//adds one random card to discard pile so there is one card to start with
 		gamePile.addCard(gameDeck.getRandomCard());
 		
-		//player hand is getting 14 cards instead of 7, currently investigating
-		System.out.println("The player has " + playerHand.getSize() + " cards. ");
-		
+
 	} // end method startGame
 
 	//class Card has a method match() which checks if another card has equal value or color
 	public static void playerGameplay() { // use to code player turn
-		System.out.println("\nThe top of the card on the pile is:\n " + gamePile.getTopCard() + "\n");
+		System.out.println("\nThe top of the card on the pile is:\n" + gamePile.getTopCard() + "\n");
+		
+		//prints the player's hand
 		System.out.println("The player's hand is: \n");
 		playerHand.printHand();
 		
@@ -109,25 +114,29 @@ public class OverZeroUnderTwo {
 	} // use to code CPU turn
 
 	private static void userInput() {
-		System.out.println("If you would like to DRAW, press D. If you would like to"
+		System.out.println("If you would like to FORFEIT, type FRENCH. If you would like to"
 				+ " place a card, type the card you want to place. (Ex. Blue 5 or B5)");
 		Scanner input = new Scanner(System.in);
+		//Print hand information
+		
 		String choice = input.nextLine();
 		// If the user types d or D, allow the user to draw a card.
-		if (choice.equalsIgnoreCase("d")) {
-			// (Put the code here to add a card to hand.)
+		if (choice.equalsIgnoreCase("F")) {
+			// Enter code to print that game is complete
 			gameComplete = true;
 		}
 		// (Write this else...if later. Check the user input to determine if it matches
 		// a card that he or she currently has. Possibly convert choice to lower case,
 		// then compare result with current hand. Should we allow user to enter shortened
 		// card entry, like B5 for blue five, as well as longer entry?)
-		else if (choice.equalsIgnoreCase("")) {
+		
 
-		} else {
-			// (Handle errors here.)
-		}
-
+		//check if card matches
+		
+		//valid if user can play card, otherwise print only cards they can play
+		
+		//if user can't play a card, make them draw a card. 
+		
 		input.close();
 	} // user inputs
 	

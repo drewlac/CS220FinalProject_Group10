@@ -66,7 +66,7 @@ public class Deck {
 	
 	//this method is always returning 7 extra cards
 	public ArrayList<Card> getRandomCards(int i){
-		ArrayList<Card> returnList = new ArrayList<Card>(i);
+		ArrayList<Card> returnList = new ArrayList<Card>();
 		Card c = new Card();
 		int randomInt;
 
@@ -78,6 +78,7 @@ public class Deck {
 			returnList.add(c);
 			deck1.remove(randomInt);
 			deckCount--;
+			//System.out.println(j);
 			} 
 		
 		else {

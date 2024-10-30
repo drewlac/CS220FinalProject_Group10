@@ -9,12 +9,12 @@ public class DeckTester {
 		Hand hand2 = new Hand();
 		
 		
-		hand1.add(deck1.getRandomCard());
-		hand1.add(deck1.getRandomCard());
-		hand1.add(deck1.getRandomCards(5));
+		
+
 		
 		hand2.add(deck1.getRandomCards(5));
-		System.out.println(hand2.getSize());
+		System.out.println("size: " + hand2.getSize());
+		hand2.printHand();
 
 		//deck1.printDeckCount();
 

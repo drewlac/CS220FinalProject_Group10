@@ -3,7 +3,7 @@ import java.util.ArrayList;
 // The Hand class manages the CPU's and player's current hand of cards.
 public class Hand {
 
-	private static ArrayList<Card> hand1 = new ArrayList<>(10);
+	private ArrayList<Card> hand1 = new ArrayList<>(10);
 
 	public void add(Card c) {
 		if (c.getColor() == "" && c.getValue() == 0) {
@@ -35,7 +35,7 @@ public class Hand {
 
 	public void printHand() {
 		for (int i = 0; i < hand1.size(); i++) {
-			System.out.println(hand1.get(i).toString());
+			System.out.println("Card " + (i+1) + ": " + hand1.get(i).toString());
 		}
 	}
 	

@@ -42,7 +42,7 @@ public class Card {
 	}
 
 	public String toString() {
-		return "Card: Color: " + color + ", Value: " + value;
+		return color + " " + value;
 	}
 	
 	public boolean match(Card c) {
