@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 // The purpose of this class is to store the top card of the discard pile. Once
 // a new card is discarded, the top card is now that card.
-public class DiscardPile {
+public class DiscardPile extends Cards{
 
 	// discard1 ArrayList holds up to the total amount of cards in the deck.
 	private static ArrayList<Card> discard1 = new ArrayList<>(76);

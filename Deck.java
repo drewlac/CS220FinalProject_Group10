@@ -3,7 +3,7 @@ import java.util.Random;
 
 // The Deck class functions as the draw pile for the game. That is, this class
 // assembles each card within the game into a draw pile, or deck.
-public class Deck {
+public class Deck extends Cards{
 
 	private static ArrayList<Card> deck1 = new ArrayList<>(76);
 	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow" };

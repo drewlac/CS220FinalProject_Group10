@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 // The Hand class manages the CPU's and player's current hand of cards.
-public class Hand {
+public class Hand extends Cards{
 
 	private ArrayList<Card> hand1 = new ArrayList<>(10);
 

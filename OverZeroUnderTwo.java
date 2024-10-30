@@ -114,7 +114,7 @@ public class OverZeroUnderTwo {
 	} // use to code CPU turn
 
 	private static void userInput() {
-		System.out.println("If you would like to FORFEIT, type FRENCH. If you would like to"
+		System.out.println("If you would like to FORFEIT, type F. If you would like to"
 				+ " place a card, type the card you want to place. (Ex. Blue 5 or B5)");
 		Scanner input = new Scanner(System.in);
 		//Print hand information
