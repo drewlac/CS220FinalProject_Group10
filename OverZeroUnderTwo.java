@@ -95,9 +95,6 @@ public class OverZeroUnderTwo {
 		 * for each card in CpuHand{
 		 * if card == topCard
 		 * add to array list
-		 * else if card color equals topCard
-		 * add to array list
-		 * else if card value equals topCard
 		 * add to array list
 		 *}
 		 *if array list.length ==0{
