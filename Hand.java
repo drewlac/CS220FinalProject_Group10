@@ -39,6 +39,10 @@ public class Hand extends Cards{
 		}
 	}
 	
+	public Card getCard(int index) {
+		return hand1.get(index);
+	}
+	
 	public int getSize() {
 		return hand1.size();
 	}
