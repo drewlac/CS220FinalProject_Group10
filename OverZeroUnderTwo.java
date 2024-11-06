@@ -91,44 +91,34 @@ public class OverZeroUnderTwo {
 	} 
 
 	public static void cpuGameplay() {
+		//creates a hand of playable cards
 		Hand playable = new Hand ();
-		
+		//checks cards in hand to see if they are playable
 		for(int i =0; i<playerHand.getSize();i++) {
 			if(playerHand.match(gamePile.getTopCard())) {
+				//adds cards to the new hand
 				playable.add(playerHand.getCard(i));
 			}
 		}
+		//if the list is 0 cpu draws a card and alerts player
 		if(playable.getSize()==0) {
 			cpuHand.add(gameDeck.getRandomCard());
 			System.out.println("CPU drew a card");
 		}
+		//if cpu has one card left cpu alerts player
 		if(cpuHand.getSize()==1) {
 			System.out.println("CPU has one card Left!");
 		}
-		
+		//if cpu hand is empty game ends
 		if (cpuHand.getSize()== 0) {
 			gameComplete = true;
 		}
+		//cpu ends turn
 		cpuTurn = false;
 		playerTurn = true;
-		/*Possible behavior blueprint below:
-		 * empty array list of cards
-		 * for each card in CpuHand{
-		 * if card == topCard
-		 * add to array list
-		 * add to array list
-		 *}
-		 *if array list.length ==0{
-		 *draw card}
-		 *else{
-		 * play random card from array list of playable cards
-		 * }
-		 * 
-		 * if CpuHand == 0 end the game
-		 * 
-		 * cpuTurn == false;
-		 * playerTurn = true;
-		 */
+		
+		//forgot to actually play cards 
+		
 	} // use to code CPU turn
 
 	private static void userInput() {
