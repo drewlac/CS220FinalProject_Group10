@@ -1,6 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
-import java.util.ArrayList;
+
 
 // This is the main class for the game. Once functionality is complete, the player 
 // plays one or more games of OverZeroUnderTwo against the CPU.
@@ -93,6 +93,7 @@ public class OverZeroUnderTwo {
 	public static void cpuGameplay() {
 		//creates a hand of playable cards
 		Hand playable = new Hand ();
+		
 		//checks cards in hand to see if they are playable
 		for(int i =0; i<playerHand.getSize();i++) {
 			if(playerHand.match(gamePile.getTopCard())) {
@@ -105,6 +106,14 @@ public class OverZeroUnderTwo {
 			cpuHand.add(gameDeck.getRandomCard());
 			System.out.println("CPU drew a card");
 		}
+		
+		//cpu plays random card from playable hand
+		Random random = new Random();
+		int cpuPlay = random.nextInt(playable.getSize())+1;
+		
+		gamePile.addCard(playable.getCard(cpuPlay));
+		cpuHand.remove(playable.getCard(cpuPlay));
+		
 		//if cpu has one card left cpu alerts player
 		if(cpuHand.getSize()==1) {
 			System.out.println("CPU has one card Left!");
@@ -113,6 +122,7 @@ public class OverZeroUnderTwo {
 		if (cpuHand.getSize()== 0) {
 			gameComplete = true;
 		}
+		
 		//cpu ends turn
 		cpuTurn = false;
 		playerTurn = true;
