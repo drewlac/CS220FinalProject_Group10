@@ -1,4 +1,4 @@
-import java.io.IOException;
+//import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -25,6 +25,8 @@ public class OverZeroUnderTwo {
 
 		do { // game will be played inside of this do while loop, and to end the game we will
 				// need to mark gameComplete as true
+			
+			//if(gameDeck)
 
 			if (playerTurn) {
 				playerGameplay(input);
@@ -78,7 +80,7 @@ public class OverZeroUnderTwo {
 
 	//class Card has a method match() which checks if another card has equal value or color
 	public static void playerGameplay(Scanner input) { // use to code player turn
-		System.out.println("\nThe top of the card on the pile is:\n" + gamePile.getTopCard() + "\n");
+		System.out.println("\nThe top of the card on the pile is: " + gamePile.getTopCard() + "\n");
 		
 		//prints the player's hand
 		System.out.println("The player's hand is:");
@@ -101,54 +103,83 @@ public class OverZeroUnderTwo {
 			playerHand.add(gameDeck.getRandomCard());
 		}
 		
+		//ends game if player's hand is empty
 		if(playerHand.getSize() == 0) {gameComplete = true;}
+		
+		//switch turns and wait 1 second
 		playerTurn = false;
 		cpuTurn = true;
+		try {
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException c) {c.printStackTrace();}
 	} 
 
 	public static void cpuGameplay() {
 		//creates a hand of playable cards
-		Hand playable = new Hand ();
+		int playableCount = 0;
 		
 		//checks cards in hand to see if they are playable
 		for(int i =0; i<cpuHand.getSize();i++) {
-			if(cpuHand.match(gamePile.getTopCard())) {
+			if(cpuHand.getCard(i).match(gamePile.getTopCard())) {
 				//adds cards to the new hand
-				playable.add(cpuHand.getCard(i));
+				playableCount++;
 			}
 		}
-		//if the list is 0 cpu draws a card and alerts player
-		if(playable.getSize()==0) {
-			cpuHand.add(gameDeck.getRandomCard());
-			System.out.println("CPU drew a card");
-		}
 		
-		//cpu plays random card from playable hand
+		//System.out.println("Playable Count: " + playableCount); //used for troubleshooting
+		
+		boolean cardPlayed = false;
 		Random random = new Random();
-		int cpuPlay = random.nextInt(playable.getSize()-1);
+		double coinflip;
 		
-		gamePile.addCard(playable.getCard(cpuPlay));
-		cpuHand.remove(playable.getCard(cpuPlay));
+		while(true) {
+			if(cpuHand.getSize() == 0) { //if CPU has no cards, end game
+				gameComplete = true;
+				System.out.println("CPU Wins!");
+				break;
+			}//end if
+			
+				//if the list is 0 cpu draws a card and alerts player
+			else if(playableCount <=0) {
+				cpuHand.add(gameDeck.getRandomCard());
+				System.out.println("CPU drew a card");
+				break;
+			}//end else if
+			
+			else {
+				//cpu flips a coin to see if they play each playable card
+				for(int i =0; i<cpuHand.getSize();i++) {
+					coinflip = random.nextDouble();
+					//System.out.println("Coinflip: " + coinflip); //used for troubleshooting
+					if(cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {//if cards match and coinflip is good
+						gamePile.addCard(cpuHand.getCard(i)); //play card to game pile
+						System.out.println("Cpu played: " + cpuHand.getCard(i)); //say which card cpu plyaed
+						cpuHand.remove(cpuHand.getCard(i));//remove it from cpuHand	
+						if(cpuHand.getSize() == 1) {System.out.println("CPU: Uno!");} //print out uno if only one card left
+						cardPlayed = true;
+						break;
+					}//end if
+				}//end for loop
 		
-		//if cpu has one card left cpu alerts player
-		if(cpuHand.getSize()==1) {
-			System.out.println("CPU: Uno!");
-		}
-		//if cpu hand is empty game ends
-		if (cpuHand.getSize()== 0) {
-			gameComplete = true;
-		}
+				if(cardPlayed) {break;}
 		
-		//cpu ends turn
+			}//end else
+		}//end while
+		
+		
+		//cpu ends turn, happens regardless. Switches turn and waits 1 second 
 		cpuTurn = false;
 		playerTurn = true;
-		
-		//forgot to actually play cards 
-		
+		try {
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException c) {c.printStackTrace();}
+
 	} // use to code CPU turn
 
 	private static void userInput(Scanner input) {
-		System.out.println("Type the number of the card you would like to play (Enter F to forfeit): ");
+		
 		
 		//get user input for next int
 		String choice;
@@ -156,12 +187,14 @@ public class OverZeroUnderTwo {
 		
 		while(true) {
 			try {
+				System.out.print("Type the number of the card you would like to play (Enter F to forfeit): ");
 				choice = input.nextLine();
 		
 				// If the user types d or D, allow the user to draw a card.
-				if (choice.equalsIgnoreCase("F")) {
+				if (choice.strip().equalsIgnoreCase("F")) {
 					// Enter code to print that game is complete
 					gameComplete = true;
+					break;
 				}//end if
 		
 				//switching input to a string

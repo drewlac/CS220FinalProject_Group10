@@ -139,5 +139,9 @@ public class Deck extends Cards{
 		} // end outer for
 		deckCount = 76;
 	}
+	
+	public int getSize() {
+		return deck1.size();
+	}
 
 }// end class deck
