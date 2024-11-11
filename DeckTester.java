@@ -5,7 +5,7 @@ public class DeckTester {
 
 		Deck deck1 = new Deck();
 
-		Hand hand1 = new Hand();
+		//Hand hand1 = new Hand();
 		Hand hand2 = new Hand();
 		
 		

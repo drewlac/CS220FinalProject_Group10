@@ -1,15 +1,14 @@
 import java.util.ArrayList;
 
-public class Cards extends Card {
+public abstract class Cards extends Card {
 	private ArrayList<Card> cardList = new ArrayList<>();
 
-	@Override
-	public String toString() {
-		return getColor() + " " + getValue();
-	}
+	public abstract String toString();
 	
-	public void print() {
-		System.out.println(toString());
+	abstract public void print();
+
+	public ArrayList<Card> getCardList() {
+		return cardList;
 	}
 	
 }

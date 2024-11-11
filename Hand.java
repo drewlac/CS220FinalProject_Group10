@@ -46,5 +46,11 @@ public class Hand extends Cards{
 	public int getSize() {
 		return hand1.size();
 	}
+	
+	public String toString() { //needs to be completed
+		return "";
+	}
+	
+	public void print() {}//needs to be completed
 
 } // end class hand

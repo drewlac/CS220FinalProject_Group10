@@ -30,6 +30,14 @@ public class Deck extends Cards{
 		deckCount = 76;
 
 	}// end constructor
+	
+	@Override
+	public String toString() { //needs to be completed
+		return "";
+	}
+	
+	@Override
+	public void print() {} //needs to be completed
 
 	private Card newCard(int i, String string) {
 		return new Card(i, string);

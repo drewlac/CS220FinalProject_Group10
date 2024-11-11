@@ -20,4 +20,12 @@ public class DiscardPile extends Cards{
 
 		return c;
 	}
+	
+	@Override
+	public void print() {}
+	
+	@Override
+	public String toString() {
+		return "";
+	}
 }
