@@ -35,7 +35,7 @@ public class Hand extends Cards{
 
 	public void printHand() {
 		for (int i = 0; i < hand1.size(); i++) {
-			System.out.println("Card " + (i+1) + ": " + hand1.get(i).toString());
+			System.out.println("-Card " + (i+1) + ": " + hand1.get(i).toString());
 		}
 	}
 	
