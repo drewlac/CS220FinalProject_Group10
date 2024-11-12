@@ -63,7 +63,7 @@ public class OverZeroUnderTwo {
 		} // end else
 		
 		//adds seven random cards to playerHand
-		for(int i = 0; i <7; i++) {
+		for(int i = 0; i < 7; i++) {
 			playerHand.add(gameDeck.getRandomCard());
 		}
 		
@@ -107,11 +107,11 @@ public class OverZeroUnderTwo {
 		
 		if(playerHand.getSize() == 1) {
 			System.out.print("Any additional information? ");
-			String answer = input.next();
+			String answer = input.nextLine();
 			if(answer.strip().equalsIgnoreCase("uno")) {
 				System.out.println("You successfully called uno!");
 			}
-			else {
+			else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
 				System.out.println("You forgot to call uno, drawing another card!");
 				playerHand.add(gameDeck.getRandomCard());
 			}
