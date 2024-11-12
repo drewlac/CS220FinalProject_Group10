@@ -171,7 +171,7 @@ public class OverZeroUnderTwo {
 					//System.out.println("Coinflip: " + coinflip); //used for troubleshooting
 					if(cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {//if cards match and coinflip is good
 						gamePile.addCard(cpuHand.getCard(i)); //play card to game pile
-						System.out.println("Cpu played: " + cpuHand.getCard(i)); //say which card cpu plyaed
+						System.out.println("Cpu played: " + cpuHand.getCard(i)); //say which card cpu played
 						cpuHand.remove(cpuHand.getCard(i));//remove it from cpuHand	
 						if(cpuHand.getSize() == 1) {System.out.println("CPU: Uno!");} //print out uno if only one card left
 						cardPlayed = true;
