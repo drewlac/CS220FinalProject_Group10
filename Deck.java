@@ -5,21 +5,26 @@ import java.util.Random;
 // assembles each card within the game into a draw pile, or deck.
 public class Deck extends Cards{
 
-	private ArrayList<Card> deck1 = new ArrayList<>(76);
+	private ArrayList<Card> deck1 = new ArrayList<>(84);
 	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow" };
 	private int deckCount;
 
 	public Deck() { // automatically creates a default deck with standard cards
 		for (int j = 0; j <= 3; j++) { // j iterates between integer 0 through 3, including 3,
 			// to represent color.
-			for (int i = 0; i <= 9; i++) { // i iterates between integers 0 through 9, including 9.
+			for (int i = 0; i <= 10; i++) { // i iterates between integers 0 through 9, including 9.
 
 				// If i is not a 0 card, ensure that there are two of each number card for each
 				// color.
-				if (i != 0) {
+				if (i != 0 && i < 9) {
 					deck1.add(newCard(i, colorArray[j]));
 					deck1.add(newCard(i, colorArray[j]));
 				} // end if
+				// If i is greater than 9, it begins to assign specialty cards. 2 of each color, except +4 cards.
+				else if (i > 9) {
+					deck1.add(newCard(i, colorArray[j]));
+					deck1.add(newCard(i, colorArray[j]));
+				}
 					// If i is a 0 card, only add one 0 card per color.
 				else {
 					deck1.add(newCard(i, colorArray[j]));
@@ -27,7 +32,7 @@ public class Deck extends Cards{
 
 			} // end for (nested)
 		} // end outer for
-		deckCount = 76;
+		deckCount = 84;
 
 	}// end constructor
 	

@@ -6,7 +6,8 @@ public class Card {
 
 	private final int[] valueArray = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }; // 0-9
 	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow" };
-
+	private final String[] specialtyCardArray = {"Skip", "Reverse", "PlusTwo", "PlusFour"};
+	
 	public Card() {
 		value = 0;
 		color = "";
@@ -53,5 +54,7 @@ public class Card {
 		
 		return returnBool;
 	}
+	
+	
 
 } // end Card Class
