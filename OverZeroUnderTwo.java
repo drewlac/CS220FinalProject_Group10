@@ -7,9 +7,9 @@ import java.util.Scanner;
 // plays one or more games of OverZeroUnderTwo against the CPU.
 public class OverZeroUnderTwo {
 
-	public static boolean gameComplete = false;
-	public static boolean playerTurn = false;
-	public static boolean cpuTurn = false;
+	private static boolean gameComplete = false;
+	private static boolean playerTurn = false;
+	private static boolean cpuTurn = false;
 	private static Hand playerHand = new Hand(); // static variable for playerHand, placed here so all methods can use it
 	private static Hand cpuHand = new Hand(); //static variable for cpuHand, placed here so all methods can use it
 	private static Deck gameDeck = new Deck(); //static variable for the deck the game is played on
@@ -26,7 +26,8 @@ public class OverZeroUnderTwo {
 		do { // game will be played inside of this do while loop, and to end the game we will
 				// need to mark gameComplete as true
 			
-			//if(gameDeck)
+			//make sure there are cards in gamedeck
+			if(gameDeck.isEmpty()) {gameDeck.reshuffle();} 
 
 			if (playerTurn) {
 				playerGameplay(input);
@@ -62,7 +63,7 @@ public class OverZeroUnderTwo {
 		} // end else
 		
 		//adds seven random cards to playerHand
-		for(int i = 0; i < 7; i++) {
+		for(int i = 0; i <7; i++) {
 			playerHand.add(gameDeck.getRandomCard());
 		}
 		
@@ -83,6 +84,7 @@ public class OverZeroUnderTwo {
 		System.out.println("\nThe top of the card on the pile is: " + gamePile.getTopCard() + "\n");
 		
 		//prints the player's hand
+		//add function to sort player's hand
 		System.out.println("The player's hand is:");
 		playerHand.printHand();
 		
@@ -103,8 +105,23 @@ public class OverZeroUnderTwo {
 			playerHand.add(gameDeck.getRandomCard());
 		}
 		
+		if(playerHand.getSize() == 1) {
+			System.out.print("Any additional information? ");
+			String answer = input.next();
+			if(answer.strip().equalsIgnoreCase("uno")) {
+				System.out.println("You successfully called uno!");
+			}
+			else {
+				System.out.println("You forgot to call uno, drawing another card!");
+				playerHand.add(gameDeck.getRandomCard());
+			}
+		}
+		
 		//ends game if player's hand is empty
-		if(playerHand.getSize() == 0) {gameComplete = true;}
+		if(playerHand.getSize() == 0) {
+			gameComplete = true;
+			System.out.println("You win!");
+		}
 		
 		//switch turns and wait 1 second
 		playerTurn = false;
@@ -185,6 +202,8 @@ public class OverZeroUnderTwo {
 		String choice;
 		int selection;
 		
+	
+		
 		while(true) {
 			try {
 				System.out.print("Type the number of the card you would like to play (Enter F to forfeit): ");
@@ -196,7 +215,12 @@ public class OverZeroUnderTwo {
 					gameComplete = true;
 					break;
 				}//end if
-		
+				
+				//to prevent NumberFormatException
+				else if(choice.isEmpty()) {
+					choice = input.next();
+				}
+				
 				//switching input to a string
 				selection = Integer.parseInt(choice);
 		
@@ -218,8 +242,10 @@ public class OverZeroUnderTwo {
 					}//end nested else	
 				}//end else	
 			}//end try
-			catch(RuntimeException e){System.out.println("Answer must be an integer between 1 and your max amount of cards!");}
-			}
+			catch(RuntimeException e){
+				System.out.println("Answer must be an integer between 1 and your max amount of cards!\n");
+				}//end catch
+		}//end while loop
 		
 		
 		

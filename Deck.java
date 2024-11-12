@@ -5,7 +5,7 @@ import java.util.Random;
 // assembles each card within the game into a draw pile, or deck.
 public class Deck extends Cards{
 
-	private static ArrayList<Card> deck1 = new ArrayList<>(76);
+	private ArrayList<Card> deck1 = new ArrayList<>(76);
 	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow" };
 	private int deckCount;
 
