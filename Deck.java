@@ -21,6 +21,7 @@ public class Deck extends Cards{
 					deck1.add(newCard(i, colorArray[j]));
 				} // end if
 				// If i is greater than 9, it begins to assign specialty cards. 2 of each color, except +4 cards.
+				// SKIP is card number 10, REVERSE is 11, PLUS2 is 12, PLUS4 is 13, WILD is 14.
 				else if (i > 9) {
 					deck1.add(newCard(i, colorArray[j]));
 					deck1.add(newCard(i, colorArray[j]));
