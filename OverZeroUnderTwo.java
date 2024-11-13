@@ -29,10 +29,10 @@ public class OverZeroUnderTwo {
 			//make sure there are cards in gamedeck
 			if(gameDeck.isEmpty()) {gameDeck.reshuffle();} 
 
-			if (playerTurn) {
+			if (playerTurn && gameComplete == false) {
 				playerGameplay(input);
 			} // code for players turn
-			else if (cpuTurn) {
+			else if (cpuTurn && gameComplete == false) {
 				cpuGameplay();
 			} // code for cpu's turn
 			else {
@@ -63,13 +63,13 @@ public class OverZeroUnderTwo {
 		} // end else
 		
 		//adds seven random cards to playerHand
-		for(int i = 0; i < 7; i++) {
+		for(int i = 0; i < 1; i++) {
 			playerHand.add(gameDeck.getRandomCard());
 		}
 		
 		
 		//adds seven random cards to cpuHand
-		for(int i = 0; i < 7; i++) {
+		for(int i = 0; i < 1; i++) {
 			cpuHand.add(gameDeck.getRandomCard());
 		}
 		
