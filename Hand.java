@@ -52,5 +52,9 @@ public class Hand extends Cards{
 	}
 	
 	public void print() {}//needs to be completed
+	
+	public void sort() {
+		hand1.sort(null);
+	}
 
 } // end class hand

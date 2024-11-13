@@ -1,5 +1,5 @@
 // The Card class stores the number and color of each card object in the game.
-public class Card {
+public class Card implements Comparable<Card> {
 
 	private int value;
 	private String color;
@@ -52,6 +52,16 @@ public class Card {
 		else if(color == c.getColor()) {returnBool = true;}
 		
 		return returnBool;
+	}
+	
+	public int compareTo(Card other) {
+		//sort by color first
+		if(color.equalsIgnoreCase(other.getColor())) {
+			return Integer.compare(value,other.getValue());
+		}
+		else {
+			return color.compareTo(other.getColor());
+		}
 	}
 
 } // end Card Class

@@ -86,6 +86,7 @@ public class OverZeroUnderTwo {
 		//prints the player's hand
 		//add function to sort player's hand
 		System.out.println("The player's hand is:");
+		playerHand.sort();
 		playerHand.printHand();
 		
 		System.out.println("\nThe player has " + playerHand.getSize() + " cards. ");
