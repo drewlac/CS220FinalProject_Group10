@@ -131,6 +131,10 @@ public class OverZeroUnderTwo {
 		cpuTurn = true;
 		}
 		
+		if (gamePile.getTopCard().getValue() == 10) {
+			System.out.println("You skipped CPU's turn.");
+		}
+		
 		try {
 			Thread.sleep(1000);
 		}
@@ -195,6 +199,10 @@ public class OverZeroUnderTwo {
 		//CPU ends turn, happens regardless. Switches turn and waits 1 second 
 		cpuTurn = false;
 		playerTurn = true;
+		}
+		
+		if (gamePile.getTopCard().getValue() == 10) {
+			System.out.println("CPU skipped your turn.");
 		}
 		
 		try {
