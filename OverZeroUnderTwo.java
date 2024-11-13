@@ -125,7 +125,7 @@ public class OverZeroUnderTwo {
 		
 		// if value is NOT equal to 10 (skip), then code runs.
 		// if it IS equal, code does not run, and the opposing player's next turn is skipped.
-		if (getValue() != 10) {
+		if (gamePile.getTopCard().getValue() != 10) {
 		//switch turns and wait 1 second
 		playerTurn = false;
 		cpuTurn = true;
@@ -189,10 +189,14 @@ public class OverZeroUnderTwo {
 			}//end else
 		}//end while
 		
-		
-		//cpu ends turn, happens regardless. Switches turn and waits 1 second 
+		// if value is NOT equal to 10 (skip), then code runs.
+		// if it IS equal, code does not run, and the opposing player's next turn is skipped.
+		if (gamePile.getTopCard().getValue() != 10) {
+		//CPU ends turn, happens regardless. Switches turn and waits 1 second 
 		cpuTurn = false;
 		playerTurn = true;
+		}
+		
 		try {
 			Thread.sleep(1000);
 		}
