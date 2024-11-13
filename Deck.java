@@ -130,10 +130,14 @@ public class Deck extends Cards{
 
 	public void reshuffle() {
 		for (int j = 0; j <= 3; j++) { // j iterates between integer 0 through 3, including 3, to represent color.
-			for (int i = 0; i <= 9; i++) { // i iterates between integers 0 through 9, including 9.
+			for (int i = 0; i <= 10; i++) { // i iterates between integers 0 through 9, including 9.
 
 				if (i != 0) { // If the card value is not 0, ensure that there are two of each number card for
 								// each color.
+					deck1.add(newCard(i, colorArray[j]));
+					deck1.add(newCard(i, colorArray[j]));
+				}
+				else if (i > 9) { //adds specialty cards to re-shuffle
 					deck1.add(newCard(i, colorArray[j]));
 					deck1.add(newCard(i, colorArray[j]));
 				} // end if
@@ -143,7 +147,7 @@ public class Deck extends Cards{
 
 			} // end for (nested)
 		} // end outer for
-		deckCount = 76;
+		deckCount = 84;
 	}
 	
 	public int getSize() {
