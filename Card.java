@@ -43,7 +43,21 @@ public class Card {
 	}
 
 	public String toString() {
+	if(value == 10) {
+			return color + " " + specialtyCardArray[0];
+		}
+	else if (value == 11) {
+			return color + " " + specialtyCardArray[1];
+		}
+	else if (value == 12) {
+			return color + " " + specialtyCardArray[2];
+		}
+	else if (value == 12) {
+			return color + " " + specialtyCardArray[3];
+		}
+	else {
 		return color + " " + value;
+		}
 	}
 	
 	public boolean match(Card c) {
