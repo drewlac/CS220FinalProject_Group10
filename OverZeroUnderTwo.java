@@ -123,9 +123,14 @@ public class OverZeroUnderTwo {
 			System.out.println("You win!");
 		}
 		
+		// if value is NOT equal to 10 (skip), then code runs.
+		// if it IS equal, code does not run, and the opposing player's next turn is skipped.
+		if (getValue() != 10) {
 		//switch turns and wait 1 second
 		playerTurn = false;
 		cpuTurn = true;
+		}
+		
 		try {
 			Thread.sleep(1000);
 		}
