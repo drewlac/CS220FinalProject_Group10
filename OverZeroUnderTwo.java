@@ -64,12 +64,12 @@ public class OverZeroUnderTwo {
 		} // end else
 
 		// adds seven random cards to playerHand
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 1; i++) {
 			playerHand.add(gameDeck.getRandomCard());
 		}
 
 		// adds seven random cards to cpuHand
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 1; i++) {
 			cpuHand.add(gameDeck.getRandomCard());
 		}
 
@@ -209,6 +209,12 @@ public class OverZeroUnderTwo {
 				}
 
 			} // end else
+			
+			if(cpuHand.getSize() == 0) { // if CPU has no cards, end game
+				gameComplete = true;
+				System.out.println("CPU Wins!");
+				break;
+			}//end if
 		} // end while
 
 		// if value is NOT equal to 10 (skip), then code runs.
@@ -240,6 +246,12 @@ public class OverZeroUnderTwo {
 
 		while (true) {
 			try {
+				//added to catch some weird situations where player would still get a turn if the CPU wins
+				if(playerHand.getSize()==0) {
+					gameComplete = true;
+					System.out.println("You win!");
+					break;
+				}
 				System.out.print("Type the number of the card you would like to play (Enter F to forfeit): ");
 				choice = input.nextLine();
 
@@ -279,6 +291,8 @@ public class OverZeroUnderTwo {
 			catch (RuntimeException e) {
 				System.out.println("Answer must be an integer between 1 and your max amount of cards!\n");
 			} // end catch
+			
+			
 		} // end while loop
 
 	} // user inputs
