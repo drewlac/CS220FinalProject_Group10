@@ -30,10 +30,10 @@ public class OverZeroUnderTwo {
 				gameDeck.reshuffle();
 			}
 
-			if (playerTurn) {
+			if (playerTurn && gameComplete == false) {
 				playerGameplay(input);
 			} // code for players turn
-			else if (cpuTurn) {
+			else if (cpuTurn && gameComplete == false) {
 				cpuGameplay();
 			} // code for cpu's turn
 			else {
