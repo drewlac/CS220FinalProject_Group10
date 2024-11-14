@@ -82,72 +82,84 @@ public class OverZeroUnderTwo {
 	// or color
 	public static void playerGameplay(Scanner input) { // use to code player turn
 		System.out.println("\nThe top of the card on the pile is: " + gamePile.getTopCard() + "\n");
-		
-		//prints the player's hand
-		//add function to sort player's hand
+
+		// prints the player's hand
+		// add function to sort player's hand
 		System.out.println("The player's hand is:");
 		playerHand.printHand();
-		
+
 		System.out.println("\nThe player has " + playerHand.getSize() + " cards. ");
-		
-		//checking if any cards match
+
+		// checking if any cards match
 		int matches = 0;
-		for(int i = 0; i < playerHand.getSize(); i++) {
-			if(playerHand.getCard(i).match(gamePile.getTopCard())) {
+		for (int i = 0; i < playerHand.getSize(); i++) {
+			if (playerHand.getCard(i).match(gamePile.getTopCard())) {
 				matches++;
 			}
-		} //if there are matches, getting user input
-		if(matches > 0) {
+		} // if there are matches, getting user input
+		if (matches > 0) {
 			userInput(input);
-		}
-		else { //if there are no matches, drawing one card
+		} else { // if there are no matches, drawing one card
 			System.out.println("You have no matches so you drew 1 card");
 			playerHand.add(gameDeck.getRandomCard());
 		}
-		
-		if(playerHand.getSize() == 1) {
+
+		if (playerHand.getSize() == 1) {
 			System.out.print("Any additional information? ");
 			String answer = input.nextLine();
-			if(answer.strip().equalsIgnoreCase("uno")) {
+			if (answer.strip().equalsIgnoreCase("uno")) {
 				System.out.println("You successfully called uno!");
-			}
-			else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
+			} else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
 				System.out.println("You forgot to call uno, drawing another card!");
 				playerHand.add(gameDeck.getRandomCard());
 			}
 		}
-		
-		//ends game if player's hand is empty
-		if(playerHand.getSize() == 0) {
-			gameComplete = true;
-			System.out.println("You win!");
-		}
-		
-		// if value is NOT equal to 10 (skip), then code runs.
-		// if it IS equal, code does not run, and the opposing player's next turn is skipped.
-		if (gamePile.getTopCard().getValue() != 10) {
-		//switch turns and wait 1 second
-		playerTurn = false;
-		cpuTurn = true;
-		}
-		// If you played a skip card and one or more of your cards matches the top card.
+		// If you played a skip card and one or more of your cards matches the top card,
+		// print the skip statement.
+		// NOTE: This skip statement shows up if the last card played before winning is
+		// a skip card.
 		if (gamePile.getTopCard().getValue() == 10 && matches > 0) {
 			System.out.println("You skipped CPU's turn.");
 		}
-		
+
+		// ends game if player's hand is empty
+		if (playerHand.getSize() == 0) {
+			gameComplete = true;
+			System.out.println("You win!");
+		}
+
+		// if value is NOT equal to 10 (skip), then code runs.
+		// if it IS equal, code does not run, and the opposing player's next turn is
+		// skipped.
+		if (gamePile.getTopCard().getValue() != 10) {
+			// switch turns and wait 1 second
+			playerTurn = false;
+			cpuTurn = true;
+		}
+		// If you played a skip card and one or more of your cards matches the top card,
+		// print the skip statement.
+		// NOTE: This skip statement shows up if the last card played before winning is
+		// a skip card.
+		/*
+		 * if (gamePile.getTopCard().getValue() == 10 && matches > 0) {
+		 * System.out.println("You skipped CPU's turn."); }
+		 */
+
 		try {
 			Thread.sleep(1000);
+		} catch (InterruptedException c) {
+			c.printStackTrace();
 		}
-		catch(InterruptedException c) {c.printStackTrace();}
 	}
 
 	public static void cpuGameplay() {
 		// creates a hand of playable cards
 		int playableCount = 0;
-
+		int matches = 0;
 		// checks cards in hand to see if they are playable
 		for (int i = 0; i < cpuHand.getSize(); i++) {
 			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
+				matches++;
 				// adds cards to the new hand
 				playableCount++;
 			}
@@ -208,7 +220,7 @@ public class OverZeroUnderTwo {
 			playerTurn = true;
 		}
 
-		if (gamePile.getTopCard().getValue() == 10) {
+		if (gamePile.getTopCard().getValue() == 10 && matches > 0) {
 			System.out.println("CPU skipped your turn.");
 		}
 
@@ -268,7 +280,6 @@ public class OverZeroUnderTwo {
 				System.out.println("Answer must be an integer between 1 and your max amount of cards!\n");
 			} // end catch
 		} // end while loop
-
 
 	} // user inputs
 

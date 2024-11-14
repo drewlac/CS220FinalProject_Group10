@@ -3,10 +3,18 @@ import java.util.Random;
 
 // The Deck class functions as the draw pile for the game. That is, this class
 // assembles each card within the game into a draw pile, or deck.
-public class Deck extends Cards{
+public class Deck extends Cards {
 
+	// Modify the amount of cards here as we add new cards. Currently, the deck has
+	// four 0s (4 cards), two of each card numbered 1-9 for each color (72 cards),
+	// and two Skip cards for each color (8 cards). Adjust as we add new cards.
+	// Also, change deckCount within the Deck constructor and the reshuffle method
+	// later.
 	private ArrayList<Card> deck1 = new ArrayList<>(84);
-	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow" };
+	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow", "Wild" }; // Added Wild for later. We need
+																						// to add 4 regular wild cards
+																						// and 4 draw 4 wild cards
+																						// later.
 	private int deckCount;
 
 	public Deck() { // automatically creates a default deck with standard cards
@@ -20,13 +28,14 @@ public class Deck extends Cards{
 					deck1.add(newCard(i, colorArray[j]));
 					deck1.add(newCard(i, colorArray[j]));
 				} // end if
-				// If i is greater than 9, it begins to assign specialty cards. 2 of each color, except +4 cards.
-				// SKIP is card number 10, REVERSE is 11, PLUS2 is 12, PLUS4 is 13, WILD is 14.
+					// If i is greater than 9, it begins to assign specialty cards. 2 of each color,
+					// except +4 cards.
+					// SKIP is card number 10, REVERSE is 11, PLUS2 is 12, PLUS4 is 13, WILD is 14.
 				else if (i > 9) {
 					deck1.add(newCard(i, colorArray[j]));
 					deck1.add(newCard(i, colorArray[j]));
 				}
-					// If i is a 0 card, only add one 0 card per color.
+				// If i is a 0 card, only add one 0 card per color.
 				else {
 					deck1.add(newCard(i, colorArray[j]));
 				}
@@ -36,14 +45,15 @@ public class Deck extends Cards{
 		deckCount = 84;
 
 	}// end constructor
-	
+
 	@Override
-	public String toString() { //needs to be completed
+	public String toString() { // needs to be completed
 		return "";
 	}
-	
+
 	@Override
-	public void print() {} //needs to be completed
+	public void print() {
+	} // needs to be completed
 
 	private Card newCard(int i, String string) {
 		return new Card(i, string);
@@ -76,27 +86,27 @@ public class Deck extends Cards{
 		}
 
 		return c;
-	}//end method getRandomCard
-	
-	//this method is always returning 7 extra cards
-	public ArrayList<Card> getRandomCards(int i){
+	}// end method getRandomCard
+
+	// this method is always returning 7 extra cards
+	public ArrayList<Card> getRandomCards(int i) {
 		ArrayList<Card> returnList = new ArrayList<Card>();
 		Card c = new Card();
 		int randomInt;
 
-		for(int j = 0; j < i; j++) {
-		
-		if (!deck1.isEmpty()) {
-			randomInt = ranInt(deck1.size() - 1, 0);
-			c = deck1.get(randomInt);
-			returnList.add(c);
-			deck1.remove(randomInt);
-			deckCount--;
-			//System.out.println(j);
-			} 
-		
-		else {
-			System.out.println("Deck is empty!");
+		for (int j = 0; j < i; j++) {
+
+			if (!deck1.isEmpty()) {
+				randomInt = ranInt(deck1.size() - 1, 0);
+				c = deck1.get(randomInt);
+				returnList.add(c);
+				deck1.remove(randomInt);
+				deckCount--;
+				// System.out.println(j);
+			}
+
+			else {
+				System.out.println("Deck is empty!");
 			}
 		} // end for loop
 		return returnList;
@@ -136,8 +146,7 @@ public class Deck extends Cards{
 								// each color.
 					deck1.add(newCard(i, colorArray[j]));
 					deck1.add(newCard(i, colorArray[j]));
-				}
-				else if (i > 9) { //adds specialty cards to re-shuffle
+				} else if (i > 9) { // adds specialty cards to re-shuffle
 					deck1.add(newCard(i, colorArray[j]));
 					deck1.add(newCard(i, colorArray[j]));
 				} // end if
@@ -149,7 +158,7 @@ public class Deck extends Cards{
 		} // end outer for
 		deckCount = 84;
 	}
-	
+
 	public int getSize() {
 		return deck1.size();
 	}
