@@ -24,7 +24,7 @@ public class Hand extends Cards{
 		
 		else {
 			hand1.add(c);
-			}
+			} 
 		
 		}
 	}//end add overload method
@@ -55,6 +55,10 @@ public class Hand extends Cards{
 	
 	public void sort() {
 		hand1.sort(null);
+	}
+	
+	public void removeAllCards() {
+		hand1.removeAll(hand1);
 	}
 
 } // end class hand

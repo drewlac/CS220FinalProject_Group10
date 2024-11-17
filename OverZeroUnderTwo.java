@@ -18,31 +18,42 @@ public class OverZeroUnderTwo {
 	public static void main(String[] args) { // start main method
 
 		
-		
-		startGame();
-		
-		Scanner input = new Scanner(System.in);
 
-		do { // game will be played inside of this do while loop, and to end the game we will
+		Scanner input = new Scanner(System.in); //initializing objects and variables
+		boolean playAgain = true;
+		
+		while(playAgain) {
+			
+			startGame(); //method to start game	
+
+			do { // game will be played inside of this do while loop, and to end the game we will
 				// need to mark gameComplete as true
 			
-			//make sure there are cards in gamedeck
-			if(gameDeck.isEmpty()) {gameDeck.reshuffle();} 
+			
+			
+				//make sure there are cards in gamedeck
+				if(gameDeck.isEmpty()) {gameDeck.reshuffle();} 
 
-			if (playerTurn && gameComplete == false) {
-				playerGameplay(input);
-			} // code for players turn
-			else if (cpuTurn && gameComplete == false) {
-				cpuGameplay();
-			} // code for cpu's turn
-			else {
-			} // catch errors and exceptions
+				if (playerTurn && gameComplete == false) {
+					playerGameplay(input);
+				} // code for players turn
+				else if (cpuTurn && gameComplete == false) {
+					cpuGameplay();
+				} // code for cpu's turn
+				else {
+				} // catch errors and exceptions
 
-		} while (!gameComplete);
+				} while (!gameComplete);
 		
-		System.out.println("\nGame is over!");
-		input.close();
-	} // end main method
+			
+				playAgain = againChecker(input);
+			
+			}	
+		
+		
+			System.out.println("\nGame is over!");
+			input.close();
+		} // end main method
 
 	// startGame() method begins the game and determine which player goes first.
 	// The current implementation mimics a coin flip to determine the turn order.
@@ -61,6 +72,9 @@ public class OverZeroUnderTwo {
 		} else {
 			System.out.println("Some sorta error, must have got the coinflip wrong :( ");
 		} // end else
+		
+		
+		resetGame();//resets game since it can be played several times
 		
 		//adds seven random cards to playerHand
 		for(int i = 0; i < 1; i++) {
@@ -266,6 +280,26 @@ public class OverZeroUnderTwo {
 		
 	} // user inputs
 	
+	public static boolean againChecker(Scanner scnr) {
+		System.out.print("\nDo you want to play again? (Y/N): ");
+		String input = scnr.next();
+		
+		if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
+			gameComplete = false;
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	
+	public static void resetGame() {
+		
+		playerHand.removeAllCards();
+		cpuHand.removeAllCards();
+		gameDeck.reshuffle();
+	}
 	
 
 } // end OverZeroUnderTwo Class
