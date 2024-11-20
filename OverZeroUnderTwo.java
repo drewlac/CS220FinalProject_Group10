@@ -13,8 +13,6 @@ public class OverZeroUnderTwo {
 	private static boolean cpu2Turn = false;
 	private static boolean cpu3Turn = false;
 	private static byte gameFlow = 1; //1 for clockwise, 2 for counter clockwise
-	//private static Hand playerHand = new Hand(); // static variable for playerHand, placed here so all methods can use it
-	//private static Hand cpuHand = new Hand(); //static variable for cpuHand, placed here so all methods can use it
 	private static Deck gameDeck = new Deck(); //static variable for the deck the game is played on
 	private static DiscardPile gamePile = new DiscardPile(); // static variable for game discard pile 
 	
