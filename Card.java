@@ -5,7 +5,8 @@ public class Card implements Comparable<Card> {
 	private String color;
 
 	private final int[] valueArray = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }; // 0-9
-	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow" };
+	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow", "Wild" };
+	private final String[] specialtyCardArray = { "Skip", "Reverse", "PlusTwo", "PlusFour" };
 
 	public Card() {
 		value = 0;
@@ -42,15 +43,31 @@ public class Card implements Comparable<Card> {
 	}
 
 	public String toString() {
-		return color + " " + value;
+		if (value == 10) {
+			return color + " " + specialtyCardArray[0];
+		} else if (value == 11) {
+			return color + " " + specialtyCardArray[1];
+		} else if (value == 12) {
+			return color + " " + specialtyCardArray[2];
+		} else if (value == 12) {
+			return color + " " + specialtyCardArray[3];
+		} else {
+			return color + " " + value;
+		}
 	}
 	
 	public boolean match(Card c) {
 		boolean returnBool = false;
-		
-		if(value == c.getValue()) {returnBool = true;}
-		else if(color == c.getColor()) {returnBool = true;}
-		
+
+		if (value == c.getValue()) {
+			returnBool = true;
+		} else if (color == c.getColor()) {
+			returnBool = true;
+			// If the Card is a Wild card, it matches all other colors.
+		} else if (color.equalsIgnoreCase("Wild")) {
+			returnBool = true;
+
+		}
 		return returnBool;
 	}
 	
