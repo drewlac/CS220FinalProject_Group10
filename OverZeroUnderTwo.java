@@ -309,14 +309,24 @@ public class OverZeroUnderTwo {
 			System.out.println("You win!");
 		}
 		
+		boolean skipped = false;
+		if(gamePile.getTopCard().getValue()==1)
+			skipped = true;
+		
 		//switch turns and wait 1 second
 		if(gameFlow == 1) { //clockwise
 			playerTurn = false;
-			cpu1Turn = true;
+			if(skipped) //if skip is played
+				cpu2Turn = true;
+			else //regular gameplay
+				cpu1Turn = true;
 		}
 		else if(gameFlow == 2) { // counter clockwise
 			playerTurn = false;
-			cpu3Turn = true;
+			if(skipped) //if skip is played
+				cpu2Turn = true;
+			else //regular gameplay
+				cpu3Turn = true;
 		}
 		try {
 			Thread.sleep(1000);
