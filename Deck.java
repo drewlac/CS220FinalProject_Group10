@@ -16,7 +16,7 @@ public class Deck extends Cards{
 
 				// If i is not a 0 card, ensure that there are two of each number card for each
 				// color.
-				if (i != 0 && i < 9) {
+				if (i != 0 && i <= 9) {
 					deck1.add(newCard(i, colorArray[j]));
 					deck1.add(newCard(i, colorArray[j]));
 				} // end if

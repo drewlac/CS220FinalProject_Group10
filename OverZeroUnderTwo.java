@@ -559,7 +559,7 @@ public class OverZeroUnderTwo {
 		
 		if(playerHand.getSize() == 1) {
 			System.out.print("Any additional information? ");
-			String answer = input.nextLine();
+			String answer = input.next();
 			if(answer.strip().equalsIgnoreCase("uno")) {
 				System.out.println("You successfully called uno!");
 			}
