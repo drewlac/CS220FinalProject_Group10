@@ -13,8 +13,6 @@ public class OverZeroUnderTwo {
 	private static boolean cpu2Turn = false;
 	private static boolean cpu3Turn = false;
 	private static byte gameFlow = 1; //1 for clockwise, 2 for counter clockwise
-	//private static Hand playerHand = new Hand(); // static variable for playerHand, placed here so all methods can use it
-	//private static Hand cpuHand = new Hand(); //static variable for cpuHand, placed here so all methods can use it
 	private static Deck gameDeck = new Deck(); //static variable for the deck the game is played on
 	private static DiscardPile gamePile = new DiscardPile(); // static variable for game discard pile 
 	
@@ -57,65 +55,8 @@ public class OverZeroUnderTwo {
 		if(singleCPU) {singleCPU(input, playerHand, cpu1Hand);}
 		else {threeCPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand);}
 		
-		/*
-		while(playAgain) {
-			
-			startGame3CPU(playerHand, cpu1Hand, cpu2Hand, cpu3Hand); //method to start game	
-			
-			
-
-			do { // game will be played inside of this do while loop, and to end the game we will
-				// need to mark gameComplete as true
-			
-				//make sure there are cards in gamedeck
-				if(gameDeck.isEmpty()) {gameDeck.reshuffle();} 
-				
-				if(gameFlow == 1 && gameComplete == false) {//clockwise gameplay
-
-					if (playerTurn && gameComplete == false) {
-						playerGameplay3CPU(input, playerHand);
-					} // code for players turn
-					else if (cpu1Turn && gameComplete == false) {
-						cpu1Gameplay3CPU(cpu1Hand);
-					} // code for cpu1 turn
-					else if (cpu2Turn && gameComplete == false) {
-						cpu2Gameplay(cpu2Hand);
-					} // code for cpu2 turn
-					else if (cpu3Turn && gameComplete == false) {
-						cpu3Gameplay(cpu3Hand);
-					} // code for cpu3 turn
-					else {
-					} // catch errors and exceptions
-				}
-				
-				else if(gameFlow == 2 && gameComplete == false) {//counter clockwise gameplay
-					
-					if (playerTurn && gameComplete == false) {
-						playerGameplay3CPU(input, playerHand);
-					} // code for players turn
-					else if (cpu3Turn && gameComplete == false) {
-						cpu1Gameplay3CPU(cpu1Hand);
-					} // code for cpu3 turn
-					else if (cpu2Turn && gameComplete == false) {
-						cpu2Gameplay(cpu2Hand);
-					} // code for cpu2 turn
-					else if (cpu1Turn && gameComplete == false) {
-						cpu3Gameplay(cpu3Hand);
-					} // code for cpu1 turn
-					
-				}
-				
-				
-				} while (!gameComplete);
-		
-			
-				playAgain = againChecker(input);
-			
-			}	*/
-		
-		
-			System.out.println("\nGame is over!");
-			input.close();
+		System.out.println("\nGame is over!");
+		input.close();
 		} // end main method
 
 	private static void cpu3Gameplay(Hand cpuHand) {
