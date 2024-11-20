@@ -575,6 +575,23 @@ public class OverZeroUnderTwo {
 			System.out.println("You win!");
 		}
 		
+		// if value is NOT equal to 10 (skip), then code runs.
+		// if it IS equal, code does not run, and the opposing player's next turn is
+		// skipped.
+		else if (gamePile.getTopCard().getValue() != 10) {
+			// switch turns and wait 1 second
+			playerTurn = false;
+			cpu1Turn = true;
+		}
+		// If you played a skip card and one or more of your cards matches the top card,
+		// print the skip statement.
+		// NOTE: This skip statement shows up if the last card played before winning is
+		// a skip card.
+		/*
+		 * if (gamePile.getTopCard().getValue() == 10 && matches > 0) {
+		 * System.out.println("You skipped CPU's turn."); }
+		 */
+		
 		//switch turns and wait 1 second
 		if(gameFlow == 1) { //clockwise
 			playerTurn = false;
@@ -645,6 +662,19 @@ public class OverZeroUnderTwo {
 		if(cpuHand.getSize() == 0) { //if CPU has no cards, end game **This check is added after cards are played to catch a bug
 			gameComplete = true;
 			System.out.println("CPU 1 Wins!");
+		}
+		
+		// if value is NOT equal to 10 (skip), then code runs.
+		// if it IS equal, code does not run, and the opposing player's next turn is
+		// skipped.
+		if (gamePile.getTopCard().getValue() != 10) {
+			// CPU ends turn, happens regardless. Switches turn and waits 1 second
+			cpu1Turn = false;
+			playerTurn = true;
+		}
+
+		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0) {
+			System.out.println("CPU skipped your turn.");
 		}
 		
 		//cpu ends turn, happens regardless. Switches turn and waits 1 second 
