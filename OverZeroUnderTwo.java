@@ -9,7 +9,7 @@ public class OverZeroUnderTwo {
 
 	private static boolean gameComplete = false;
 	private static boolean playerTurn = false;
-	private static boolean cpuTurn = false;
+	private static boolean cpu1Turn = false;
 	private static boolean cpu2Turn = false;
 	private static boolean cpu3Turn = false;
 	private static byte gameFlow = 1; //1 for clockwise, 2 for counter clockwise
@@ -20,19 +20,47 @@ public class OverZeroUnderTwo {
 	
 	public static void main(String[] args) { // start main method
 
+		Scanner input = new Scanner(System.in); //initializing scanner object
 		
+		//generate hands that the methods use
+			Hand playerHand = new Hand();
+			Hand cpu1Hand = new Hand();
+			Hand cpu2Hand = new Hand();
+			Hand cpu3Hand = new Hand();
 
-		Scanner input = new Scanner(System.in); //initializing objects and variables
-		boolean playAgain = true;
+		//Initializing variables used by game
+			byte gameMode;
+			boolean singleCPU = true;
+			//boolean playAgain = true;
+
+
+		//For determining game mode
+			System.out.println("Option 1: Play against 1 CPU: ");
+			System.out.println("Option 2: Play against 3 CPUs:");
+			System.out.print("Please enter 1 or 2 to select your option: ");
 		
-		Hand playerHand = new Hand();
-		Hand cpuHand1 = new Hand();
-		Hand cpuHand2 = new Hand();
-		Hand cpuHand3 = new Hand();
 		
+		
+		while(true) { //getting input for gameMode
+			try {
+				gameMode = input.nextByte();
+				if(!(gameMode == 1 || gameMode == 2)) {throw new RuntimeException();}
+				break;
+			}
+			catch(RuntimeException E) {System.out.println("Error, input must be 1 or 2. Enter again: ");}
+		}
+		
+		if(gameMode == 2) { //switch to 3 CPU Mode 
+			singleCPU = false;
+		}
+		
+		if(singleCPU) {singleCPU(input, playerHand, cpu1Hand);}
+		else {threeCPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand);}
+		
+		/*
 		while(playAgain) {
 			
-			startGame(playerHand, cpuHand1, cpuHand2, cpuHand3); //method to start game	
+			startGame3CPU(playerHand, cpu1Hand, cpu2Hand, cpu3Hand); //method to start game	
 			
 			
 
@@ -45,16 +73,16 @@ public class OverZeroUnderTwo {
 				if(gameFlow == 1 && gameComplete == false) {//clockwise gameplay
 
 					if (playerTurn && gameComplete == false) {
-						playerGameplay(input, playerHand);
+						playerGameplay3CPU(input, playerHand);
 					} // code for players turn
-					else if (cpuTurn && gameComplete == false) {
-						cpuGameplay(cpuHand1);
+					else if (cpu1Turn && gameComplete == false) {
+						cpu1Gameplay3CPU(cpu1Hand);
 					} // code for cpu1 turn
 					else if (cpu2Turn && gameComplete == false) {
-						cpuGameplay2(cpuHand2);
+						cpu2Gameplay(cpu2Hand);
 					} // code for cpu2 turn
 					else if (cpu3Turn && gameComplete == false) {
-						cpuGameplay3(cpuHand3);
+						cpu3Gameplay(cpu3Hand);
 					} // code for cpu3 turn
 					else {
 					} // catch errors and exceptions
@@ -63,16 +91,16 @@ public class OverZeroUnderTwo {
 				else if(gameFlow == 2 && gameComplete == false) {//counter clockwise gameplay
 					
 					if (playerTurn && gameComplete == false) {
-						playerGameplay(input, playerHand);
+						playerGameplay3CPU(input, playerHand);
 					} // code for players turn
 					else if (cpu3Turn && gameComplete == false) {
-						cpuGameplay(cpuHand1);
+						cpu1Gameplay3CPU(cpu1Hand);
 					} // code for cpu3 turn
 					else if (cpu2Turn && gameComplete == false) {
-						cpuGameplay2(cpuHand2);
+						cpu2Gameplay(cpu2Hand);
 					} // code for cpu2 turn
-					else if (cpuTurn && gameComplete == false) {
-						cpuGameplay3(cpuHand3);
+					else if (cpu1Turn && gameComplete == false) {
+						cpu3Gameplay(cpu3Hand);
 					} // code for cpu1 turn
 					
 				}
@@ -83,14 +111,14 @@ public class OverZeroUnderTwo {
 			
 				playAgain = againChecker(input);
 			
-			}	
+			}	*/
 		
 		
 			System.out.println("\nGame is over!");
 			input.close();
 		} // end main method
 
-	private static void cpuGameplay3(Hand cpuHand) {
+	private static void cpu3Gameplay(Hand cpuHand) {
 		//creates a hand of playable cards
 				int playableCount = 0;
 				
@@ -142,6 +170,11 @@ public class OverZeroUnderTwo {
 					}//end else
 				}//end while
 				
+				if(cpuHand.getSize() == 0) { //if CPU has no cards, end game **This check is added after cards are played to catch a bug
+					gameComplete = true;
+					System.out.println("CPU 3 Wins!");
+				}
+				
 				
 				//cpu ends turn, happens regardless. Switches turn and waits 1 second 
 				if(gameFlow == 1) { //clockwise
@@ -160,7 +193,7 @@ public class OverZeroUnderTwo {
 		
 	}
 
-	private static void cpuGameplay2(Hand cpuHand) {
+	private static void cpu2Gameplay(Hand cpuHand) {
 		//creates a hand of playable cards
 				int playableCount = 0;
 				
@@ -212,6 +245,10 @@ public class OverZeroUnderTwo {
 					}//end else
 				}//end while
 				
+				if(cpuHand.getSize() == 0) { //if CPU has no cards, end game **This check is added after cards are played to catch a bug
+					gameComplete = true;
+					System.out.println("CPU 2 Wins!");
+				}
 				
 				//cpu ends turn, happens regardless. Switches turn and waits 1 second
 				if(gameFlow == 1) { //clockwise
@@ -220,7 +257,7 @@ public class OverZeroUnderTwo {
 				}
 				else if(gameFlow == 2) { // counter clockwise
 					cpu2Turn = false;
-					cpuTurn = true;
+					cpu1Turn = true;
 				}
 				try {
 					Thread.sleep(1000);
@@ -232,24 +269,31 @@ public class OverZeroUnderTwo {
 
 	// startGame() method begins the game and determine which player goes first.
 	// The current implementation mimics a coin flip to determine the turn order.
-	public static void startGame(Hand playerHand, Hand cpuHand, Hand cpuHand2, Hand cpuHand3) {
-		System.out.println("Game is starting");
+	public static void startGame3CPU(Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand) {
+		System.out.println("\nGame is starting");
 		Random rand = new Random();
 		int coinflip = 0;
-		coinflip = rand.nextInt(2) + 1;
+		coinflip = rand.nextInt(4) + 1;
 
 		if (coinflip == 1) {
 			playerTurn = true;
 			System.out.println("Player turn is first!");
 		} else if (coinflip == 2) {
-			cpuTurn = true;
-			System.out.println("CPU turn is first!");
-		} else {
+			cpu1Turn = true;
+			System.out.println("CPU 1 turn is first!");
+		} else if (coinflip == 3) {
+			cpu2Turn = true;
+			System.out.println("CPU 2 turn is first!");
+		} else if (coinflip == 4) {
+			cpu3Turn = true;
+			System.out.println("CPU 3 turn is first!");
+		} 
+		else {
 			System.out.println("Some sorta error, must have got the coinflip wrong :( ");
 		} // end else
 		
 		
-		resetGame(playerHand, cpuHand, cpuHand2, cpuHand3);//resets game since it can be played several times
+		resetGame3CPU(playerHand, cpu1Hand, cpu2Hand, cpu3Hand);//resets game since it can be played several times
 		
 		//adds seven random cards to playerHand
 		for(int i = 0; i < 1; i++) {
@@ -257,19 +301,19 @@ public class OverZeroUnderTwo {
 		}
 		
 		
-		//adds seven random cards to cpuHand
+		//adds seven random cards to cpu1Hand
 		for(int i = 0; i < 1; i++) {
-			cpuHand.add(gameDeck.getRandomCard());
+			cpu1Hand.add(gameDeck.getRandomCard());
 		}
 		
-		//adds seven random cards to cpuHand
+		//adds seven random cards to cpu2Hand
 		for(int i = 0; i < 1; i++) {
-			cpuHand2.add(gameDeck.getRandomCard());
+			cpu2Hand.add(gameDeck.getRandomCard());
 		}
 				
-		//adds seven random cards to cpuHand
+		//adds seven random cards to cpu3Hand
 			for(int i = 0; i < 1; i++) {
-			cpuHand3.add(gameDeck.getRandomCard());
+			cpu3Hand.add(gameDeck.getRandomCard());
 		}
 		
 		//adds one random card to discard pile so there is one card to start with
@@ -279,7 +323,7 @@ public class OverZeroUnderTwo {
 	} // end method startGame
 
 	//class Card has a method match() which checks if another card has equal value or color
-	public static void playerGameplay(Scanner input, Hand playerHand) 
+	public static void playerGameplay3CPU(Scanner input, Hand playerHand) 
 	{ // use to code player turn
 		System.out.println("\nThe top of the card on the pile is: " + gamePile.getTopCard() + "\n");
 		
@@ -326,8 +370,8 @@ public class OverZeroUnderTwo {
 		
 		//switch turns and wait 1 second
 		if(gameFlow == 1) { //clockwise
-		playerTurn = false;
-		cpuTurn = true;
+			playerTurn = false;
+			cpu1Turn = true;
 		}
 		else if(gameFlow == 2) { // counter clockwise
 			playerTurn = false;
@@ -339,7 +383,7 @@ public class OverZeroUnderTwo {
 		catch(InterruptedException c) {c.printStackTrace();}
 	} 
 
-	public static void cpuGameplay(Hand cpuHand) {
+	public static void cpu1Gameplay3CPU(Hand cpuHand) {
 		//creates a hand of playable cards
 		int playableCount = 0;
 		
@@ -391,14 +435,18 @@ public class OverZeroUnderTwo {
 			}//end else
 		}//end while
 		
+		if(cpuHand.getSize() == 0) { //if CPU has no cards, end game **This check is added after cards are played to catch a bug
+			gameComplete = true;
+			System.out.println("CPU 1 Wins!");
+		}
 		
 		//cpu ends turn, happens regardless. Switches turn and waits 1 second 
 		if(gameFlow == 1) { //clockwise
-			cpuTurn = false;
+			cpu1Turn = false;
 			cpu2Turn = true;
 		}
 		else if(gameFlow == 2) { //counter clockwise
-			cpuTurn = false;
+			cpu1Turn = false;
 			playerTurn = true;
 		}
 		try {
@@ -492,14 +540,280 @@ public class OverZeroUnderTwo {
 		
 	}
 	
-	public static void resetGame(Hand playerHand, Hand cpuHand, Hand cpuHand2, Hand cpuHand3) {
+	public static void resetGame3CPU(Hand playerHand, Hand cpu1Hand, Hand cpuHand2, Hand cpuHand3) {
 		
 		playerHand.removeAllCards();
-		cpuHand.removeAllCards();
+		cpu1Hand.removeAllCards();
 		cpuHand2.removeAllCards();
 		cpuHand3.removeAllCards();
 		gameDeck.reshuffle();
 	}
 	
+	public static void startGame1CPU(Hand playerHand, Hand cpu1Hand) {
+		System.out.println("Game is starting");
+		Random rand = new Random();
+		int coinflip = 0;
+		coinflip = rand.nextInt(2) + 1;
 
+		if (coinflip == 1) {
+			playerTurn = true;
+			System.out.println("Player turn is first!");
+		} else if (coinflip == 2) {
+			cpu1Turn = true;
+			System.out.println("CPU turn is first!");
+		} else {
+			System.out.println("Some sorta error, must have got the coinflip wrong :( ");
+		} // end else
+		
+		
+		resetGame1CPU(playerHand, cpu1Hand);//resets game since it can be played several times
+		
+		//adds seven random cards to playerHand
+		for(int i = 0; i < 1; i++) {
+			playerHand.add(gameDeck.getRandomCard());
+		}
+		
+		
+		//adds seven random cards to cpuHand
+		for(int i = 0; i < 1; i++) {
+			cpu1Hand.add(gameDeck.getRandomCard());
+		}
+		
+		//adds one random card to discard pile so there is one card to start with
+		gamePile.addCard(gameDeck.getRandomCard());
+	}
+
+	private static void resetGame1CPU(Hand playerHand, Hand cpu1Hand) {
+		playerHand.removeAllCards();
+		cpu1Hand.removeAllCards();
+		gameDeck.reshuffle();
+	}
+	
+	public static void playerGameplay1CPU(Scanner input, Hand playerHand) 
+	{ // use to code player turn
+		System.out.println("\nThe top of the card on the pile is: " + gamePile.getTopCard() + "\n");
+		
+		//prints the player's hand
+		//add function to sort player's hand
+		System.out.println("The player's hand is:");
+		playerHand.sort();
+		playerHand.printHand();
+		
+		System.out.println("\nThe player has " + playerHand.getSize() + " cards. ");
+		
+		//checking if any cards match
+		int matches = 0;
+		for(int i = 0; i < playerHand.getSize(); i++) {
+			if(playerHand.getCard(i).match(gamePile.getTopCard())) {
+				matches++;
+			}
+		} //if there are matches, getting user input
+		if(matches > 0) {
+			userInput(input, playerHand);
+		}
+		else { //if there are no matches, drawing one card
+			System.out.println("You have no matches so you drew 1 card");
+			playerHand.add(gameDeck.getRandomCard());
+		}
+		
+		if(playerHand.getSize() == 1) {
+			System.out.print("Any additional information? ");
+			String answer = input.nextLine();
+			if(answer.strip().equalsIgnoreCase("uno")) {
+				System.out.println("You successfully called uno!");
+			}
+			else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
+				System.out.println("You forgot to call uno, drawing another card!");
+				playerHand.add(gameDeck.getRandomCard());
+			}
+		}
+		
+		//ends game if player's hand is empty
+		if(playerHand.getSize() == 0) {
+			gameComplete = true;
+			System.out.println("You win!");
+		}
+		
+		//switch turns and wait 1 second
+		if(gameFlow == 1) { //clockwise
+			playerTurn = false;
+			cpu1Turn = true;
+		}
+		else if(gameFlow == 2) { // counter clockwise
+			playerTurn = false;
+			cpu1Turn = true;
+		}
+		try {
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException c) {c.printStackTrace();}
+	} 
+
+	public static void cpu1Gameplay1CPU(Hand cpuHand) {
+		//creates a hand of playable cards
+		int playableCount = 0;
+		
+		//checks cards in hand to see if they are playable
+		for(int i =0; i<cpuHand.getSize();i++) {
+			if(cpuHand.getCard(i).match(gamePile.getTopCard())) {
+				//adds cards to the new hand
+				playableCount++;
+			}
+		}
+		
+		//System.out.println("Playable Count: " + playableCount); //used for troubleshooting
+		
+		boolean cardPlayed = false;
+		Random random = new Random();
+		double coinflip;
+		
+		while(true) {
+			if(cpuHand.getSize() == 0) { //if CPU has no cards, end game
+				gameComplete = true;
+				System.out.println("CPU 1 Wins!");
+				break;
+			}//end if
+			
+				//if the list is 0 cpu draws a card and alerts player
+			else if(playableCount <=0) {
+				cpuHand.add(gameDeck.getRandomCard());
+				System.out.println("CPU 1 drew a card");
+				break;
+			}//end else if
+			
+			else {
+				//cpu flips a coin to see if they play each playable card
+				for(int i =0; i<cpuHand.getSize();i++) {
+					coinflip = random.nextDouble();
+					//System.out.println("Coinflip: " + coinflip); //used for troubleshooting
+					if(cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {//if cards match and coinflip is good
+						gamePile.addCard(cpuHand.getCard(i)); //play card to game pile
+						System.out.println("CPU 1 played: " + cpuHand.getCard(i)); //say which card cpu played
+						cpuHand.remove(cpuHand.getCard(i));//remove it from cpuHand	
+						if(cpuHand.getSize() == 1) {System.out.println("CPU 1: Uno!");} //print out uno if only one card left
+						cardPlayed = true;
+						break;
+					}//end if
+				}//end for loop
+		
+				if(cardPlayed) {break;}
+		
+			}//end else
+		}//end while
+		
+		if(cpuHand.getSize() == 0) { //if CPU has no cards, end game **This check is added after cards are played to catch a bug
+			gameComplete = true;
+			System.out.println("CPU 1 Wins!");
+		}
+		
+		//cpu ends turn, happens regardless. Switches turn and waits 1 second 
+		if(gameFlow == 1) { //clockwise
+			cpu1Turn = false;
+			playerTurn = true;
+		}
+		else if(gameFlow == 2) { //counter clockwise
+			cpu1Turn = false;
+			playerTurn = true;
+		}
+		try {
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException c) {c.printStackTrace();}
+
+	} // use to code CPU turn
+
+	public static void singleCPU(Scanner input, Hand playerHand, Hand cpu1Hand){
+		
+		boolean playAgain = true;
+		
+		while(playAgain) {
+			
+			startGame1CPU(playerHand, cpu1Hand); //method to start game	
+
+			do { // game will be played inside of this do while loop, and to end the game we will
+				// need to mark gameComplete as true
+			
+			
+			
+				//make sure there are cards in gamedeck
+				if(gameDeck.isEmpty()) {gameDeck.reshuffle();} 
+
+				if (playerTurn && gameComplete == false) {
+					playerGameplay1CPU(input, playerHand);
+				} // code for players turn
+				else if (cpu1Turn && gameComplete == false) {
+					cpu1Gameplay1CPU(cpu1Hand);
+				} // code for cpu's turn
+				else {
+				} // catch errors and exceptions
+
+				} while (!gameComplete);
+		
+			
+				playAgain = againChecker(input);
+			
+			}
+		
+	}
+	
+	public static void threeCPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand) {
+		
+		boolean playAgain = true;
+		
+		while(playAgain) {
+			
+		startGame3CPU(playerHand, cpu1Hand, cpu2Hand, cpu3Hand); //method to start game	
+			
+			
+
+		do { // game will be played inside of this do while loop, and to end the game we will
+			// need to mark gameComplete as true
+			
+			//make sure there are cards in gamedeck
+			if(gameDeck.isEmpty()) {gameDeck.reshuffle();} 
+				
+			if(gameFlow == 1 && gameComplete == false) {//clockwise gameplay
+
+				if (playerTurn && gameComplete == false) {
+					playerGameplay3CPU(input, playerHand);
+				} // code for players turn
+				else if (cpu1Turn && gameComplete == false) {
+					cpu1Gameplay3CPU(cpu1Hand);
+				} // code for cpu1 turn
+				else if (cpu2Turn && gameComplete == false) {
+					cpu2Gameplay(cpu2Hand);
+				} // code for cpu2 turn
+				else if (cpu3Turn && gameComplete == false) {
+					cpu3Gameplay(cpu3Hand);
+				} // code for cpu3 turn
+				else {
+				} // catch errors and exceptions
+			}
+				
+			else if(gameFlow == 2 && gameComplete == false) {//counter clockwise gameplay
+					
+				if (playerTurn && gameComplete == false) {
+					playerGameplay3CPU(input, playerHand);
+				} // code for players turn
+				else if (cpu3Turn && gameComplete == false) {
+					cpu1Gameplay3CPU(cpu1Hand);
+				} // code for cpu3 turn
+				else if (cpu2Turn && gameComplete == false) {
+					cpu2Gameplay(cpu2Hand);
+				} // code for cpu2 turn
+				else if (cpu1Turn && gameComplete == false) {
+					cpu3Gameplay(cpu3Hand);
+				} // code for cpu1 turn
+					
+			}
+				
+				
+			} while (!gameComplete);
+		
+			
+			playAgain = againChecker(input);
+			
+		}//end playAgain loop
+	}
+	
 } // end OverZeroUnderTwo Class
