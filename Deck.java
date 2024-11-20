@@ -5,14 +5,14 @@ import java.util.Random;
 // assembles each card within the game into a draw pile, or deck.
 public class Deck extends Cards{
 
-	private ArrayList<Card> deck1 = new ArrayList<>(84);
+	private ArrayList<Card> deck1 = new ArrayList<>(92);
 	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow", "Wild" };
 	private int deckCount;
 
 	public Deck() { // automatically creates a default deck with standard cards
 		for (int j = 0; j <= 3; j++) { // j iterates between integer 0 through 3, including 3,
 			// to represent color.
-			for (int i = 0; i <= 10; i++) { // i iterates between integers 0 through 9, including 9.
+			for (int i = 0; i <= 12; i++) { // i iterates between integers 0 through 9, including 9.
 
 				// If i is not a 0 card, ensure that there are two of each number card for each
 				// color.
@@ -22,7 +22,7 @@ public class Deck extends Cards{
 				} // end if
 					// If i is greater than 9, it begins to assign specialty cards. 2 of each color,
 					// except +4 cards.
-					// SKIP is card number 10, REVERSE is 11, PLUS2 is 12, PLUS4 is 13, WILD is 14.
+					// SKIP is card number 10, REVERSE is 11, PLUS2 is 12, WILD is 13, WILDPLUS4 is 14.
 				else if (i > 9) {
 					deck1.add(newCard(i, colorArray[j]));
 					deck1.add(newCard(i, colorArray[j]));
@@ -34,7 +34,7 @@ public class Deck extends Cards{
 
 			} // end for (nested)
 		} // end outer for
-		deckCount = 84;
+		deckCount = 92;
 
 	}// end constructor
 	
@@ -131,7 +131,7 @@ public class Deck extends Cards{
 
 	public void reshuffle() {
 		for (int j = 0; j <= 3; j++) { // j iterates between integer 0 through 3, including 3, to represent color.
-			for (int i = 0; i <= 10; i++) { // i iterates between integers 0 through 9, including 9.
+			for (int i = 0; i <= 12; i++) { // i iterates between integers 0 through 9, including 9.
 
 				if (i != 0) { // If the card value is not 0, ensure that there are two of each number card for
 								// each color.
@@ -147,7 +147,7 @@ public class Deck extends Cards{
 
 			} // end for (nested)
 		} // end outer for
-		deckCount = 84;
+		deckCount = 92;
 	}
 	
 	public int getSize() {
