@@ -594,7 +594,7 @@ public class OverZeroUnderTwo {
 			playerTurn = true;
 		} // do nothing if skip cpu
 
-		if (gamePile.getTopCard().getValue() == 12 && playerTurn) { // Player plays a plus2 card.
+		else if (gamePile.getTopCard().getValue() == 12 && playerTurn) { // Player plays a plus2 card.
 			// Force CPU to draw 2 random cards.
 			cpuHand.add(gameDeck.getRandomCard());
 			cpuHand.add(gameDeck.getRandomCard());
@@ -603,7 +603,7 @@ public class OverZeroUnderTwo {
 			// Need to skip the CPU's turn after forcing it to draw 2 cards.
 
 		}
-
+		
 		else { // no skip played, switch turns
 				// switch turns and wait 1 second
 			if (gameFlow == 1) { // clockwise
@@ -691,11 +691,11 @@ public class OverZeroUnderTwo {
 
 		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0) {
 			System.out.println("CPU skipped your turn.");
-			cpu1Turn = false;
-			playerTurn = true;
+			//cpu1Turn = false;
+			//playerTurn = true;
 		}
 
-		if (gamePile.getTopCard().getValue() == 12 && cpu1Turn) { // plus2
+		else if (gamePile.getTopCard().getValue() == 12 && cpu1Turn) { // plus2
 			// Forces player to draw 2 random cards.
 			playerHand.add(gameDeck.getRandomCard());
 			playerHand.add(gameDeck.getRandomCard());
