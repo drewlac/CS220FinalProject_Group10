@@ -539,7 +539,7 @@ public class OverZeroUnderTwo {
 		gameDeck.reshuffle();
 	}
 
-	public static void playerGameplay1CPU(Scanner input, Hand playerHand) { // use to code player turn
+	public static void playerGameplay1CPU(Scanner input, Hand playerHand, Hand cpuHand) { // use to code player turn
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
 
 		// prints the player's hand
@@ -596,17 +596,17 @@ public class OverZeroUnderTwo {
 
 		if (gamePile.getTopCard().getValue() == 12 && playerTurn) { // Player plays a plus2 card.
 			// Currently forces user to draw 2 random cards after playing a plus2 card.
-			playerHand.add(gameDeck.getRandomCard());
-			playerHand.add(gameDeck.getRandomCard());
-			System.out.println("You drew 2 cards.");
-			
-			//System.out.println("CPU1 drew 2 cards.");
+			cpuHand.add(gameDeck.getRandomCard());
+			cpuHand.add(gameDeck.getRandomCard());
+			//System.out.println("You drew 2 cards.");
+
+			System.out.println("CPU 1 drew 2 cards.");
 			// Need to skip the CPU's turn after forcing it to draw 2 cards.
 
 		}
 
 		else { // no skip played, switch turns
-			// switch turns and wait 1 second
+				// switch turns and wait 1 second
 			if (gameFlow == 1) { // clockwise
 				playerTurn = false;
 				cpu1Turn = true;
@@ -622,7 +622,7 @@ public class OverZeroUnderTwo {
 		}
 	}
 
-	public static void cpu1Gameplay1CPU(Hand cpuHand) {
+	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand) {
 		// creates a hand of playable cards
 		int playableCount = 0;
 
@@ -699,11 +699,11 @@ public class OverZeroUnderTwo {
 		// Currently, if the CPU plays a plus2 card, only the print statement executes.
 		// Need to add 2 cards to player's hand if CPU plays this card.
 		if (gamePile.getTopCard().getValue() == 12 && cpu1Turn) { // plus2
-			cpuHand.add(gameDeck.getRandomCard());
-			cpuHand.add(gameDeck.getRandomCard());
+			playerHand.add(gameDeck.getRandomCard());
+			playerHand.add(gameDeck.getRandomCard());
 
-			System.out.println("CPU 1 drew 2 cards.");
-			//System.out.println("You drew 2 cards.");
+			//System.out.println("CPU 1 drew 2 cards.");
+			System.out.println("You drew 2 cards.");
 			// Need to skip player's turn after they draw 2 cards.
 
 		}
@@ -741,10 +741,10 @@ public class OverZeroUnderTwo {
 				}
 
 				if (playerTurn && gameComplete == false) {
-					playerGameplay1CPU(input, playerHand);
+					playerGameplay1CPU(input, playerHand, cpu1Hand);
 				} // code for players turn
 				else if (cpu1Turn && gameComplete == false) {
-					cpu1Gameplay1CPU(cpu1Hand);
+					cpu1Gameplay1CPU(cpu1Hand, playerHand);
 				} // code for cpu's turn
 				else {
 				} // catch errors and exceptions
