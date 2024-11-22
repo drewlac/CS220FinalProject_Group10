@@ -595,10 +595,9 @@ public class OverZeroUnderTwo {
 		} // do nothing if skip cpu
 
 		if (gamePile.getTopCard().getValue() == 12 && playerTurn) { // Player plays a plus2 card.
-			// Currently forces user to draw 2 random cards after playing a plus2 card.
+			// Force CPU to draw 2 random cards.
 			cpuHand.add(gameDeck.getRandomCard());
 			cpuHand.add(gameDeck.getRandomCard());
-			//System.out.println("You drew 2 cards.");
 
 			System.out.println("CPU 1 drew 2 cards.");
 			// Need to skip the CPU's turn after forcing it to draw 2 cards.
@@ -696,13 +695,11 @@ public class OverZeroUnderTwo {
 			playerTurn = true;
 		}
 
-		// Currently, if the CPU plays a plus2 card, only the print statement executes.
-		// Need to add 2 cards to player's hand if CPU plays this card.
 		if (gamePile.getTopCard().getValue() == 12 && cpu1Turn) { // plus2
+			// Forces player to draw 2 random cards.
 			playerHand.add(gameDeck.getRandomCard());
 			playerHand.add(gameDeck.getRandomCard());
 
-			//System.out.println("CPU 1 drew 2 cards.");
 			System.out.println("You drew 2 cards.");
 			// Need to skip player's turn after they draw 2 cards.
 
@@ -721,7 +718,8 @@ public class OverZeroUnderTwo {
 		} catch (InterruptedException c) {
 			c.printStackTrace();
 		}
-
+		// Test code to see how many cards CPU has.
+		System.out.println("CPU has " + cpuHand.getSize() + " cards.");
 	} // use to code CPU turn
 
 	public static void singleCPU(Scanner input, Hand playerHand, Hand cpu1Hand) {
