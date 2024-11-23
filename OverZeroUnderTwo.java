@@ -574,7 +574,17 @@ public class OverZeroUnderTwo {
 				playerHand.add(gameDeck.getRandomCard());
 			}
 		}
-
+		
+		// reverse
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1) {
+			gameFlow = 2;
+			System.out.println("The game order was switched to counter-clockwise.");
+		}
+		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2) {
+			gameFlow = 1;
+			System.out.println("The game order was switched to clockwise.");
+		}
+		
 		// ends game if player's hand is empty
 		if (playerHand.getSize() == 0) {
 			gameComplete = true;
@@ -599,10 +609,10 @@ public class OverZeroUnderTwo {
 			cpuHand.add(gameDeck.getRandomCard());
 			cpuHand.add(gameDeck.getRandomCard());
 
-			System.out.println("CPU 1 drew 2 cards.");
-			// Need to skip the CPU's turn after forcing it to draw 2 cards.
-
+			System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
 		}
+		
+		
 
 		else { // no skip played, switch turns
 				// switch turns and wait 1 second
@@ -679,6 +689,16 @@ public class OverZeroUnderTwo {
 			} // end else
 		} // end while
 
+		// reverse
+				if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1) {
+					gameFlow = 2;
+					System.out.println("The game order was switched to counter-clockwise.");
+				}
+				else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2) {
+					gameFlow = 1;
+					System.out.println("The game order was switched to clockwise.");
+				}
+		
 		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
 										// catch a bug
 			gameComplete = true;
@@ -701,9 +721,9 @@ public class OverZeroUnderTwo {
 			playerHand.add(gameDeck.getRandomCard());
 
 			System.out.println("You drew 2 cards.");
-			// Need to skip player's turn after they draw 2 cards.
-
 		}
+		
+		
 
 		else { // no skip played, switch turns
 			// cpu ends turn, happens regardless. Switches turn and waits 1 second
