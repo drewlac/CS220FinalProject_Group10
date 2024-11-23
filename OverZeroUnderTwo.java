@@ -574,35 +574,35 @@ public class OverZeroUnderTwo {
 				playerHand.add(gameDeck.getRandomCard());
 			}
 		}
-		
+
 		// reverse
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0) {
 			gameFlow = 2;
 			System.out.println("The game order was switched to counter-clockwise.");
-		}
-		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
+		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
 			gameFlow = 1;
 			System.out.println("The game order was switched to clockwise.");
 		}
-		
+
 		// Wild card
 		if (gamePile.getTopCard().getValue() == 13 && matches > 0) {
-			//Scanner newInput = new Scanner(System.in); // initializing scanner object
+			String colorChoice = "";
 			System.out.println("Enter a card color: ");
-			String colorChoice = input.nextLine().strip();
-			if(colorChoice.equalsIgnoreCase("red")) {
-				//gamePile.getTopCard().setColor(colorChoice);
+			colorChoice = input.nextLine().strip();
+			if (colorChoice.equalsIgnoreCase("red")) {
+				gamePile.getTopCard().setColor(colorChoice);
+			} else if (colorChoice.equalsIgnoreCase("green")) {
+				gamePile.getTopCard().setColor(colorChoice);
+			} else if (colorChoice.equalsIgnoreCase("yellow")) {
+				gamePile.getTopCard().setColor(colorChoice);
+			} else if (colorChoice.equalsIgnoreCase("blue")) {
+				gamePile.getTopCard().setColor(colorChoice);
+			} else {
+				System.out.println("Enter a valid card color (red, green, yellow, or blue): ");
+				colorChoice = input.nextLine().strip();
 			}
-			else if (colorChoice.equalsIgnoreCase("green")) {
-				
-			}
-			else if (colorChoice.equalsIgnoreCase("yellow")) {
-				
-			}
-			else if (colorChoice.equalsIgnoreCase("blue")) {
-	
-			})
 		}
+
 		// ends game if player's hand is empty
 		if (playerHand.getSize() == 0) {
 			gameComplete = true;
@@ -629,8 +629,6 @@ public class OverZeroUnderTwo {
 
 			System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
 		}
-		
-		
 
 		else { // no skip played, switch turns
 				// switch turns and wait 1 second
