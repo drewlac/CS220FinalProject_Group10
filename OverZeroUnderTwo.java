@@ -576,11 +576,11 @@ public class OverZeroUnderTwo {
 		}
 		
 		// reverse
-		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1) {
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0) {
 			gameFlow = 2;
 			System.out.println("The game order was switched to counter-clockwise.");
 		}
-		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2) {
+		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
 			gameFlow = 1;
 			System.out.println("The game order was switched to clockwise.");
 		}
@@ -690,11 +690,11 @@ public class OverZeroUnderTwo {
 		} // end while
 
 		// reverse
-				if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1) {
+				if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
 					gameFlow = 2;
 					System.out.println("The game order was switched to counter-clockwise.");
 				}
-				else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2) {
+				else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
 					gameFlow = 1;
 					System.out.println("The game order was switched to clockwise.");
 				}
@@ -720,7 +720,7 @@ public class OverZeroUnderTwo {
 			playerHand.add(gameDeck.getRandomCard());
 			playerHand.add(gameDeck.getRandomCard());
 
-			System.out.println("You drew 2 cards.");
+			System.out.println("You drew 2 cards and your turn was skipped.");
 		}
 		
 		
