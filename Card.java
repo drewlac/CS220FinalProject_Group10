@@ -6,7 +6,7 @@ public class Card implements Comparable<Card> {
 
 	private final int[] valueArray = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }; // 0-9
 	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow", "Wild" };
-	private final String[] specialtyCardArray = { "Skip", "Reverse", "PlusTwo", "Card", "PlusFour" };
+	private final String[] specialtyCardArray = { "Skip", "Reverse", "Plus Two", "Card", "Plus Four Card" };
 
 	public Card() {
 		value = 0;
@@ -51,9 +51,9 @@ public class Card implements Comparable<Card> {
 		} else if (value == 12) {
 			return color + " " + specialtyCardArray[2];
 		} else if (value == 13) {
-			return color + " " + specialtyCardArray[3];
+			return colorArray[4] + " " + specialtyCardArray[3];
 		} else if (value == 14) {
-			return color + " " + specialtyCardArray[4];
+			return colorArray[4] + " " + specialtyCardArray[4];
 		} else {
 			return color + " " + value;
 		}
