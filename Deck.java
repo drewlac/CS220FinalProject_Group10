@@ -10,7 +10,7 @@ public class Deck extends Cards{
 	private int deckCount;
 
 	public Deck() { // automatically creates a default deck with standard cards
-		for (int j = 0; j <= 4; j++) { // j iterates between integer 0 through 4, including 4,
+		for (int j = 0; j <= 3; j++) { // j iterates between integer 0 through 3, including 3,
 			// to represent color.
 			for (int i = 0; i <= 14; i++) { // i iterates between integers 0 through 14, including 14.
 
@@ -28,7 +28,7 @@ public class Deck extends Cards{
 					deck1.add(newCard(i, colorArray[j]));
 				}
 				// If i is a WILD card, only add four of each.
-				else if (i >= 13 || i <= 14) {
+				else if (i >= 13 && i <= 14) {
 					deck1.add(newCard(i, colorArray[4]));
 				}
 				// If i is a 0 card, only add one 0 card per color.
@@ -134,8 +134,8 @@ public class Deck extends Cards{
 	}
 
 	public void reshuffle() {
-		for (int j = 0; j <= 4; j++) { // j iterates between integer 0 through 3, including 3, to represent color.
-			for (int i = 0; i <= 14; i++) { // i iterates between integers 0 through 9, including 9.
+		for (int j = 0; j <= 3; j++) { // j iterates between integer 0 through 3, including 3, to represent color.
+			for (int i = 0; i <= 14; i++) { // i iterates between integers 0 through 14, including 14.
 
 				if (i != 0) { // If the card value is not 0, ensure that there are two of each number card for
 								// each color.

@@ -6,7 +6,7 @@ public class Card implements Comparable<Card> {
 
 	private final int[] valueArray = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }; // 0-9
 	private final String[] colorArray = { "Red", "Blue", "Green", "Yellow", "Wild" };
-	private final String[] specialtyCardArray = { "Skip", "Reverse", "Plus Two", "Card", "Plus Four Card" };
+	private final String[] specialtyCardArray = { "Skip", "Reverse", "Plus Two", "Card", "Plus Four" };
 
 	public Card() {
 		value = 0;

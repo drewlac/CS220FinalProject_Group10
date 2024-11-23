@@ -585,6 +585,24 @@ public class OverZeroUnderTwo {
 			System.out.println("The game order was switched to clockwise.");
 		}
 		
+		// Wild card
+		if (gamePile.getTopCard().getValue() == 13 && matches > 0) {
+			//Scanner newInput = new Scanner(System.in); // initializing scanner object
+			System.out.println("Enter a card color: ");
+			String colorChoice = input.nextLine().strip();
+			if(colorChoice.equalsIgnoreCase("red")) {
+				//gamePile.getTopCard().setColor(colorChoice);
+			}
+			else if (colorChoice.equalsIgnoreCase("green")) {
+				
+			}
+			else if (colorChoice.equalsIgnoreCase("yellow")) {
+				
+			}
+			else if (colorChoice.equalsIgnoreCase("blue")) {
+	
+			})
+		}
 		// ends game if player's hand is empty
 		if (playerHand.getSize() == 0) {
 			gameComplete = true;
@@ -690,15 +708,14 @@ public class OverZeroUnderTwo {
 		} // end while
 
 		// reverse
-				if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
-					gameFlow = 2;
-					System.out.println("The game order was switched to counter-clockwise.");
-				}
-				else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
-					gameFlow = 1;
-					System.out.println("The game order was switched to clockwise.");
-				}
-		
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
+			gameFlow = 2;
+			System.out.println("The game order was switched to counter-clockwise.");
+		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
+			gameFlow = 1;
+			System.out.println("The game order was switched to clockwise.");
+		}
+
 		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
 										// catch a bug
 			gameComplete = true;
@@ -722,11 +739,9 @@ public class OverZeroUnderTwo {
 
 			System.out.println("You drew 2 cards and your turn was skipped.");
 		}
-		
-		
 
 		else { // no skip played, switch turns
-			// cpu ends turn, happens regardless. Switches turn and waits 1 second
+				// cpu ends turn, happens regardless. Switches turn and waits 1 second
 			if (gameFlow == 1) { // clockwise
 				cpu1Turn = false;
 				playerTurn = true;
