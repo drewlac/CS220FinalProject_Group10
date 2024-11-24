@@ -67,9 +67,8 @@ public class Card implements Comparable<Card> {
 		} else if (color == c.getColor()) {
 			returnBool = true;
 			// If the Card is a Wild card, it matches all other colors.
-		} else if (color.equalsIgnoreCase("Wild") || c.getValue() == 13 || c.getValue() == 14) {
+		} else if (c.getValue() == 13 || c.getValue() == 14 || c.getColor().equalsIgnoreCase("Wild")) {
 			returnBool = true;
-
 		}
 		return returnBool;
 	}

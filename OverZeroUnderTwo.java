@@ -586,20 +586,37 @@ public class OverZeroUnderTwo {
 
 		// Wild card
 		if (gamePile.getTopCard().getValue() == 13 && matches > 0) {
-			String colorChoice = "";
+			gamePile.getTopCard().setColor("Wild");
+			String colorChoice = gamePile.getTopCard().getColor();
+			int topCardNum = gamePile.getTopCard().getValue();
 			System.out.println("Enter a card color: ");
-			colorChoice = input.nextLine().strip();
-			if (colorChoice.equalsIgnoreCase("red")) {
+			colorChoice = input.next().strip();
+			if (colorChoice.equalsIgnoreCase("Red")) {
 				gamePile.getTopCard().setColor(colorChoice);
-			} else if (colorChoice.equalsIgnoreCase("green")) {
+				gamePile.getTopCard().setValue(topCardNum);
+			} else if (colorChoice.equalsIgnoreCase("Green")) {
 				gamePile.getTopCard().setColor(colorChoice);
-			} else if (colorChoice.equalsIgnoreCase("yellow")) {
+				gamePile.getTopCard().setValue(topCardNum);
+			} else if (colorChoice.equalsIgnoreCase("Yellow")) {
 				gamePile.getTopCard().setColor(colorChoice);
-			} else if (colorChoice.equalsIgnoreCase("blue")) {
+				gamePile.getTopCard().setValue(topCardNum);
+			} else if (colorChoice.equalsIgnoreCase("Blue")) {
 				gamePile.getTopCard().setColor(colorChoice);
+				gamePile.getTopCard().setValue(topCardNum);
 			} else {
-				System.out.println("Enter a valid card color (red, green, yellow, or blue): ");
-				colorChoice = input.nextLine().strip();
+				System.out.print("\nEnter a valid card color (red, green, yellow, or blue): ");
+				colorChoice = input.next().strip();
+				if (colorChoice.equalsIgnoreCase("red") || colorChoice.equalsIgnoreCase("green")
+						|| colorChoice.equalsIgnoreCase("yellow") || colorChoice.equalsIgnoreCase("blue")) {
+					gamePile.getTopCard().setColor(colorChoice);
+					gamePile.getTopCard().setValue(topCardNum);
+				}
+				else {
+					System.out.print("\nInvalid color entry. Please enter red, green, yellow, or blue: ");
+					colorChoice = input.next().strip();
+					gamePile.getTopCard().setColor(colorChoice);
+					gamePile.getTopCard().setValue(topCardNum);
+				}
 			}
 		}
 
