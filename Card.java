@@ -67,7 +67,7 @@ public class Card implements Comparable<Card> {
 	public boolean match(Card c) {
 		boolean returnBool = false;
 		// If the Card is a Wild card, it matches all other colors.
-		if (value == 13 || value == 14) {
+		if (this.getValue() == 13 || this.getValue() == 14) {
 			return true;
 		} else if (value == c.getValue()) {
 			returnBool = true;
