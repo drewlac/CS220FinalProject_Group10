@@ -597,35 +597,42 @@ public class OverZeroUnderTwo {
 					if (colorChoice == 1) {
 						System.out.println("You played a Red Wild card.");
 						gamePile.addCard(new Card("Red"));
+						break;
 					} else if (colorChoice == 2) {
 						System.out.println("You played a Blue Wild card.");
 						gamePile.addCard(new Card("Blue"));
+						break;
 					} else if (colorChoice == 3) {
 						System.out.println("You played a Green Wild card.");
 						gamePile.addCard(new Card("Green"));
+						break;
 					} else if (colorChoice == 4) {
 						System.out.println("You played a Yellow Wild card.");
 						gamePile.addCard(new Card("Yellow"));
+						break;
 					} else {
 						System.out.print("\nEnter a valid card number (1-4): ");
 						colorChoice = input.nextInt();
 						if (colorChoice == 1) {
 							System.out.println("You played a Red Wild card.");
 							gamePile.addCard(new Card("Red"));
+							break;
 						} else if (colorChoice == 2) {
 							System.out.println("You played a Blue Wild card.");
 							gamePile.addCard(new Card("Blue"));
+							break;
 						} else if (colorChoice == 3) {
 							System.out.println("You played a Green Wild card.");
 							gamePile.addCard(new Card("Green"));
+							break;
 						} else if (colorChoice == 4) {
 							System.out.println("You played a Yellow Wild card.");
 							gamePile.addCard(new Card("Yellow"));
+							break;
 						}
 					} // End Else
 				} catch (InputMismatchException e) {
 					System.out.print("\nAnswer must be an integer between 1 and 4!\n");
-					continue;
 				} // end catch
 			} // End Wild while
 		} // End if
