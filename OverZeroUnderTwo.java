@@ -587,26 +587,12 @@ public class OverZeroUnderTwo {
 
 		// Wild card
 		if (gamePile.getTopCard().getValue() == 13 && matches > 0) {
-			try {
-				int colorChoice = 0;
-				System.out.println("1: Red\n2: Blue\n3: Green\n4: Yellow");
-				System.out.print("\nEnter a card number (1-4): ");
-				colorChoice = input.nextInt();
-				if (colorChoice == 1) {
-					System.out.println("You played a Red Wild card.");
-					gamePile.addCard(new Card("Red"));
-
-				} else if (colorChoice == 2) {
-					System.out.println("You played a Blue Wild card.");
-					gamePile.addCard(new Card("Blue"));
-				} else if (colorChoice == 3) {
-					System.out.println("You played a Green Wild card.");
-					gamePile.addCard(new Card("Green"));
-				} else if (colorChoice == 4) {
-					System.out.println("You played a Yellow Wild card.");
-					gamePile.addCard(new Card("Yellow"));
-				} else {
-					System.out.print("\nEnter a valid card number (1-4): ");
+			while (true) {
+				try {
+					int colorChoice = 0;
+					System.out.println("1: Red\n2: Blue\n3: Green\n4: Yellow");
+					System.out.print("\nEnter a card number (1-4): ");
+					input.nextLine();
 					colorChoice = input.nextInt();
 					if (colorChoice == 1) {
 						System.out.println("You played a Red Wild card.");
@@ -620,12 +606,29 @@ public class OverZeroUnderTwo {
 					} else if (colorChoice == 4) {
 						System.out.println("You played a Yellow Wild card.");
 						gamePile.addCard(new Card("Yellow"));
-					}
-				} // End Else
-			} catch (InputMismatchException e) {
-				System.out.println("Answer must be an integer between 1 and 4!\n");
-			} // end catch
-		} // End Wild if
+					} else {
+						System.out.print("\nEnter a valid card number (1-4): ");
+						colorChoice = input.nextInt();
+						if (colorChoice == 1) {
+							System.out.println("You played a Red Wild card.");
+							gamePile.addCard(new Card("Red"));
+						} else if (colorChoice == 2) {
+							System.out.println("You played a Blue Wild card.");
+							gamePile.addCard(new Card("Blue"));
+						} else if (colorChoice == 3) {
+							System.out.println("You played a Green Wild card.");
+							gamePile.addCard(new Card("Green"));
+						} else if (colorChoice == 4) {
+							System.out.println("You played a Yellow Wild card.");
+							gamePile.addCard(new Card("Yellow"));
+						}
+					} // End Else
+				} catch (InputMismatchException e) {
+					System.out.print("\nAnswer must be an integer between 1 and 4!\n");
+					continue;
+				} // end catch
+			} // End Wild while
+		} // End if
 
 		// ends game if player's hand is empty
 		if (playerHand.getSize() == 0) {
@@ -647,7 +650,8 @@ public class OverZeroUnderTwo {
 		} // do nothing if skip cpu
 
 		else if (gamePile.getTopCard().getValue() == 12 && playerTurn && matches > 0) { // Player plays a plus2 card.
-			// Force CPU to draw 2 random cards.
+																						// Force CPU to draw 2 random
+																						// cards.
 			cpuHand.add(gameDeck.getRandomCard());
 			cpuHand.add(gameDeck.getRandomCard());
 
