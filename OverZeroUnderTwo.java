@@ -24,8 +24,7 @@ public class OverZeroUnderTwo {
 		// generate hands that the methods use
 		Hand playerHand = new Hand();
 		Hand cpu1Hand = new Hand();
-		Hand cpu2Hand = new Hand();
-		Hand cpu3Hand = new Hand();
+		
 
 		// Initializing variables used by game
 		byte gameMode;
@@ -56,6 +55,8 @@ public class OverZeroUnderTwo {
 		if (singleCPU) {
 			singleCPU(input, playerHand, cpu1Hand);
 		} else {
+			Hand cpu2Hand = new Hand();
+			Hand cpu3Hand = new Hand();
 			threeCPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand);
 		}
 
@@ -432,7 +433,7 @@ public class OverZeroUnderTwo {
 		while (true) {
 			try {
 				System.out.print("Type the number of the card you would like to play (Enter F to forfeit): ");
-				choice = input.nextLine();
+				choice = input.next();
 
 				// If the user types d or D, allow the user to draw a card.
 				if (choice.strip().equalsIgnoreCase("F")) {
