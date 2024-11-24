@@ -13,6 +13,10 @@ public class Card implements Comparable<Card> {
 		color = "";
 	}
 
+	public Card (String color){
+		this.color = color;
+	}
+	
 	public Card(int value, String color) {
 		this.value = value;
 		this.color = color;
@@ -43,7 +47,8 @@ public class Card implements Comparable<Card> {
 	}
 
 	public String toString() {
-		// SKIP is card number 10, REVERSE is 11, PLUS2 is 12, WILD is 13, WILDPLUS4 is 14.
+		// SKIP is card number 10, REVERSE is 11, PLUS2 is 12, WILD is 13, WILDPLUS4 is
+		// 14.
 		if (value == 10) {
 			return color + " " + specialtyCardArray[0];
 		} else if (value == 11) {
@@ -61,13 +66,12 @@ public class Card implements Comparable<Card> {
 
 	public boolean match(Card c) {
 		boolean returnBool = false;
-
-		if (value == c.getValue()) {
+		// If the Card is a Wild card, it matches all other colors.
+		if (value == 13 || value == 14) {
+			return true;
+		} else if (value == c.getValue()) {
 			returnBool = true;
 		} else if (color == c.getColor()) {
-			returnBool = true;
-			// If the Card is a Wild card, it matches all other colors.
-		} else if (c.getValue() == 13 || c.getValue() == 14 || c.getColor().equalsIgnoreCase("Wild")) {
 			returnBool = true;
 		}
 		return returnBool;

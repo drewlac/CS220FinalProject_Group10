@@ -1,5 +1,6 @@
 
 //import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -586,39 +587,45 @@ public class OverZeroUnderTwo {
 
 		// Wild card
 		if (gamePile.getTopCard().getValue() == 13 && matches > 0) {
-			gamePile.getTopCard().setColor("Wild");
-			String colorChoice = gamePile.getTopCard().getColor();
-			int topCardNum = gamePile.getTopCard().getValue();
-			System.out.println("Enter a card color: ");
-			colorChoice = input.next().strip();
-			if (colorChoice.equalsIgnoreCase("Red")) {
-				gamePile.getTopCard().setColor(colorChoice);
-				gamePile.getTopCard().setValue(topCardNum);
-			} else if (colorChoice.equalsIgnoreCase("Green")) {
-				gamePile.getTopCard().setColor(colorChoice);
-				gamePile.getTopCard().setValue(topCardNum);
-			} else if (colorChoice.equalsIgnoreCase("Yellow")) {
-				gamePile.getTopCard().setColor(colorChoice);
-				gamePile.getTopCard().setValue(topCardNum);
-			} else if (colorChoice.equalsIgnoreCase("Blue")) {
-				gamePile.getTopCard().setColor(colorChoice);
-				gamePile.getTopCard().setValue(topCardNum);
-			} else {
-				System.out.print("\nEnter a valid card color (red, green, yellow, or blue): ");
-				colorChoice = input.next().strip();
-				if (colorChoice.equalsIgnoreCase("red") || colorChoice.equalsIgnoreCase("green")
-						|| colorChoice.equalsIgnoreCase("yellow") || colorChoice.equalsIgnoreCase("blue")) {
-					gamePile.getTopCard().setColor(colorChoice);
-					gamePile.getTopCard().setValue(topCardNum);
-				}
-				else {
-					System.out.print("\nInvalid color entry. Please enter red, green, yellow, or blue: ");
-					colorChoice = input.next().strip();
-					gamePile.getTopCard().setColor(colorChoice);
-					gamePile.getTopCard().setValue(topCardNum);
-				}
-			}
-		}
+			try {
+				int colorChoice = 0;
+				System.out.println("1: Red\n2: Blue\n3: Green\n4: Yellow");
+				System.out.print("\nEnter a card number (1-4): ");
+				colorChoice = input.nextInt();
+				if (colorChoice == 1) {
+					System.out.println("You played a Red Wild card.");
+					gamePile.addCard(new Card("Red"));
+
+				} else if (colorChoice == 2) {
+					System.out.println("You played a Blue Wild card.");
+					gamePile.addCard(new Card("Blue"));
+				} else if (colorChoice == 3) {
+					System.out.println("You played a Green Wild card.");
+					gamePile.addCard(new Card("Green"));
+				} else if (colorChoice == 4) {
+					System.out.println("You played a Yellow Wild card.");
+					gamePile.addCard(new Card("Yellow"));
+				} else {
+					System.out.print("\nEnter a valid card number (1-4): ");
+					colorChoice = input.nextInt();
+					if (colorChoice == 1) {
+						System.out.println("You played a Red Wild card.");
+						gamePile.addCard(new Card("Red"));
+					} else if (colorChoice == 2) {
+						System.out.println("You played a Blue Wild card.");
+						gamePile.addCard(new Card("Blue"));
+					} else if (colorChoice == 3) {
+						System.out.println("You played a Green Wild card.");
+						gamePile.addCard(new Card("Green"));
+					} else if (colorChoice == 4) {
+						System.out.println("You played a Yellow Wild card.");
+						gamePile.addCard(new Card("Yellow"));
+					}
+				} // End Else
+			} catch (InputMismatchException e) {
+				System.out.println("Answer must be an integer between 1 and 4!\n");
+			} // end catch
+		} // End Wild if
 
 		// ends game if player's hand is empty
 		if (playerHand.getSize() == 0) {
