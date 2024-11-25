@@ -294,6 +294,28 @@ public class OverZeroUnderTwo {
 
 		// adds one random card to discard pile so there is one card to start with
 		gamePile.addCard(gameDeck.getRandomCard());
+		//gamePile.addCard(new Card(14, "Wild"));
+		// If the top card at the beginning of the game is a Wild card, randomly assign
+		// a color value to the top card.
+		if (gamePile.getTopCard().getValue() == 13 || gamePile.getTopCard().getValue() == 14) {
+			int colorChoice = 0;
+			Random rand1 = new Random();
+			colorChoice = rand1.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
+			System.out.println("The first card of the game was a Wild or Wild Plus Four card.");
+			if (colorChoice == 1) {
+				System.out.println("The first card is now a Red Card.\n");
+				gamePile.addCard(new Card("Red"));
+			} else if (colorChoice == 2) {
+				System.out.println("The first card is now a Blue Card.\n");
+				gamePile.addCard(new Card("Blue"));
+			} else if (colorChoice == 3) {
+				System.out.println("The first card is now a Green Card.\n");
+				gamePile.addCard(new Card("Green"));
+			} else if (colorChoice == 4) {
+				System.out.println("The first card is now a Yellow Card.\n");
+				gamePile.addCard(new Card("Yellow"));
+			}
+		}
 
 	} // end method startGame
 
@@ -302,6 +324,7 @@ public class OverZeroUnderTwo {
 	public static void playerGameplay3CPU(Scanner input, Hand playerHand) { // use to code player turn
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
 
+		playerHand.add(new Card(10, "Red"));
 		// prints the player's hand
 		// add function to sort player's hand
 		System.out.println("The player's hand is:");
