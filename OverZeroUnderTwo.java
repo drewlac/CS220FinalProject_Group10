@@ -37,7 +37,8 @@ public class OverZeroUnderTwo {
 		System.out.print("\nStacking Rule (Y/N): ");
 		boolean stacking = getYesNo(input);
 
-
+		//used to pass these values into methods
+		boolean[] partyRules = {sevenZero, bluffing, stacking};
 
 		// Initializing variables used by game
 		byte gameMode;
