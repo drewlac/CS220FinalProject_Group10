@@ -24,10 +24,10 @@ public class OverZeroUnderTwo {
 		// generate hands that the methods use
 		Hand playerHand = new Hand();
 		Hand cpu1Hand = new Hand();
-		
-		//Party Rules Add On
+
+		// Party Rules Add On
 		System.out.println("Optional Party Rules:");
-		
+
 		System.out.print("7-0 Rule (Y/N): ");
 		boolean sevenZero = getYesNo(input);
 
@@ -36,8 +36,6 @@ public class OverZeroUnderTwo {
 
 		System.out.print("\nStacking Rule (Y/N): ");
 		boolean stacking = getYesNo(input);
-
-
 
 		// Initializing variables used by game
 		byte gameMode;
@@ -421,49 +419,39 @@ public class OverZeroUnderTwo {
 			System.out.println("CPU 1 Wins!");
 		}
 
-		
 		// skip code for CLOCKWISE order
 		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 1) {
 			cpu2Turn = false;
 			cpu3Turn = true;
-			//cpu2Turn = true;
+			// cpu2Turn = true;
 			System.out.println("cpu2 turn skipped");
-		}
-		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
+		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
 			cpu3Turn = false;
 			playerTurn = true;
-			//cpu3Turn = true;
+			// cpu3Turn = true;
 			System.out.println("cpu3 turn skipped");
-		}
-		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
+		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
 			playerTurn = false;
 			cpu1Turn = true;
-			//playerTurn = true;
+			// playerTurn = true;
 			System.out.println("your turn skipped");
 		}
-		
-		
+
 		// skip code for COUNTER-CLOCKWISE order
 		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 2) {
 			cpu1Turn = false;
 			playerTurn = true;
 			System.out.println("CPU2 skipped CPU1's turn.");
-		}
-		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
+		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
 			cpu2Turn = false;
-			cpu1Turn = true;	
+			cpu1Turn = true;
 			System.out.println("CPU3 skipped CPU2's turn.");
-		}
-		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
+		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
 			cpu3Turn = false;
 			cpu2Turn = true;
 			System.out.println("You skipped CPU3's turn.");
 		}
-		
-		
-		
-		
-		
+
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
 		if (gameFlow == 1) { // clockwise
 			cpu1Turn = false;
@@ -472,8 +460,7 @@ public class OverZeroUnderTwo {
 			cpu1Turn = false;
 			playerTurn = true;
 		}
-		
-		
+
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException c) {
@@ -591,6 +578,31 @@ public class OverZeroUnderTwo {
 
 		// adds one random card to discard pile so there is one card to start with
 		gamePile.addCard(gameDeck.getRandomCard());
+		
+		//gamePile.addCard(new Card(13, "Wild")); //Tester code to see what happens when
+		// a Wild card is the first card placed on the discard pile in a game.
+		//gamePile.addCard(new Card(14, "Wild"));
+		// If the top card at the beginning of the game is a Wild card, randomly assign
+		// a color value to the top card.
+		if (gamePile.getTopCard().getValue() == 13 || gamePile.getTopCard().getValue() == 14) {
+			int colorChoice = 0;
+			Random rand1 = new Random();
+			colorChoice = rand1.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
+			System.out.println("The first card of the game was a Wild or Wild Plus Four card.");
+			if (colorChoice == 1) {
+				System.out.println("The first card is now a Red Card.\n");
+				gamePile.addCard(new Card("Red"));
+			} else if (colorChoice == 2) {
+				System.out.println("The first card is now a Blue Card.\n");
+				gamePile.addCard(new Card("Blue"));
+			} else if (colorChoice == 3) {
+				System.out.println("The first card is now a Green Card.\n");
+				gamePile.addCard(new Card("Green"));
+			} else if (colorChoice == 4) {
+				System.out.println("The first card is now a Yellow Card.\n");
+				gamePile.addCard(new Card("Yellow"));
+			}
+		}
 	}
 
 	private static void resetGame1CPU(Hand playerHand, Hand cpu1Hand) {
@@ -604,7 +616,7 @@ public class OverZeroUnderTwo {
 
 		// Permanently add a Wild Plus Four to player hand every turn for testing
 		// purposes.
-		playerHand.add(new Card(14, "Wild"));
+		//playerHand.add(new Card(14, "Wild"));
 		// prints the player's hand
 		// add function to sort player's hand
 		System.out.println("The player's hand is:");
@@ -837,7 +849,8 @@ public class OverZeroUnderTwo {
 	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand) {
 		// creates a hand of playable cards
 		int playableCount = 0;
-		//cpuHand.add(new Card(14, "Wild")); // Added tester code so the CPU always has a
+		// cpuHand.add(new Card(14, "Wild")); // Added tester code so the CPU always has
+		// a
 		// Wild Draw Four card.
 		// checks cards in hand to see if they are playable
 		for (int i = 0; i < cpuHand.getSize(); i++) {
@@ -1099,25 +1112,22 @@ public class OverZeroUnderTwo {
 	}
 
 	public static boolean getYesNo(Scanner input) {
-		
-		while(true) {
+
+		while (true) {
 			try {
 				String answer = input.next();
-				if(answer.equalsIgnoreCase("y")||answer.equalsIgnoreCase("yes")){
+				if (answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
 					return true;
-				}
-				else if(answer.equalsIgnoreCase("n")||answer.equalsIgnoreCase("no")) {
+				} else if (answer.equalsIgnoreCase("n") || answer.equalsIgnoreCase("no")) {
 					return false;
+				} else {
+					throw new RuntimeException();
 				}
-				else {
-					throw new RuntimeException();	
-				}
-			}
-			catch(RuntimeException e) {
+			} catch (RuntimeException e) {
 				System.out.print("\nValue must be Y or N, Enter again: ");
 			}
-			
-		}//end while loop
-	}//end getYesNo method	
-	
+
+		} // end while loop
+	}// end getYesNo method
+
 } // end OverZeroUnderTwo Class
