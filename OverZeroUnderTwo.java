@@ -60,7 +60,7 @@ public class OverZeroUnderTwo {
 
 		while (true) { // getting input for gameMode
 			try {
-				gameMode = input.nextByte();
+				gameMode = Byte.parseByte(input.next());
 				if (!(gameMode == 1 || gameMode == 2)) {
 					throw new RuntimeException();
 				}
@@ -488,7 +488,7 @@ public class OverZeroUnderTwo {
 
 		while (true) {
 			try {
-				System.out.print("Type the number of the card you would like to play (Enter F to forfeit): ");
+				System.out.print("\nType the number of the card you would like to play (Enter F to forfeit): ");
 				choice = input.next();
 
 				// If the user types d or D, allow the user to draw a card.
@@ -520,7 +520,7 @@ public class OverZeroUnderTwo {
 
 					else {
 						System.out.println(
-								"Card does not match the color or value of the top card. Please select another card");
+								"\nCard does not match the color or value of the top card. Please select another card!");
 					} // end nested else
 				} // end else
 			} // end try
@@ -1123,8 +1123,9 @@ public class OverZeroUnderTwo {
 	}
 
 	public static boolean getYesNo(Scanner input) {
-
+		byte loopCount = 0;
 		while (true) {
+			loopCount++;
 			try {
 				String answer = input.next();
 				if (answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
@@ -1136,8 +1137,7 @@ public class OverZeroUnderTwo {
 				}
 			} catch (RuntimeException e) {
 				System.out.print("\nValue must be Y or N, Enter again: ");
-			}
-
+			}if(loopCount==10) {return false;}
 		} // end while loop
 	}// end getYesNo method
 
