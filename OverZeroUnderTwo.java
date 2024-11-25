@@ -41,6 +41,11 @@ public class OverZeroUnderTwo {
 
 		//used to pass these values into methods
 		boolean[] partyRules = {sevenZero, bluffing, stacking};
+		/*
+		 * partyRules[0] = sevenZero rule
+		 * partyRules[1] = No bluffing rule
+		 * partyRules[2] = stacking rule
+		 */
 
 
 		// Initializing variables used by game
@@ -70,11 +75,11 @@ public class OverZeroUnderTwo {
 		}
 
 		if (singleCPU) {
-			singleCPU(input, playerHand, cpu1Hand);
+			singleCPU(input, playerHand, cpu1Hand, partyRules);
 		} else {
 			Hand cpu2Hand = new Hand();
 			Hand cpu3Hand = new Hand();
-			threeCPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand);
+			threeCPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand, partyRules);
 		}
 
 		System.out.println("\nGame is over!");
@@ -1026,7 +1031,7 @@ public class OverZeroUnderTwo {
 		System.out.println("CPU has " + cpuHand.getSize() + " cards.");
 	} // use to code CPU turn
 
-	public static void singleCPU(Scanner input, Hand playerHand, Hand cpu1Hand) {
+	public static void singleCPU(Scanner input, Hand playerHand, Hand cpu1Hand, boolean[] partyRules) {
 
 		boolean playAgain = true;
 
@@ -1059,7 +1064,7 @@ public class OverZeroUnderTwo {
 
 	}
 
-	public static void threeCPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand) {
+	public static void threeCPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand, boolean[] partyRules) {
 
 		boolean playAgain = true;
 
