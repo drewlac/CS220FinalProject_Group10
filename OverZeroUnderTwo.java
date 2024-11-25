@@ -24,6 +24,20 @@ public class OverZeroUnderTwo {
 		// generate hands that the methods use
 		Hand playerHand = new Hand();
 		Hand cpu1Hand = new Hand();
+		
+		//Party Rules Add On
+		System.out.println("Optional Party Rules:");
+		
+		System.out.print("7-0 Rule (Y/N): ");
+		boolean sevenZero = getYesNo(input);
+
+		System.out.print("\nNo Bluffing (Y/N): ");
+		boolean bluffing = getYesNo(input);
+
+		System.out.print("\nStacking Rule (Y/N): ");
+		boolean stacking = getYesNo(input);
+
+
 
 		// Initializing variables used by game
 		byte gameMode;
@@ -31,7 +45,7 @@ public class OverZeroUnderTwo {
 		// boolean playAgain = true;
 
 		// For determining game mode
-		System.out.println("Option 1: Play against 1 CPU: ");
+		System.out.println("\nOption 1: Play against 1 CPU: ");
 		System.out.println("Option 2: Play against 3 CPUs:");
 		System.out.print("Please enter 1 or 2 to select your option: ");
 
@@ -1039,4 +1053,26 @@ public class OverZeroUnderTwo {
 		} // end playAgain loop
 	}
 
+	public static boolean getYesNo(Scanner input) {
+		
+		while(true) {
+			try {
+				String answer = input.next();
+				if(answer.equalsIgnoreCase("y")||answer.equalsIgnoreCase("yes")){
+					return true;
+				}
+				else if(answer.equalsIgnoreCase("n")||answer.equalsIgnoreCase("no")) {
+					return false;
+				}
+				else {
+					throw new RuntimeException();	
+				}
+			}
+			catch(RuntimeException e) {
+				System.out.print("\nValue must be Y or N, Enter again: ");
+			}
+			
+		}//end while loop
+	}//end getYesNo method	
+	
 } // end OverZeroUnderTwo Class
