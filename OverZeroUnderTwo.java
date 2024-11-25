@@ -37,16 +37,12 @@ public class OverZeroUnderTwo {
 		System.out.print("\nStacking Rule (Y/N): ");
 		boolean stacking = getYesNo(input);
 
-
-
-		//used to pass these values into methods
-		boolean[] partyRules = {sevenZero, bluffing, stacking};
+		// used to pass these values into methods
+		boolean[] partyRules = { sevenZero, bluffing, stacking };
 		/*
-		 * partyRules[0] = sevenZero rule
-		 * partyRules[1] = No bluffing rule
-		 * partyRules[2] = stacking rule
+		 * partyRules[0] = sevenZero rule partyRules[1] = No bluffing rule partyRules[2]
+		 * = stacking rule
 		 */
-
 
 		// Initializing variables used by game
 		byte gameMode;
@@ -86,502 +82,6 @@ public class OverZeroUnderTwo {
 		input.close();
 	} // end main method
 
-	private static void cpu3Gameplay(Hand cpuHand) {
-		// creates a hand of playable cards
-		int playableCount = 0;
-
-		// checks cards in hand to see if they are playable
-		for (int i = 0; i < cpuHand.getSize(); i++) {
-			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
-				// adds cards to the new hand
-				playableCount++;
-			}
-		}
-
-		// System.out.println("Playable Count: " + playableCount); //used for
-		// troubleshooting
-
-		boolean cardPlayed = false;
-		Random random = new Random();
-		double coinflip;
-
-		while (true) {
-			if (cpuHand.getSize() == 0) { // if CPU has no cards, end game
-				gameComplete = true;
-				System.out.println("CPU 3 Wins!");
-				break;
-			} // end if
-
-			// if the list is 0 cpu draws a card and alerts player
-			else if (playableCount <= 0) {
-				cpuHand.add(gameDeck.getRandomCard());
-				System.out.println("CPU 3 drew a card");
-				break;
-			} // end else if
-
-			else {
-				// cpu flips a coin to see if they play each playable card
-				for (int i = 0; i < cpuHand.getSize(); i++) {
-					coinflip = random.nextDouble();
-					// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
-					if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
-																							// coinflip is good
-						gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
-						System.out.println("CPU 3 played: " + cpuHand.getCard(i)); // say which card cpu played
-						cpuHand.remove(cpuHand.getCard(i));// remove it from cpuHand
-						if (cpuHand.getSize() == 1) {
-							System.out.println("CPU 3: Uno!");
-						} // print out uno if only one card left
-						cardPlayed = true;
-						break;
-					} // end if
-				} // end for loop
-
-				if (cardPlayed) {
-					break;
-				}
-
-			} // end else
-		} // end while
-
-		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
-										// catch a bug
-			gameComplete = true;
-			System.out.println("CPU 3 Wins!");
-		}
-
-		// cpu ends turn, happens regardless. Switches turn and waits 1 second
-		if (gameFlow == 1) { // clockwise
-			cpu3Turn = false;
-			playerTurn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu3Turn = false;
-			cpu2Turn = true;
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException c) {
-			c.printStackTrace();
-		}
-
-	}
-
-	private static void cpu2Gameplay(Hand cpuHand) {
-		// creates a hand of playable cards
-		int playableCount = 0;
-
-		// checks cards in hand to see if they are playable
-		for (int i = 0; i < cpuHand.getSize(); i++) {
-			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
-				// adds cards to the new hand
-				playableCount++;
-			}
-		}
-
-		// System.out.println("Playable Count: " + playableCount); //used for
-		// troubleshooting
-
-		boolean cardPlayed = false;
-		Random random = new Random();
-		double coinflip;
-
-		while (true) {
-			if (cpuHand.getSize() == 0) { // if CPU has no cards, end game
-				gameComplete = true;
-				System.out.println("CPU 2 Wins!");
-				break;
-			} // end if
-
-			// if the list is 0 cpu draws a card and alerts player
-			else if (playableCount <= 0) {
-				cpuHand.add(gameDeck.getRandomCard());
-				System.out.println("CPU 2 drew a card");
-				break;
-			} // end else if
-
-			else {
-				// cpu flips a coin to see if they play each playable card
-				for (int i = 0; i < cpuHand.getSize(); i++) {
-					coinflip = random.nextDouble();
-					// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
-					if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
-																							// coinflip is good
-						gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
-						System.out.println("CPU 2 played: " + cpuHand.getCard(i)); // say which card cpu played
-						cpuHand.remove(cpuHand.getCard(i));// remove it from cpuHand
-						if (cpuHand.getSize() == 1) {
-							System.out.println("CPU 2: Uno!");
-						} // print out uno if only one card left
-						cardPlayed = true;
-						break;
-					} // end if
-				} // end for loop
-
-				if (cardPlayed) {
-					break;
-				}
-
-			} // end else
-		} // end while
-
-		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
-										// catch a bug
-			gameComplete = true;
-			System.out.println("CPU 2 Wins!");
-		}
-
-		// cpu ends turn, happens regardless. Switches turn and waits 1 second
-		if (gameFlow == 1) { // clockwise
-			cpu2Turn = false;
-			cpu3Turn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu2Turn = false;
-			cpu1Turn = true;
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException c) {
-			c.printStackTrace();
-		}
-
-	}// end CPUGameplay2
-
-	// startGame() method begins the game and determine which player goes first.
-	// The current implementation mimics a coin flip to determine the turn order.
-	public static void startGame3CPU(Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand) {
-		System.out.println("\nGame is starting");
-		Random rand = new Random();
-		int coinflip = 0;
-		coinflip = rand.nextInt(4) + 1;
-
-		if (coinflip == 1) {
-			playerTurn = true;
-			System.out.println("Player turn is first!");
-		} else if (coinflip == 2) {
-			cpu1Turn = true;
-			System.out.println("CPU 1 turn is first!");
-		} else if (coinflip == 3) {
-			cpu2Turn = true;
-			System.out.println("CPU 2 turn is first!");
-		} else if (coinflip == 4) {
-			cpu3Turn = true;
-			System.out.println("CPU 3 turn is first!");
-		} else {
-			System.out.println("Some sorta error, must have got the coinflip wrong :( ");
-		} // end else
-
-		resetGame3CPU(playerHand, cpu1Hand, cpu2Hand, cpu3Hand);// resets game since it can be played several times
-
-		// adds seven random cards to playerHand
-		for (int i = 0; i < 7; i++) {
-			playerHand.add(gameDeck.getRandomCard());
-		}
-
-		// adds seven random cards to cpu1Hand
-		for (int i = 0; i < 7; i++) {
-			cpu1Hand.add(gameDeck.getRandomCard());
-		}
-
-		// adds seven random cards to cpu2Hand
-		for (int i = 0; i < 7; i++) {
-			cpu2Hand.add(gameDeck.getRandomCard());
-		}
-
-		// adds seven random cards to cpu3Hand
-		for (int i = 0; i < 7; i++) {
-			cpu3Hand.add(gameDeck.getRandomCard());
-		}
-
-		// adds one random card to discard pile so there is one card to start with
-		gamePile.addCard(gameDeck.getRandomCard());
-		//gamePile.addCard(new Card(14, "Wild"));
-		// If the top card at the beginning of the game is a Wild card, randomly assign
-		// a color value to the top card.
-		if (gamePile.getTopCard().getValue() == 13 || gamePile.getTopCard().getValue() == 14) {
-			int colorChoice = 0;
-			Random rand1 = new Random();
-			colorChoice = rand1.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
-			System.out.println("The first card of the game was a Wild or Wild Plus Four card.");
-			if (colorChoice == 1) {
-				System.out.println("The first card is now a Red Card.\n");
-				gamePile.addCard(new Card("Red"));
-			} else if (colorChoice == 2) {
-				System.out.println("The first card is now a Blue Card.\n");
-				gamePile.addCard(new Card("Blue"));
-			} else if (colorChoice == 3) {
-				System.out.println("The first card is now a Green Card.\n");
-				gamePile.addCard(new Card("Green"));
-			} else if (colorChoice == 4) {
-				System.out.println("The first card is now a Yellow Card.\n");
-				gamePile.addCard(new Card("Yellow"));
-			}
-		}
-
-	} // end method startGame
-
-	// class Card has a method match() which checks if another card has equal value
-	// or color
-	public static void playerGameplay3CPU(Scanner input, Hand playerHand) { // use to code player turn
-		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
-
-		playerHand.add(new Card(10, "Red"));
-		// prints the player's hand
-		// add function to sort player's hand
-		System.out.println("The player's hand is:");
-		playerHand.sort();
-		playerHand.printHand();
-
-		System.out.println("\nThe player has " + playerHand.getSize() + " cards. ");
-
-		// checking if any cards match
-		int matches = 0;
-		for (int i = 0; i < playerHand.getSize(); i++) {
-			if (playerHand.getCard(i).match(gamePile.getTopCard())) {
-				matches++;
-			}
-		} // if there are matches, getting user input
-		if (matches > 0) {
-			userInput(input, playerHand);
-		} else { // if there are no matches, drawing one card
-			System.out.println("You have no matches so you drew 1 card");
-			playerHand.add(gameDeck.getRandomCard());
-		}
-
-		if (playerHand.getSize() == 1) {
-			System.out.print("Any additional information? ");
-			String answer = input.next();
-			if (answer.strip().equalsIgnoreCase("uno")) {
-				System.out.println("You successfully called uno!");
-			} else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
-				System.out.println("You forgot to call uno, drawing another card!");
-				playerHand.add(gameDeck.getRandomCard());
-			}
-		}
-
-		// ends game if player's hand is empty
-		if (playerHand.getSize() == 0) {
-			gameComplete = true;
-			System.out.println("You win!");
-		}
-
-		boolean skipped = false;
-		if (gamePile.getTopCard().getValue() == 10)
-			skipped = true;
-
-		// switch turns and wait 1 second
-		if (gameFlow == 1) { // clockwise
-			playerTurn = false;
-			if (skipped) // if skip is played
-				cpu2Turn = true;
-			else // regular gameplay
-				cpu1Turn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			playerTurn = false;
-			if (skipped) // if skip is played
-				cpu2Turn = true;
-			else // regular gameplay
-				cpu3Turn = true;
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException c) {
-			c.printStackTrace();
-		}
-	}
-
-	public static void cpu1Gameplay3CPU(Hand cpuHand) {
-		// creates a hand of playable cards
-		int playableCount = 0;
-
-		// checks cards in hand to see if they are playable
-		for (int i = 0; i < cpuHand.getSize(); i++) {
-			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
-				// adds cards to the new hand
-				playableCount++;
-			}
-		}
-
-		// System.out.println("Playable Count: " + playableCount); //used for
-		// troubleshooting
-
-		boolean cardPlayed = false;
-		Random random = new Random();
-		double coinflip;
-
-		while (true) {
-			if (cpuHand.getSize() == 0) { // if CPU has no cards, end game
-				gameComplete = true;
-				System.out.println("CPU 1 Wins!");
-				break;
-			} // end if
-
-			// if the list is 0 cpu draws a card and alerts player
-			else if (playableCount <= 0) {
-				cpuHand.add(gameDeck.getRandomCard());
-				System.out.println("CPU 1 drew a card");
-				break;
-			} // end else if
-
-			else {
-				// cpu flips a coin to see if they play each playable card
-				for (int i = 0; i < cpuHand.getSize(); i++) {
-					coinflip = random.nextDouble();
-					// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
-					if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
-																							// coinflip is good
-						gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
-						System.out.println("CPU 1 played: " + cpuHand.getCard(i)); // say which card cpu played
-						cpuHand.remove(cpuHand.getCard(i));// remove it from cpuHand
-						if (cpuHand.getSize() == 1) {
-							System.out.println("CPU 1: Uno!");
-						} // print out uno if only one card left
-						cardPlayed = true;
-						break;
-					} // end if
-				} // end for loop
-
-				if (cardPlayed) {
-					break;
-				}
-
-			} // end else
-		} // end while
-
-		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
-										// catch a bug
-			gameComplete = true;
-			System.out.println("CPU 1 Wins!");
-		}
-
-		// skip code for CLOCKWISE order
-		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 1) {
-			cpu2Turn = false;
-			cpu3Turn = true;
-			// cpu2Turn = true;
-			System.out.println("cpu2 turn skipped");
-		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
-			cpu3Turn = false;
-			playerTurn = true;
-			// cpu3Turn = true;
-			System.out.println("cpu3 turn skipped");
-		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
-			playerTurn = false;
-			cpu1Turn = true;
-			// playerTurn = true;
-			System.out.println("your turn skipped");
-		}
-
-		// skip code for COUNTER-CLOCKWISE order
-		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 2) {
-			cpu1Turn = false;
-			playerTurn = true;
-			System.out.println("CPU2 skipped CPU1's turn.");
-		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
-			cpu2Turn = false;
-			cpu1Turn = true;
-			System.out.println("CPU3 skipped CPU2's turn.");
-		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
-			cpu3Turn = false;
-			cpu2Turn = true;
-			System.out.println("You skipped CPU3's turn.");
-		}
-
-		// cpu ends turn, happens regardless. Switches turn and waits 1 second
-		if (gameFlow == 1) { // clockwise
-			cpu1Turn = false;
-			cpu2Turn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu1Turn = false;
-			playerTurn = true;
-		}
-
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException c) {
-			c.printStackTrace();
-		}
-
-	} // use to code CPU turn
-
-	private static void userInput(Scanner input, Hand playerHand) {
-
-		// get user input for next int
-		String choice;
-		int selection;
-
-		while (true) {
-			try {
-				System.out.print("\nType the number of the card you would like to play (Enter F to forfeit): ");
-				choice = input.next();
-
-				// If the user types d or D, allow the user to draw a card.
-				if (choice.strip().equalsIgnoreCase("F")) {
-					// Enter code to print that game is complete
-					gameComplete = true;
-					break;
-				} // end if
-
-				// to prevent NumberFormatException
-				else if (choice.isEmpty()) {
-					choice = input.next();
-				}
-
-				// switching input to a string
-				selection = Integer.parseInt(choice);
-
-				// Number must be greater than zero and no greater than the size of the hand
-				if (selection < 0 || selection > playerHand.getSize()) {
-					throw new RuntimeException();
-				} else {
-					if (playerHand.getCard(selection - 1).match(gamePile.getTopCard())) {// if card matches top card
-						// Playing the selected card
-						gamePile.addCard(playerHand.getCard(selection - 1));
-						System.out.println("You played: " + playerHand.getCard(selection - 1));
-						playerHand.remove(playerHand.getCard(selection - 1));
-						break;
-					} // end nested if
-
-					else {
-						System.out.println(
-								"\nCard does not match the color or value of the top card. Please select another card!");
-					} // end nested else
-				} // end else
-			} // end try
-			catch (RuntimeException e) {
-				System.out.println("Answer must be an integer between 1 and your max amount of cards!\n");
-			} // end catch
-		} // end while loop
-
-		// check if card matches
-
-		// valid if user can play card, otherwise print only cards they can play
-
-		// if user can't play a card, make them draw a card.
-
-	} // user inputs
-
-	public static boolean againChecker(Scanner scnr) {
-		System.out.print("\nDo you want to play again? (Y/N): ");
-		String input = scnr.next();
-
-		if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
-			gameComplete = false;
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	public static void resetGame3CPU(Hand playerHand, Hand cpu1Hand, Hand cpuHand2, Hand cpuHand3) {
-
-		playerHand.removeAllCards();
-		cpu1Hand.removeAllCards();
-		cpuHand2.removeAllCards();
-		cpuHand3.removeAllCards();
-		gameDeck.reshuffle();
-	}
-
 	public static void startGame1CPU(Hand playerHand, Hand cpu1Hand) {
 		System.out.println("Game is starting");
 		Random rand = new Random();
@@ -612,10 +112,11 @@ public class OverZeroUnderTwo {
 
 		// adds one random card to discard pile so there is one card to start with
 		gamePile.addCard(gameDeck.getRandomCard());
-		
-		//gamePile.addCard(new Card(13, "Wild")); //Tester code to see what happens when
+
+		// gamePile.addCard(new Card(13, "Wild")); //Tester code to see what happens
+		// when
 		// a Wild card is the first card placed on the discard pile in a game.
-		//gamePile.addCard(new Card(14, "Wild"));
+		// gamePile.addCard(new Card(14, "Wild"));
 		// If the top card at the beginning of the game is a Wild card, randomly assign
 		// a color value to the top card.
 		if (gamePile.getTopCard().getValue() == 13 || gamePile.getTopCard().getValue() == 14) {
@@ -637,20 +138,21 @@ public class OverZeroUnderTwo {
 				gamePile.addCard(new Card("Yellow"));
 			}
 		}
-	}
+	} // End startGame1CPU method.
 
 	private static void resetGame1CPU(Hand playerHand, Hand cpu1Hand) {
 		playerHand.removeAllCards();
 		cpu1Hand.removeAllCards();
 		gameDeck.reshuffle();
-	}
+	} // End resetGame1CPU method.
 
-	public static void playerGameplay1CPU(Scanner input, Hand playerHand, Hand cpuHand) { // use to code player turn
+	// This method is for coding player gameplay in a single-player game.
+	public static void playerGameplay1CPU(Scanner input, Hand playerHand, Hand cpuHand) {
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
 
 		// Permanently add a Wild Plus Four to player hand every turn for testing
 		// purposes.
-		//playerHand.add(new Card(14, "Wild"));
+		// playerHand.add(new Card(14, "Wild"));
 		// prints the player's hand
 		// add function to sort player's hand
 		System.out.println("The player's hand is:");
@@ -878,8 +380,9 @@ public class OverZeroUnderTwo {
 		} catch (InterruptedException c) {
 			c.printStackTrace();
 		}
-	}
+	} // End playerGameplay1CPU method.
 
+	// This method is for coding CPU gameplay in a single-player game.
 	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand) {
 		// creates a hand of playable cards
 		int playableCount = 0;
@@ -1052,8 +555,9 @@ public class OverZeroUnderTwo {
 		}
 		// Test code to see how many cards CPU has.
 		System.out.println("CPU has " + cpuHand.getSize() + " cards.");
-	} // use to code CPU turn
+	} // End cpu1Gameplay1CPU method.
 
+	// A single-player game is played within this singleCPU method.
 	public static void singleCPU(Scanner input, Hand playerHand, Hand cpu1Hand, boolean[] partyRules) {
 
 		boolean playAgain = true;
@@ -1085,9 +589,543 @@ public class OverZeroUnderTwo {
 
 		}
 
-	}
+	} // End singleCPU method.
 
-	public static void threeCPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand, boolean[] partyRules) {
+	// startGame() method begins the game and determines which player goes first.
+	// The current implementation mimics a coin flip to determine the turn order.
+	public static void startGame3CPU(Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand) {
+		System.out.println("\nGame is starting");
+		Random rand = new Random();
+		int coinflip = 0;
+		coinflip = rand.nextInt(4) + 1;
+
+		if (coinflip == 1) {
+			playerTurn = true;
+			System.out.println("Player turn is first!");
+		} else if (coinflip == 2) {
+			cpu1Turn = true;
+			System.out.println("CPU 1 turn is first!");
+		} else if (coinflip == 3) {
+			cpu2Turn = true;
+			System.out.println("CPU 2 turn is first!");
+		} else if (coinflip == 4) {
+			cpu3Turn = true;
+			System.out.println("CPU 3 turn is first!");
+		} else {
+			System.out.println("Some sorta error, must have got the coinflip wrong :( ");
+		} // end else
+
+		resetGame3CPU(playerHand, cpu1Hand, cpu2Hand, cpu3Hand);// resets game since it can be played several times
+
+		// adds seven random cards to playerHand
+		for (int i = 0; i < 7; i++) {
+			playerHand.add(gameDeck.getRandomCard());
+		}
+
+		// adds seven random cards to cpu1Hand
+		for (int i = 0; i < 7; i++) {
+			cpu1Hand.add(gameDeck.getRandomCard());
+		}
+
+		// adds seven random cards to cpu2Hand
+		for (int i = 0; i < 7; i++) {
+			cpu2Hand.add(gameDeck.getRandomCard());
+		}
+
+		// adds seven random cards to cpu3Hand
+		for (int i = 0; i < 7; i++) {
+			cpu3Hand.add(gameDeck.getRandomCard());
+		}
+
+		// adds one random card to discard pile so there is one card to start with
+		gamePile.addCard(gameDeck.getRandomCard());
+		// gamePile.addCard(new Card(14, "Wild")); Tester code that sets the first card
+		// placed on the discard pile as a Wild Plus Four card.
+
+		// If the top card at the beginning of the game is a Wild card, randomly assign
+		// a color value to the top card.
+		if (gamePile.getTopCard().getValue() == 13 || gamePile.getTopCard().getValue() == 14) {
+			int colorChoice = 0;
+			Random rand1 = new Random();
+			colorChoice = rand1.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
+			System.out.println("The first card of the game was a Wild or Wild Plus Four card.");
+			if (colorChoice == 1) {
+				System.out.println("The first card is now a Red Card.\n");
+				gamePile.addCard(new Card("Red"));
+			} else if (colorChoice == 2) {
+				System.out.println("The first card is now a Blue Card.\n");
+				gamePile.addCard(new Card("Blue"));
+			} else if (colorChoice == 3) {
+				System.out.println("The first card is now a Green Card.\n");
+				gamePile.addCard(new Card("Green"));
+			} else if (colorChoice == 4) {
+				System.out.println("The first card is now a Yellow Card.\n");
+				gamePile.addCard(new Card("Yellow"));
+			}
+		}
+
+	} // End startGame3CPU method.
+
+	public static void resetGame3CPU(Hand playerHand, Hand cpu1Hand, Hand cpuHand2, Hand cpuHand3) {
+
+		playerHand.removeAllCards();
+		cpu1Hand.removeAllCards();
+		cpuHand2.removeAllCards();
+		cpuHand3.removeAllCards();
+		gameDeck.reshuffle();
+	} // End resetGame3CPU method.
+
+	// Method for player gameplay in a multiplayer game.
+	public static void playerGameplay3CPU(Scanner input, Hand playerHand) { // use to code player turn
+		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
+
+		// playerHand.add(new Card(10, "Red")); Tester code that gives the player a Red
+		// Skip every turn.
+		// prints the player's hand
+		// add function to sort player's hand
+		System.out.println("The player's hand is:");
+		playerHand.sort();
+		playerHand.printHand();
+
+		System.out.println("\nThe player has " + playerHand.getSize() + " cards. ");
+
+		// checking if any cards match
+		int matches = 0;
+		for (int i = 0; i < playerHand.getSize(); i++) {
+			// Class Card has a method match() which checks if another card has equal value
+			// or color.
+			if (playerHand.getCard(i).match(gamePile.getTopCard())) {
+				matches++;
+			}
+		} // if there are matches, getting user input
+		if (matches > 0) {
+			userInput(input, playerHand);
+		} else { // if there are no matches, drawing one card
+			System.out.println("You have no matches so you drew 1 card");
+			playerHand.add(gameDeck.getRandomCard());
+		}
+
+		if (playerHand.getSize() == 1) {
+			System.out.print("Any additional information? ");
+			// Added this input.nextLine() to clear out newline. This should prevent
+			// infinite print loop.
+			input.nextLine();
+			String answer = input.next();
+			if (answer.strip().equalsIgnoreCase("uno")) {
+				System.out.println("You successfully called uno!");
+			} else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
+				System.out.println("You forgot to call uno, drawing another card!");
+				playerHand.add(gameDeck.getRandomCard());
+			}
+		}
+
+		// ends game if player's hand is empty
+		if (playerHand.getSize() == 0) {
+			gameComplete = true;
+			System.out.println("You win!");
+		}
+
+		boolean skipped = false;
+		if (gamePile.getTopCard().getValue() == 10)
+			skipped = true;
+
+		// switch turns and wait 1 second
+		if (gameFlow == 1) { // clockwise
+			playerTurn = false;
+			if (skipped) // if skip is played
+				cpu2Turn = true;
+			else // regular gameplay
+				cpu1Turn = true;
+		} else if (gameFlow == 2) { // counter clockwise
+			playerTurn = false;
+			if (skipped) // if skip is played
+				cpu2Turn = true;
+			else // regular gameplay
+				cpu3Turn = true;
+		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException c) {
+			c.printStackTrace();
+		}
+	} // End playerGameplay3CPU.
+
+	// Method for CPU 1 in a multiplayer game.
+	public static void cpu1Gameplay3CPU(Hand cpuHand) {
+		// creates a hand of playable cards
+		int playableCount = 0;
+
+		// checks cards in hand to see if they are playable
+		for (int i = 0; i < cpuHand.getSize(); i++) {
+			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
+				// adds cards to the new hand
+				playableCount++;
+			}
+		}
+
+		// System.out.println("Playable Count: " + playableCount); //used for
+		// troubleshooting
+
+		boolean cardPlayed = false;
+		Random random = new Random();
+		double coinflip;
+
+		while (true) {
+			if (cpuHand.getSize() == 0) { // if CPU has no cards, end game
+				gameComplete = true;
+				System.out.println("CPU 1 Wins!");
+				break;
+			} // end if
+
+			// if the list is 0 cpu draws a card and alerts player
+			else if (playableCount <= 0) {
+				cpuHand.add(gameDeck.getRandomCard());
+				System.out.println("CPU 1 drew a card");
+				break;
+			} // end else if
+
+			else {
+				// cpu flips a coin to see if they play each playable card
+				for (int i = 0; i < cpuHand.getSize(); i++) {
+					coinflip = random.nextDouble();
+					// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
+					if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
+																							// coinflip is good
+						gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
+						System.out.println("CPU 1 played: " + cpuHand.getCard(i)); // say which card cpu played
+						cpuHand.remove(cpuHand.getCard(i));// remove it from cpuHand
+						if (cpuHand.getSize() == 1) {
+							System.out.println("CPU 1: Uno!");
+						} // print out uno if only one card left
+						cardPlayed = true;
+						break;
+					} // end if
+				} // end for loop
+
+				if (cardPlayed) {
+					break;
+				}
+
+			} // end else
+		} // end while
+
+		// Wild card functionality.
+		if (gamePile.getTopCard().getValue() == 13 && playableCount > 0) {
+			int colorChoice = 0;
+			Random rand = new Random();
+			colorChoice = rand.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
+
+			// System.out.println("CPU colorChoice is " + colorChoice); Test print statement
+			// to confirm CPU can play only the four valid colors.
+			if (colorChoice == 1) {
+				System.out.println("CPU 1 played a Red Wild Card.");
+				gamePile.addCard(new Card("Red"));
+			} else if (colorChoice == 2) {
+				System.out.println("CPU 1 played a Blue Wild Card.");
+				gamePile.addCard(new Card("Blue"));
+			} else if (colorChoice == 3) {
+				System.out.println("CPU 1 played a Green Wild Card.");
+				gamePile.addCard(new Card("Green"));
+			} else if (colorChoice == 4) {
+				System.out.println("CPU 1 played a Yellow Wild Card.");
+				gamePile.addCard(new Card("Yellow"));
+			}
+		}
+
+		// Reverse card functionality.
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
+			gameFlow = 2;
+			System.out.println("The game order was switched to counter-clockwise.");
+		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
+			gameFlow = 1;
+			System.out.println("The game order was switched to clockwise.");
+		}
+
+		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
+										// catch a bug
+			gameComplete = true;
+			System.out.println("CPU 1 Wins!");
+		}
+
+		// skip code for CLOCKWISE order
+		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 1) {
+			cpu2Turn = false;
+			cpu3Turn = true;
+			// cpu2Turn = true;
+			System.out.println("cpu2 turn skipped");
+		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
+			cpu3Turn = false;
+			playerTurn = true;
+			// cpu3Turn = true;
+			System.out.println("cpu3 turn skipped");
+		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
+			playerTurn = false;
+			cpu1Turn = true;
+			// playerTurn = true;
+			System.out.println("your turn skipped");
+		}
+
+		// skip code for COUNTER-CLOCKWISE order
+		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 2) {
+			cpu1Turn = false;
+			playerTurn = true;
+			System.out.println("CPU2 skipped CPU1's turn.");
+		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
+			cpu2Turn = false;
+			cpu1Turn = true;
+			System.out.println("CPU3 skipped CPU2's turn.");
+		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
+			cpu3Turn = false;
+			cpu2Turn = true;
+			System.out.println("You skipped CPU3's turn.");
+		}
+
+		// cpu ends turn, happens regardless. Switches turn and waits 1 second
+		if (gameFlow == 1) { // clockwise
+			cpu1Turn = false;
+			cpu2Turn = true;
+		} else if (gameFlow == 2) { // counter clockwise
+			cpu1Turn = false;
+			playerTurn = true;
+		}
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException c) {
+			c.printStackTrace();
+		}
+
+	} // End cpu1Gameplay3CPU method.
+
+	// Method for CPU 2 in a multiplayer game.
+	private static void cpu2Gameplay(Hand cpuHand) {
+		// creates a hand of playable cards
+		int playableCount = 0;
+
+		// checks cards in hand to see if they are playable
+		for (int i = 0; i < cpuHand.getSize(); i++) {
+			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
+				// adds cards to the new hand
+				playableCount++;
+			}
+		}
+
+		// System.out.println("Playable Count: " + playableCount); //used for
+		// troubleshooting
+
+		boolean cardPlayed = false;
+		Random random = new Random();
+		double coinflip;
+
+		while (true) {
+			if (cpuHand.getSize() == 0) { // if CPU has no cards, end game
+				gameComplete = true;
+				System.out.println("CPU 2 Wins!");
+				break;
+			} // end if
+
+			// if the list is 0 cpu draws a card and alerts player
+			else if (playableCount <= 0) {
+				cpuHand.add(gameDeck.getRandomCard());
+				System.out.println("CPU 2 drew a card");
+				break;
+			} // end else if
+
+			else {
+				// cpu flips a coin to see if they play each playable card
+				for (int i = 0; i < cpuHand.getSize(); i++) {
+					coinflip = random.nextDouble();
+					// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
+					if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
+																							// coinflip is good
+						gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
+						System.out.println("CPU 2 played: " + cpuHand.getCard(i)); // say which card cpu played
+						cpuHand.remove(cpuHand.getCard(i));// remove it from cpuHand
+						if (cpuHand.getSize() == 1) {
+							System.out.println("CPU 2: Uno!");
+						} // print out uno if only one card left
+						cardPlayed = true;
+						break;
+					} // end if
+				} // end for loop
+
+				if (cardPlayed) {
+					break;
+				}
+
+			} // end else
+		} // end while
+
+		// Wild card functionality.
+		if (gamePile.getTopCard().getValue() == 13 && playableCount > 0) {
+			int colorChoice = 0;
+			Random rand = new Random();
+			colorChoice = rand.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
+
+			// System.out.println("CPU colorChoice is " + colorChoice); Test print statement
+			// to confirm CPU can play only the four valid colors.
+			if (colorChoice == 1) {
+				System.out.println("CPU 1 played a Red Wild Card.");
+				gamePile.addCard(new Card("Red"));
+			} else if (colorChoice == 2) {
+				System.out.println("CPU 1 played a Blue Wild Card.");
+				gamePile.addCard(new Card("Blue"));
+			} else if (colorChoice == 3) {
+				System.out.println("CPU 1 played a Green Wild Card.");
+				gamePile.addCard(new Card("Green"));
+			} else if (colorChoice == 4) {
+				System.out.println("CPU 1 played a Yellow Wild Card.");
+				gamePile.addCard(new Card("Yellow"));
+			}
+		}
+
+		// Reverse card functionality.
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
+			gameFlow = 2;
+			System.out.println("The game order was switched to counter-clockwise.");
+		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
+			gameFlow = 1;
+			System.out.println("The game order was switched to clockwise.");
+		}
+
+		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
+										// catch a bug
+			gameComplete = true;
+			System.out.println("CPU 2 Wins!");
+		}
+
+		// cpu ends turn, happens regardless. Switches turn and waits 1 second
+		if (gameFlow == 1) { // clockwise
+			cpu2Turn = false;
+			cpu3Turn = true;
+		} else if (gameFlow == 2) { // counter clockwise
+			cpu2Turn = false;
+			cpu1Turn = true;
+		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException c) {
+			c.printStackTrace();
+		}
+
+	}// End cpu2Gameplay method.
+
+	// Method for CPU 3 in a multiplayer game.
+	private static void cpu3Gameplay(Hand cpuHand) {
+		// creates a hand of playable cards
+		int playableCount = 0;
+
+		// checks cards in hand to see if they are playable
+		for (int i = 0; i < cpuHand.getSize(); i++) {
+			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
+				// adds cards to the new hand
+				playableCount++;
+			}
+		}
+
+		// System.out.println("Playable Count: " + playableCount); //used for
+		// troubleshooting
+
+		boolean cardPlayed = false;
+		Random random = new Random();
+		double coinflip;
+
+		while (true) {
+			if (cpuHand.getSize() == 0) { // if CPU has no cards, end game
+				gameComplete = true;
+				System.out.println("CPU 3 Wins!");
+				break;
+			} // end if
+
+			// if the list is 0 cpu draws a card and alerts player
+			else if (playableCount <= 0) {
+				cpuHand.add(gameDeck.getRandomCard());
+				System.out.println("CPU 3 drew a card");
+				break;
+			} // end else if
+
+			else {
+				// cpu flips a coin to see if they play each playable card
+				for (int i = 0; i < cpuHand.getSize(); i++) {
+					coinflip = random.nextDouble();
+					// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
+					if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
+																							// coinflip is good
+						gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
+						System.out.println("CPU 3 played: " + cpuHand.getCard(i)); // say which card cpu played
+						cpuHand.remove(cpuHand.getCard(i));// remove it from cpuHand
+						if (cpuHand.getSize() == 1) {
+							System.out.println("CPU 3: Uno!");
+						} // print out uno if only one card left
+						cardPlayed = true;
+						break;
+					} // end if
+				} // end for loop
+
+				if (cardPlayed) {
+					break;
+				}
+
+			} // end else
+		} // end while
+
+		// Wild card functionality.
+		if (gamePile.getTopCard().getValue() == 13 && playableCount > 0) {
+			int colorChoice = 0;
+			Random rand = new Random();
+			colorChoice = rand.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
+
+			// System.out.println("CPU colorChoice is " + colorChoice); Test print statement
+			// to confirm CPU can play only the four valid colors.
+			if (colorChoice == 1) {
+				System.out.println("CPU 1 played a Red Wild Card.");
+				gamePile.addCard(new Card("Red"));
+			} else if (colorChoice == 2) {
+				System.out.println("CPU 1 played a Blue Wild Card.");
+				gamePile.addCard(new Card("Blue"));
+			} else if (colorChoice == 3) {
+				System.out.println("CPU 1 played a Green Wild Card.");
+				gamePile.addCard(new Card("Green"));
+			} else if (colorChoice == 4) {
+				System.out.println("CPU 1 played a Yellow Wild Card.");
+				gamePile.addCard(new Card("Yellow"));
+			}
+		}
+
+		// Reverse card functionality.
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
+			gameFlow = 2;
+			System.out.println("The game order was switched to counter-clockwise.");
+		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
+			gameFlow = 1;
+			System.out.println("The game order was switched to clockwise.");
+		}
+
+		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
+										// catch a bug
+			gameComplete = true;
+			System.out.println("CPU 3 Wins!");
+		}
+
+		// cpu ends turn, happens regardless. Switches turn and waits 1 second
+		if (gameFlow == 1) { // clockwise
+			cpu3Turn = false;
+			playerTurn = true;
+		} else if (gameFlow == 2) { // counter clockwise
+			cpu3Turn = false;
+			cpu2Turn = true;
+		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException c) {
+			c.printStackTrace();
+		}
+
+	} // End CPU3Gameplay method.
+
+	// A multiplayer game is played within this threeCPU method.
+	public static void threeCPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand,
+			boolean[] partyRules) {
 
 		boolean playAgain = true;
 
@@ -1143,6 +1181,78 @@ public class OverZeroUnderTwo {
 			playAgain = againChecker(input);
 
 		} // end playAgain loop
+	} // End threeCPU method.
+
+	// Get userInput from this method. Allows the user to choose a card number,
+	// forfeit the game, or draw a card on his or her turn.
+	private static void userInput(Scanner input, Hand playerHand) {
+
+		// get user input for next int
+		String choice;
+		int selection;
+
+		while (true) {
+			try {
+				System.out.print(
+						"\nType the number of the card you would like to play (Enter F to forfeit or D to draw a card): ");
+				choice = input.next();
+
+				// If the user types f or F, allow the user to forfeit the game.
+				if (choice.strip().equalsIgnoreCase("F")) {
+					// Enter code to print that game is complete
+					gameComplete = true;
+					break;
+				} // end if
+					// If the user types d or D, allow the user to draw a card.
+				else if (choice.strip().equalsIgnoreCase("D")) {
+					playerHand.add(gameDeck.getRandomCard());
+					break;
+				}
+				// to prevent NumberFormatException
+				else if (choice.isEmpty()) {
+					choice = input.next();
+				}
+
+				// switching input to a string
+				selection = Integer.parseInt(choice);
+
+				// Number must be greater than zero and no greater than the size of the hand
+				if (selection < 0 || selection > playerHand.getSize()) {
+					throw new RuntimeException();
+				} else {
+					if (playerHand.getCard(selection - 1).match(gamePile.getTopCard())) {// if card matches top card
+						// Playing the selected card.
+						gamePile.addCard(playerHand.getCard(selection - 1));
+						System.out.println("You played: " + playerHand.getCard(selection - 1));
+						// Removing the selected card from the player's hand.
+						playerHand.remove(playerHand.getCard(selection - 1));
+						break;
+					} // end nested if
+
+					else {
+						System.out.println(
+								"\nCard does not match the color or value of the top card. Please select another card!");
+					} // end nested else
+				} // end else
+			} // end try
+			catch (RuntimeException e) {
+				System.out.println("Answer must be an integer between 1 and your max amount of cards!\n");
+			} // end catch
+		} // end while loop
+
+	} // user inputs
+
+	public static boolean againChecker(Scanner scnr) {
+		System.out.print("\nDo you want to play again? (Y/N): ");
+		String input = scnr.next();
+
+		if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
+			gameComplete = false;
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	public static boolean getYesNo(Scanner input) {
@@ -1160,7 +1270,10 @@ public class OverZeroUnderTwo {
 				}
 			} catch (RuntimeException e) {
 				System.out.print("\nValue must be Y or N, Enter again: ");
-			}if(loopCount==10) {return false;}
+			}
+			if (loopCount == 10) {
+				return false;
+			}
 		} // end while loop
 	}// end getYesNo method
 
