@@ -24,7 +24,6 @@ public class OverZeroUnderTwo {
 		// generate hands that the methods use
 		Hand playerHand = new Hand();
 		Hand cpu1Hand = new Hand();
-		
 
 		// Initializing variables used by game
 		byte gameMode;
@@ -544,6 +543,9 @@ public class OverZeroUnderTwo {
 	public static void playerGameplay1CPU(Scanner input, Hand playerHand, Hand cpuHand) { // use to code player turn
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
 
+		// Permanently add a Wild Plus Four to player hand every turn for testing
+		// purposes.
+		playerHand.add(new Card(14, "Wild"));
 		// prints the player's hand
 		// add function to sort player's hand
 		System.out.println("The player's hand is:");
@@ -592,7 +594,7 @@ public class OverZeroUnderTwo {
 				try {
 					int colorChoice = 0;
 					System.out.println("1: Red\n2: Blue\n3: Green\n4: Yellow");
-					System.out.print("\nEnter a card number (1-4): ");
+					System.out.print("\nEnter a color number (1-4): ");
 					input.nextLine();
 					colorChoice = input.nextInt();
 					if (colorChoice == 1) {
@@ -612,7 +614,7 @@ public class OverZeroUnderTwo {
 						gamePile.addCard(new Card("Yellow"));
 						break;
 					} else {
-						System.out.print("\nEnter a valid card number (1-4): ");
+						System.out.print("\nEnter a valid color number (1-4): ");
 						colorChoice = input.nextInt();
 						if (colorChoice == 1) {
 							System.out.println("You played a Red Wild card.");
@@ -631,11 +633,11 @@ public class OverZeroUnderTwo {
 							gamePile.addCard(new Card("Yellow"));
 							break;
 						}
-					} // End Else
+					} // End else
 				} catch (InputMismatchException e) {
 					System.out.print("\nAnswer must be an integer between 1 and 4!\n");
 				} // end catch
-			} // End Wild while
+			} // End while
 		} // End if
 
 		// ends game if player's hand is empty
@@ -657,17 +659,107 @@ public class OverZeroUnderTwo {
 			playerTurn = true;
 		} // do nothing if skip cpu
 
-		else if (gamePile.getTopCard().getValue() == 12 && playerTurn && matches > 0) { // Player plays a plus2 card.
-																						// Force CPU to draw 2 random
-																						// cards.
+		// Player plays a plus2 card. Force CPU to draw 2 random cards.
+		else if (gamePile.getTopCard().getValue() == 12 && playerTurn && matches > 0) {
 			cpuHand.add(gameDeck.getRandomCard());
 			cpuHand.add(gameDeck.getRandomCard());
 
 			System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
 		}
-
-		else { // no skip played, switch turns
-				// switch turns and wait 1 second
+		// Player plays a Wild Plus Four card. Change the color to one of the four
+		// colors, add four cards to CPU's hand, and skip CPU's turn. Keep asking for
+		// valid input of 1-4 if the user enters a wrong number or input type.
+		else if (gamePile.getTopCard().getValue() == 14 && playerTurn && matches > 0) {
+			while (true) {
+				try {
+					int colorChoice = 0;
+					System.out.println("1: Red\n2: Blue\n3: Green\n4: Yellow");
+					System.out.print("\nEnter a color number (1-4): ");
+					input.nextLine();
+					colorChoice = input.nextInt();
+					if (colorChoice == 1) {
+						System.out.println("You played a Red Wild Plus Four card.");
+						gamePile.addCard(new Card("Red"));
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						break;
+					} else if (colorChoice == 2) {
+						System.out.println("You played a Blue Wild Plus Four card.");
+						gamePile.addCard(new Card("Blue"));
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						break;
+					} else if (colorChoice == 3) {
+						System.out.println("You played a Green Wild Plus Four card.");
+						gamePile.addCard(new Card("Green"));
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						break;
+					} else if (colorChoice == 4) {
+						System.out.println("You played a Yellow Wild Plus Four card.");
+						gamePile.addCard(new Card("Yellow"));
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						cpuHand.add(gameDeck.getRandomCard());
+						System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						break;
+					} else {
+						System.out.print("\nEnter a valid color number (1-4): ");
+						colorChoice = input.nextInt();
+						if (colorChoice == 1) {
+							System.out.println("You played a Red Wild Plus Four card.");
+							gamePile.addCard(new Card("Red"));
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+							break;
+						} else if (colorChoice == 2) {
+							System.out.println("You played a Blue Wild Plus Four card.");
+							gamePile.addCard(new Card("Blue"));
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+							break;
+						} else if (colorChoice == 3) {
+							System.out.println("You played a Green Wild Plus Four card.");
+							gamePile.addCard(new Card("Green"));
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+							break;
+						} else if (colorChoice == 4) {
+							System.out.println("You played a Yellow Wild Plus Four card.");
+							gamePile.addCard(new Card("Yellow"));
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							cpuHand.add(gameDeck.getRandomCard());
+							System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+							break;
+						}
+					} // End else
+				} catch (InputMismatchException e) {
+					System.out.print("\nAnswer must be an integer between 1 and 4!\n");
+				} // end catch
+			} // End while
+		} else { // no skip played, switch turns
+					// switch turns and wait 1 second
 			if (gameFlow == 1) { // clockwise
 				playerTurn = false;
 				cpu1Turn = true;
@@ -686,7 +778,8 @@ public class OverZeroUnderTwo {
 	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand) {
 		// creates a hand of playable cards
 		int playableCount = 0;
-
+		cpuHand.add(new Card(14, "Wild")); // Added tester code so the CPU always has a
+		// Wild Draw Four card.
 		// checks cards in hand to see if they are playable
 		for (int i = 0; i < cpuHand.getSize(); i++) {
 			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
@@ -741,6 +834,29 @@ public class OverZeroUnderTwo {
 			} // end else
 		} // end while
 
+		// Wild card
+		if (gamePile.getTopCard().getValue() == 13 && playableCount > 0) {
+			int colorChoice = 0;
+			Random rand = new Random();
+			colorChoice = rand.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
+
+			// System.out.println("CPU colorChoice is " + colorChoice); Test print statement
+			// to confirm CPU can play only the four valid colors.
+			if (colorChoice == 1) {
+				System.out.println("CPU 1 played a Red Wild Card.");
+				gamePile.addCard(new Card("Red"));
+			} else if (colorChoice == 2) {
+				System.out.println("CPU 1 played a Blue Wild Card.");
+				gamePile.addCard(new Card("Blue"));
+			} else if (colorChoice == 3) {
+				System.out.println("CPU 1 played a Green Wild Card.");
+				gamePile.addCard(new Card("Green"));
+			} else if (colorChoice == 4) {
+				System.out.println("CPU 1 played a Yellow Wild Card.");
+				gamePile.addCard(new Card("Yellow"));
+			}
+		}
+
 		// reverse
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
 			gameFlow = 2;
@@ -762,20 +878,59 @@ public class OverZeroUnderTwo {
 
 		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0) {
 			System.out.println("CPU skipped your turn.");
-			// cpu1Turn = false;
-			// playerTurn = true;
 		}
 
-		else if (gamePile.getTopCard().getValue() == 12 && cpu1Turn && playableCount > 0) { // plus2
+		else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0) { // plus2
 			// Forces player to draw 2 random cards.
 			playerHand.add(gameDeck.getRandomCard());
 			playerHand.add(gameDeck.getRandomCard());
 
 			System.out.println("You drew 2 cards and your turn was skipped.");
 		}
+		// CPU plays Wild Plus Four card. It then randomly chooses a color, forces the
+		// player to draw 4 cards, and skips the player's turn.
+		else if (gamePile.getTopCard().getValue() == 14 && playableCount > 0) {
+			int colorChoice = 0;
+			Random rand = new Random();
+			colorChoice = rand.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
 
-		else { // no skip played, switch turns
-				// cpu ends turn, happens regardless. Switches turn and waits 1 second
+			// System.out.println("CPU colorChoice is " + colorChoice); Test print statement
+			// to confirm CPU can play only the four valid colors.
+			if (colorChoice == 1) {
+				System.out.println("CPU 1 played a Red Wild Draw Four Card.");
+				gamePile.addCard(new Card("Red"));
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				System.out.println("You drew 4 cards and your turn was skipped.");
+			} else if (colorChoice == 2) {
+				System.out.println("CPU 1 played a Blue Wild Draw Four Card.");
+				gamePile.addCard(new Card("Blue"));
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				System.out.println("You drew 4 cards and your turn was skipped.");
+			} else if (colorChoice == 3) {
+				System.out.println("CPU 1 played a Green Wild Draw Four Card.");
+				gamePile.addCard(new Card("Green"));
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				System.out.println("You drew 4 cards and your turn was skipped.");
+			} else if (colorChoice == 4) {
+				System.out.println("CPU 1 played a Yellow Wild Draw Four Card.");
+				gamePile.addCard(new Card("Yellow"));
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				System.out.println("You drew 4 cards and your turn was skipped.");
+			}
+		} else { // no skip played, switch turns
+					// cpu ends turn, happens regardless. Switches turn and waits 1 second
 			if (gameFlow == 1) { // clockwise
 				cpu1Turn = false;
 				playerTurn = true;

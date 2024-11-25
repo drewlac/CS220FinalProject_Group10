@@ -12,7 +12,7 @@ public class Card implements Comparable<Card> {
 		value = 0;
 		color = "";
 	}
-
+	
 	public Card (String color){
 		this.color = color;
 	}
