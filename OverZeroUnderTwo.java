@@ -778,7 +778,7 @@ public class OverZeroUnderTwo {
 	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand) {
 		// creates a hand of playable cards
 		int playableCount = 0;
-		cpuHand.add(new Card(14, "Wild")); // Added tester code so the CPU always has a
+		//cpuHand.add(new Card(14, "Wild")); // Added tester code so the CPU always has a
 		// Wild Draw Four card.
 		// checks cards in hand to see if they are playable
 		for (int i = 0; i < cpuHand.getSize(); i++) {

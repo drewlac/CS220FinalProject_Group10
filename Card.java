@@ -15,6 +15,7 @@ public class Card implements Comparable<Card> {
 	
 	public Card (String color){
 		this.color = color;
+		value = 15;
 	}
 	
 	public Card(int value, String color) {
@@ -59,6 +60,8 @@ public class Card implements Comparable<Card> {
 			return colorArray[4] + " " + specialtyCardArray[3];
 		} else if (value == 14) {
 			return colorArray[4] + " " + specialtyCardArray[4];
+		} else if (value == 15) {
+			return color + " " + specialtyCardArray[3];
 		} else {
 			return color + " " + value;
 		}
