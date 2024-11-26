@@ -1032,13 +1032,13 @@ public class OverZeroUnderTwo {
 						playerGameplay3CPU(input, playerHand);
 					} // code for players turn
 					else if (cpu3Turn && gameComplete == false) {
-						cpu1Gameplay3CPU(cpu1Hand);
+						cpu1Gameplay3CPU(cpu3Hand);
 					} // code for cpu3 turn
 					else if (cpu2Turn && gameComplete == false) {
 						cpu2Gameplay(cpu2Hand);
 					} // code for cpu2 turn
 					else if (cpu1Turn && gameComplete == false) {
-						cpu3Gameplay(cpu3Hand);
+						cpu1Gameplay3CPU(cpu1Hand);
 					} // code for cpu1 turn
 
 				}
