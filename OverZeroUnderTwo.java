@@ -145,7 +145,7 @@ public class OverZeroUnderTwo {
 		cpu1Hand.removeAllCards();
 		gameDeck.reshuffle();
 	} // End resetGame1CPU method.
-	
+
 	// Use to code player turn.
 	public static void playerGameplay1CPU(Scanner input, Hand playerHand, Hand cpuHand, boolean[] partyRules) {
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
@@ -661,6 +661,7 @@ public class OverZeroUnderTwo {
 
 		System.out.println("\nThe player has " + playerHand.getSize() + " cards. ");
 
+		playerHand.add(new Card(11, "Red"));
 		// checking if any cards match
 		int matches = 0;
 		for (int i = 0; i < playerHand.getSize(); i++) {
@@ -686,6 +687,15 @@ public class OverZeroUnderTwo {
 			}
 		}
 
+		// reverse
+				if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0) {
+					gameFlow = 2;
+					System.out.println("The game order was switched to counter-clockwise.");
+				} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
+					gameFlow = 1;
+					System.out.println("The game order was switched to clockwise.");
+				}
+		
 		// ends game if player's hand is empty
 		if (playerHand.getSize() == 0) {
 			gameComplete = true;
@@ -774,6 +784,15 @@ public class OverZeroUnderTwo {
 
 			} // end else
 		} // end while
+
+		// reverse
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
+			gameFlow = 2;
+			System.out.println("The game order was switched to counter-clockwise.");
+		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
+			gameFlow = 1;
+			System.out.println("The game order was switched to clockwise.");
+		}
 
 		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
 										// catch a bug
@@ -889,6 +908,15 @@ public class OverZeroUnderTwo {
 			} // end else
 		} // end while
 
+		// reverse
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
+			gameFlow = 2;
+			System.out.println("The game order was switched to counter-clockwise.");
+		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
+			gameFlow = 1;
+			System.out.println("The game order was switched to clockwise.");
+		}
+
 		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
 										// catch a bug
 			gameComplete = true;
@@ -909,7 +937,7 @@ public class OverZeroUnderTwo {
 			c.printStackTrace();
 		}
 
-	}// end cpuGameplay2 method.
+	}// end cpu2Gameplay3CPU method.
 
 	private static void cpu3Gameplay3CPU(Hand cpuHand) {
 		// creates a hand of playable cards
@@ -969,6 +997,15 @@ public class OverZeroUnderTwo {
 			} // end else
 		} // end while
 
+		// reverse
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
+			gameFlow = 2;
+			System.out.println("The game order was switched to counter-clockwise.");
+		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
+			gameFlow = 1;
+			System.out.println("The game order was switched to clockwise.");
+		}
+
 		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
 										// catch a bug
 			gameComplete = true;
@@ -989,7 +1026,7 @@ public class OverZeroUnderTwo {
 			c.printStackTrace();
 		}
 
-	} // End cpu3Gameplay method.
+	} // End cpu3Gameplay3CPU method.
 
 	public static void threeCPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand,
 			boolean[] partyRules) {
@@ -1028,18 +1065,22 @@ public class OverZeroUnderTwo {
 
 				else if (gameFlow == 2 && gameComplete == false) {// counter clockwise gameplay
 
+					// Code for player turn.
 					if (playerTurn && gameComplete == false) {
 						playerGameplay3CPU(input, playerHand);
-					} // code for players turn
+					}
+					// Code for CPU3's turn.
 					else if (cpu3Turn && gameComplete == false) {
-						cpu1Gameplay3CPU(cpu3Hand);
-					} // code for cpu3 turn
+						cpu3Gameplay3CPU(cpu3Hand);
+					}
+					// Code for CPU2's turn.
 					else if (cpu2Turn && gameComplete == false) {
 						cpu2Gameplay3CPU(cpu2Hand);
-					} // code for cpu2 turn
+					}
+					// Code for CPU1's turn.
 					else if (cpu1Turn && gameComplete == false) {
 						cpu1Gameplay3CPU(cpu1Hand);
-					} // code for cpu1 turn
+					}
 
 				}
 
