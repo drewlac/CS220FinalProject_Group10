@@ -314,7 +314,7 @@ public class OverZeroUnderTwo {
 						throw new InputMismatchException();
 					} // End else
 				} catch (InputMismatchException e) {
-					System.out.print("\nAnswer must be an integer between 1 and 4!\n");
+					System.out.print("Answer must be an integer between 1 and 4!\n");
 				} // end catch
 			} // End while
 		} // End if *** END WILD CARD ***
@@ -386,7 +386,7 @@ public class OverZeroUnderTwo {
 						throw new InputMismatchException();
 					} // End else
 				} catch (InputMismatchException e) {
-					System.out.print("\nAnswer must be an integer between 1 and 4!\n");
+					System.out.print("Answer must be an integer between 1 and 4!\n");
 				} // end catch
 			} // End while
 		} else if (!(gamePile.getTopCard().getValue() == 10)) { // no skip played, switch turns
@@ -571,7 +571,7 @@ public class OverZeroUnderTwo {
 				}
 				System.out.println("You drew 4 cards and your turn was skipped.");
 			}
-		} else if (!(gamePile.getTopCard().getValue() == 10)) { // no skip played, switch turns
+		} else if (!(gamePile.getTopCard().getValue() == 10 && playableCount < 1)) { // no skip played, switch turns
 			// cpu ends turn, happens regardless. Switches turn and waits 1 second
 			if (gameFlow == 1) { // clockwise
 				cpu1Turn = false;
