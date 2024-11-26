@@ -7,7 +7,7 @@ import java.util.Scanner;
 // This is the main class for the game. Once functionality is complete, the player 
 // plays one or more games of OverZeroUnderTwo against the CPU.
 public class OverZeroUnderTwo {
-
+	private static int stackCount = 0;
 	private static boolean gameComplete = false;
 	private static boolean playerTurn = false;
 	private static boolean cpu1Turn = false;
@@ -408,6 +408,11 @@ public class OverZeroUnderTwo {
 
 	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand, boolean[] partyRules) {
 		// creates a hand of playable cards
+		boolean stackable;
+		if (partyRules[2] && (gamePile.getTopCard().getValue() == 12 || gamePile.getTopCard().getValue() == 14))
+			stackable = true;
+		else
+			stackable = false;
 		int playableCount = 0;
 		// cpuHand.add(new Card(14, "Wild")); // Added tester code so the CPU always has
 		// a
@@ -523,6 +528,37 @@ public class OverZeroUnderTwo {
 		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0) {
 			System.out.println("CPU 1 skipped your turn.");
 		}
+		
+		// *******Stacking********* Currently broken
+		
+		//WIP		//Checks to see if party rules are in effect, if the previous player played a stackable card
+				else if (partyRules[2] && stackable) {
+						System.out.println("Stacking check");//testing to tell us if this is run
+						if ((gamePile.getTopCard().getValue() == 12 || gamePile.getTopCard().getValue() == 14)) {    //<-- I think this is the problem
+							if (gamePile.getTopCard().getValue() == 12) {
+								stackCount += 2;
+								System.out.println("+2 added to stack");
+							}
+							else {
+								stackCount += 4;
+								System.out.println("+4 added to stack");
+							}
+						}
+						//if the card played is not stackable then the current player draws stackCount number of cards and informs player
+						else {
+							for (int n = 0; n < stackCount; n++) {
+								cpuHand.add(gameDeck.getRandomCard());
+								System.out.println("CPU didn't stack and drew " + stackCount + " cards!");
+							}
+							stackCount =0;
+						}
+						System.out.println(stackable + " "+ stackCount) ;//testing to see if stuff is working
+						//change turn
+						cpu1Turn = false;
+						playerTurn = true;
+					}
+
+		
 
 		// *** Plus Two card - CPU1 - Single-player ***
 		else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0) { // plus2
