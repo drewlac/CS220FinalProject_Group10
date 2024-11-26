@@ -113,7 +113,7 @@ public class OverZeroUnderTwo {
 		// adds one random card to discard pile so there is one card to start with
 		gamePile.addCard(gameDeck.getRandomCard());
 
-		// gamePile.addCard(new Card(13, "Wild")); //Tester code to see what happens
+		//gamePile.addCard(new Card(12, "Red")); // Tester code to see what happens
 		// when
 		// a Wild card is the first card placed on the discard pile in a game.
 		// gamePile.addCard(new Card(14, "Wild"));
@@ -136,6 +136,46 @@ public class OverZeroUnderTwo {
 			} else if (colorChoice == 4) {
 				System.out.println("The first card is now a Yellow Card.\n");
 				gamePile.addCard(new Card("Yellow"));
+			}
+		}
+		// If the skip card is the first card on the discard pile, skip the first
+		// player's turn.
+		if (gamePile.getTopCard().getValue() == 10) {
+			if (playerTurn) {
+				playerTurn = false;
+				cpu1Turn = true;
+			} else if (cpu1Turn) {
+				cpu1Turn = false;
+				playerTurn = true;
+			}
+		}
+		// If the reverse card is the first card on the discard pile, reverse the turn
+		// order and continue.
+		if (gamePile.getTopCard().getValue() == 11) {
+			if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1) {
+				gameFlow = 2;
+				System.out.println("The game order was switched to counter-clockwise.");
+			} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2) {
+				gameFlow = 1;
+				System.out.println("The game order was switched to clockwise.");
+			}
+		}
+		// If the Plus 2 card is the first card on the discard pile, make the first
+		// player draw 2 cards and skip their turn.
+		if (gamePile.getTopCard().getValue() == 12) {
+			if (playerTurn) {
+				System.out.println("First card was a Plus Two card.\nYou drew 2 cards and your turn was skipped.");
+				playerHand.add(gameDeck.getRandomCard());
+				playerHand.add(gameDeck.getRandomCard());
+				playerTurn = false;
+				cpu1Turn = true;
+			}
+			else if (cpu1Turn) {
+				System.out.println("First card was a Plus Two card.\nCPU 1 drew 2 cards and their turn was skipped.");
+				cpu1Hand.add(gameDeck.getRandomCard());
+				cpu1Hand.add(gameDeck.getRandomCard());
+				cpu1Turn = false;
+				playerTurn = true;
 			}
 		}
 	} // End startGame1CPU method.
@@ -486,7 +526,7 @@ public class OverZeroUnderTwo {
 		// skipped.
 
 		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0) {
-			System.out.println("CPU skipped your turn.");
+			System.out.println("CPU 1 skipped your turn.");
 		}
 
 		else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0) { // plus2
@@ -554,7 +594,7 @@ public class OverZeroUnderTwo {
 			c.printStackTrace();
 		}
 		// Test code to see how many cards CPU has.
-		System.out.println("CPU has " + cpuHand.getSize() + " cards.");
+		System.out.println("CPU 1 has " + cpuHand.getSize() + " cards.");
 	} // End cpu1Gameplay1CPU method.
 
 	// A single-player game is played within this singleCPU method.
@@ -1253,7 +1293,7 @@ public class OverZeroUnderTwo {
 			return false;
 		}
 
-	}
+	} // End againChecker method.
 
 	public static boolean getYesNo(Scanner input) {
 		byte loopCount = 0;
@@ -1275,6 +1315,6 @@ public class OverZeroUnderTwo {
 				return false;
 			}
 		} // end while loop
-	}// end getYesNo method
+	}// End getYesNo method.
 
 } // end OverZeroUnderTwo Class
