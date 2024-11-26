@@ -5,20 +5,28 @@ public class DeckTester {
 
 		Deck deck1 = new Deck();
 
-		//Hand hand1 = new Hand();
+		Hand hand1 = new Hand();
 		Hand hand2 = new Hand();
-		
-		
-		
-
-		
+		 
+		hand1.add(deck1.getRandomCards(5));
 		hand2.add(deck1.getRandomCards(5));
-		System.out.println("size: " + hand2.getSize());
+		
+		System.out.println("Hand 1: ");
+		hand1.printHand();
+		System.out.println("Hand 2: ");
 		hand2.printHand();
 
-		//deck1.printDeckCount();
+		Hand.switchHands(hand1, hand2);
+		
+		System.out.println("************************************");
+		
+		//hand1.add(deck1.getRandomCards(1));
 
-		//hand1.printHand();
+		
+		System.out.println("Hand 1: ");
+		hand1.printHand();
+		System.out.println("Hand 2: ");
+		hand2.printHand();
 
 	}
 

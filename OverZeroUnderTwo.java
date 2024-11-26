@@ -35,7 +35,7 @@ public class OverZeroUnderTwo {
 		boolean bluffing = getYesNo(input);
 
 		System.out.print("\nStacking Rule (Y/N): ");
-		boolean stacking = getYesNo(input);
+		boolean stacking = getYesNo(input); 
 
 
 
@@ -622,7 +622,7 @@ public class OverZeroUnderTwo {
 		gameDeck.reshuffle();
 	}
 
-	public static void playerGameplay1CPU(Scanner input, Hand playerHand, Hand cpuHand) { // use to code player turn
+	public static void playerGameplay1CPU(Scanner input, Hand playerHand, Hand cpuHand, boolean[] partyRules) { // use to code player turn
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
 
 		// Permanently add a Wild Plus Four to player hand every turn for testing
@@ -642,7 +642,7 @@ public class OverZeroUnderTwo {
 			if (playerHand.getCard(i).match(gamePile.getTopCard())) {
 				matches++;
 			}
-		} // if there are matches, getting user input
+		} // if there are matches, getting user input *** PLAYER PLAYS CARD HERE ***
 		if (matches > 0) {
 			userInput(input, playerHand);
 		} else { // if there are no matches, drawing one card
@@ -660,18 +660,25 @@ public class OverZeroUnderTwo {
 				playerHand.add(gameDeck.getRandomCard());
 			}
 		}
+		
+		// ends game if player's hand is empty *** CATCH AFTER PLAYER HAS PLAYED Card
+		if (playerHand.getSize() == 0) {
+			gameComplete = true;
+			System.out.println("You win!");
+		}
 
 		// reverse
-		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0) {
+		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0) {
 			gameFlow = 2;
 			System.out.println("The game order was switched to counter-clockwise.");
-		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
+		} 
+		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
 			gameFlow = 1;
 			System.out.println("The game order was switched to clockwise.");
 		}
 
-		// Wild card
-		if (gamePile.getTopCard().getValue() == 13 && matches > 0) {
+		// *** Wild card ***
+		else if (gamePile.getTopCard().getValue() == 13 && matches > 0) {
 			while (true) {
 				try {
 					int colorChoice = 0;
@@ -720,13 +727,9 @@ public class OverZeroUnderTwo {
 					System.out.print("\nAnswer must be an integer between 1 and 4!\n");
 				} // end catch
 			} // End while
-		} // End if
+		} // End if *** END WILD CARD ***
 
-		// ends game if player's hand is empty
-		if (playerHand.getSize() == 0) {
-			gameComplete = true;
-			System.out.println("You win!");
-		}
+		
 
 		// if value is NOT equal to 10 (skip), then code runs.
 		// if it IS equal, code does not run, and the opposing player's next turn is
@@ -735,7 +738,7 @@ public class OverZeroUnderTwo {
 		// print the skip statement.
 		// NOTE: This skip statement shows up if the last card played before winning is
 		// a skip card.
-		if (gamePile.getTopCard().getValue() == 10 && matches > 0) {
+		else if (gamePile.getTopCard().getValue() == 10 && matches > 0 && gameComplete == false) {
 			System.out.println("You skipped CPU's turn.");
 			cpu1Turn = false;
 			playerTurn = true;
@@ -840,7 +843,8 @@ public class OverZeroUnderTwo {
 					System.out.print("\nAnswer must be an integer between 1 and 4!\n");
 				} // end catch
 			} // End while
-		} else { // no skip played, switch turns
+		} 
+		if(!(gamePile.getTopCard().getValue()==10)) { // no skip played, switch turns
 					// switch turns and wait 1 second
 			if (gameFlow == 1) { // clockwise
 				playerTurn = false;
@@ -857,7 +861,7 @@ public class OverZeroUnderTwo {
 		}
 	}
 
-	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand) {
+	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand, boolean[] partyRules) {
 		// creates a hand of playable cards
 		int playableCount = 0;
 		// cpuHand.add(new Card(14, "Wild")); // Added tester code so the CPU always has
@@ -1048,10 +1052,10 @@ public class OverZeroUnderTwo {
 				}
 
 				if (playerTurn && gameComplete == false) {
-					playerGameplay1CPU(input, playerHand, cpu1Hand);
+					playerGameplay1CPU(input, playerHand, cpu1Hand, partyRules);
 				} // code for players turn
 				else if (cpu1Turn && gameComplete == false) {
-					cpu1Gameplay1CPU(cpu1Hand, playerHand);
+					cpu1Gameplay1CPU(cpu1Hand, playerHand, partyRules);
 				} // code for cpu's turn
 				else {
 				} // catch errors and exceptions

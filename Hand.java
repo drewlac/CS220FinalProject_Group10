@@ -60,5 +60,32 @@ public class Hand extends Cards{
 	public void removeAllCards() {
 		hand1.removeAll(hand1);
 	}
+	
+	public void clearHand() {
+		hand1.clear();
+	}
+	
+	private ArrayList<Card> getHandArray(){
+		return hand1;
+	}
+
+	public static void switchHands(Hand first, Hand second) {
+		//create a copy of the first list
+		ArrayList<Card> copyFirst = new ArrayList<>(10);
+		copyFirst.addAll(first.getHandArray());
+		
+		//create a copy of the second list
+		ArrayList<Card> copySecond = new ArrayList<>(10);
+		copySecond.addAll(second.getHandArray());
+	
+		//clear both original hands
+		first.clearHand();
+		second.clearHand();
+		
+		//add second to first and first to second
+		first.add(copySecond);
+		second.add(copyFirst);	
+	
+	}//end switch hands method
 
 } // end class hand
