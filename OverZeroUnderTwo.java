@@ -31,10 +31,10 @@ public class OverZeroUnderTwo {
 		System.out.print("7-0 Rule (Y/N): ");
 		boolean sevenZero = getYesNo(input);
 
-		System.out.print("\nNo Bluffing (Y/N): ");
+		System.out.print("No Bluffing (Y/N): ");
 		boolean bluffing = getYesNo(input);
 
-		System.out.print("\nStacking Rule (Y/N): ");
+		System.out.print("Stacking Rule (Y/N): ");
 		boolean stacking = getYesNo(input);
 
 		// used to pass these values into methods
@@ -83,7 +83,7 @@ public class OverZeroUnderTwo {
 	} // end main method
 
 	public static void startGame1CPU(Hand playerHand, Hand cpu1Hand) {
-		System.out.println("Game is starting");
+		System.out.println("\nGame is starting");
 		Random rand = new Random();
 		int coinflip = 0;
 		coinflip = rand.nextInt(2) + 1;
@@ -256,12 +256,18 @@ public class OverZeroUnderTwo {
 			gameComplete = true;
 			System.out.println("You win!");
 		}
-
+		
+		else if(partyRules[0] && (gamePile.getTopCard().getValue()==0 || gamePile.getTopCard().getValue()==7)){ // *** 0-7 Rule ***
+            Hand.switchHands(playerHand, cpuHand);
+            System.out.println("0-7 Rule Activated: Hands Switched");	
+		}                                                                                    
+                                                                                       
 		// reverse
 		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0) {
 			gameFlow = 2;
 			System.out.println("The game order was switched to counter-clockwise.");
-		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
+		} 
+		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
 			gameFlow = 1;
 			System.out.println("The game order was switched to clockwise.");
 		}
@@ -431,7 +437,7 @@ public class OverZeroUnderTwo {
 				} // end catch
 			} // End while
 		}
-		if (!(gamePile.getTopCard().getValue() == 10)) { // no skip played, switch turns
+		else if (!(gamePile.getTopCard().getValue() == 10)) { // no skip played, switch turns
 			// switch turns and wait 1 second
 			if (gameFlow == 1) { // clockwise
 				playerTurn = false;
@@ -469,7 +475,7 @@ public class OverZeroUnderTwo {
 		Random random = new Random();
 		double coinflip;
 
-		while (true) {
+		while (true) { //*** CPU IS PLAYING CARD HERE ***
 			if (cpuHand.getSize() == 0) { // if CPU has no cards, end game
 				gameComplete = true;
 				System.out.println("CPU 1 Wins!");
@@ -506,10 +512,21 @@ public class OverZeroUnderTwo {
 				}
 
 			} // end else
-		} // end while
+		} // end while *** CPU CARD IS PLAYED ***
 
-		// Wild card
-		if (gamePile.getTopCard().getValue() == 13 && playableCount > 0) {
+		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
+			// catch a bug
+			gameComplete = true;
+			System.out.println("CPU 1 Wins!");
+		}
+		
+		else if(partyRules[0] && (gamePile.getTopCard().getValue()==0 || gamePile.getTopCard().getValue()==7)){ // *** 0-7 Rule ***
+            Hand.switchHands(playerHand, cpuHand);
+            System.out.println("0-7 Rule Activated: Hands Switched");	
+		}
+		
+		// *** Wild card ***
+		else if (gamePile.getTopCard().getValue() == 13 && playableCount > 0) {
 			int colorChoice = 0;
 			Random rand = new Random();
 			colorChoice = rand.nextInt((4 - 1) + 1) + 1; // Generate random number between 1 and 4.
@@ -531,29 +548,27 @@ public class OverZeroUnderTwo {
 			}
 		}
 
-		// reverse
-		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
+		// *** REVERSE ***
+		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
 			gameFlow = 2;
 			System.out.println("The game order was switched to counter-clockwise.");
-		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
+		} 
+		else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
 			gameFlow = 1;
 			System.out.println("The game order was switched to clockwise.");
 		}
 
-		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
-										// catch a bug
-			gameComplete = true;
-			System.out.println("CPU 1 Wins!");
-		}
+		
 
 		// if value is NOT equal to 10 (skip), then code runs.
 		// if it IS equal, code does not run, and the opposing player's next turn is
 		// skipped.
-
+		// *** SKIP ***
 		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0) {
 			System.out.println("CPU 1 skipped your turn.");
 		}
-
+		
+		// *** PLUS TWO ***
 		else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0) { // plus2
 			// Forces player to draw 2 random cards.
 			playerHand.add(gameDeck.getRandomCard());
@@ -561,6 +576,7 @@ public class OverZeroUnderTwo {
 
 			System.out.println("You drew 2 cards and your turn was skipped.");
 		}
+		
 		// CPU plays Wild Plus Four card. It then randomly chooses a color, forces the
 		// player to draw 4 cards, and skips the player's turn.
 		else if (gamePile.getTopCard().getValue() == 14 && playableCount > 0) {
@@ -603,7 +619,8 @@ public class OverZeroUnderTwo {
 				playerHand.add(gameDeck.getRandomCard());
 				System.out.println("You drew 4 cards and your turn was skipped.");
 			}
-		} else { // no skip played, switch turns
+		} 
+		else if (!(gamePile.getTopCard().getValue()==10)) { // no skip played, switch turns
 					// cpu ends turn, happens regardless. Switches turn and waits 1 second
 			if (gameFlow == 1) { // clockwise
 				cpu1Turn = false;
