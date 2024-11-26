@@ -831,7 +831,7 @@ public class OverZeroUnderTwo {
 
 	} // End cpu1Gameplay3CPU method.
 
-	private static void cpu2Gameplay(Hand cpuHand) {
+	private static void cpu2Gameplay3CPU(Hand cpuHand) {
 		// creates a hand of playable cards
 		int playableCount = 0;
 
@@ -911,7 +911,7 @@ public class OverZeroUnderTwo {
 
 	}// end cpuGameplay2 method.
 
-	private static void cpu3Gameplay(Hand cpuHand) {
+	private static void cpu3Gameplay3CPU(Hand cpuHand) {
 		// creates a hand of playable cards
 		int playableCount = 0;
 
@@ -1017,10 +1017,10 @@ public class OverZeroUnderTwo {
 						cpu1Gameplay3CPU(cpu1Hand);
 					} // code for cpu1 turn
 					else if (cpu2Turn && gameComplete == false) {
-						cpu2Gameplay(cpu2Hand);
+						cpu2Gameplay3CPU(cpu2Hand);
 					} // code for cpu2 turn
 					else if (cpu3Turn && gameComplete == false) {
-						cpu3Gameplay(cpu3Hand);
+						cpu3Gameplay3CPU(cpu3Hand);
 					} // code for cpu3 turn
 					else {
 					} // catch errors and exceptions
@@ -1035,7 +1035,7 @@ public class OverZeroUnderTwo {
 						cpu1Gameplay3CPU(cpu3Hand);
 					} // code for cpu3 turn
 					else if (cpu2Turn && gameComplete == false) {
-						cpu2Gameplay(cpu2Hand);
+						cpu2Gameplay3CPU(cpu2Hand);
 					} // code for cpu2 turn
 					else if (cpu1Turn && gameComplete == false) {
 						cpu1Gameplay3CPU(cpu1Hand);
