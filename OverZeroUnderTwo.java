@@ -755,7 +755,7 @@ public class OverZeroUnderTwo {
 			System.out.println("\nThe player has " + playerHand.getSize() + " card. ");
 		}
 
-		// playerHand.add(new Card(11, "Red")); Tester code for a Red Reverse card.
+		playerHand.add(new Card(10, "Red")); // Tester code for a Red Reverse card.
 		// checking if any cards match
 		int matches = 0;
 		for (int i = 0; i < playerHand.getSize(); i++) {
@@ -797,8 +797,14 @@ public class OverZeroUnderTwo {
 		}
 
 		boolean skipped = false;
-		if (gamePile.getTopCard().getValue() == 10)
+		if (gamePile.getTopCard().getValue() == 10 && matches > 0) {
 			skipped = true;
+			if (gameFlow == 1) {
+				System.out.println("You skipped CPU 1's turn.");
+			} else if (gameFlow == 2) {
+				System.out.println("You skipped CPU 3's turn.");
+			}
+		}
 
 		// switch turns and wait 1 second
 		if (gameFlow == 1) { // clockwise
@@ -833,6 +839,7 @@ public class OverZeroUnderTwo {
 			}
 		}
 
+		cpuHand.add(new Card(10, "Red"));
 		// System.out.println("Playable Count: " + playableCount); //used for
 		// troubleshooting
 
@@ -898,34 +905,29 @@ public class OverZeroUnderTwo {
 		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 1) {
 			cpu2Turn = false;
 			cpu3Turn = true;
-			// cpu2Turn = true;
-			System.out.println("cpu2 turn skipped");
-		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
-			cpu3Turn = false;
-			playerTurn = true;
-			// cpu3Turn = true;
-			System.out.println("cpu3 turn skipped");
-		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
-			playerTurn = false;
-			cpu1Turn = true;
-			// playerTurn = true;
-			System.out.println("your turn skipped");
-		}
+			System.out.println("CPU 1 skipped CPU 2's turn.");
+		} /*
+			 * else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 &&
+			 * cpu2Turn == true) { cpu3Turn = false; playerTurn = true; // cpu3Turn = true;
+			 * System.out.println("cpu3 turn skipped"); } else if
+			 * (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn ==
+			 * true) { playerTurn = false; cpu1Turn = true; // playerTurn = true;
+			 * System.out.println("your turn skipped"); }
+			 */
 
 		// skip code for COUNTER-CLOCKWISE order
 		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 2) {
-			cpu1Turn = false;
-			playerTurn = true;
-			System.out.println("CPU2 skipped CPU1's turn.");
-		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true) {
-			cpu2Turn = false;
-			cpu1Turn = true;
-			System.out.println("CPU3 skipped CPU2's turn.");
-		} else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true) {
-			cpu3Turn = false;
-			cpu2Turn = true;
-			System.out.println("You skipped CPU3's turn.");
-		}
+			cpu3Turn = true;
+			playerTurn = false;
+			System.out.println("CPU 1 skipped your turn.");
+		} /*
+			 * else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 &&
+			 * cpu2Turn == true) { cpu2Turn = false; cpu1Turn = true;
+			 * System.out.println("CPU 1 skipped CPU2's turn."); } else if
+			 * (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn ==
+			 * true) { cpu3Turn = false; cpu2Turn = true;
+			 * System.out.println("You skipped CPU3's turn."); }
+			 */
 
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
 		if (gameFlow == 1) { // clockwise
@@ -1017,6 +1019,20 @@ public class OverZeroUnderTwo {
 			System.out.println("CPU 2 Wins!");
 		}
 
+		// skip code for CLOCKWISE order
+		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true && gameFlow == 1) {
+			cpu3Turn = false;
+			playerTurn = true;
+			System.out.println("CPU 2 skipped CPU 3's turn.");
+		}
+
+		// skip code for COUNTER-CLOCKWISE order
+		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true && gameFlow == 2) {
+			cpu1Turn = false;
+			playerTurn = true;
+			System.out.println("CPU 2 skipped CPU 1's turn.");
+		}
+
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
 		if (gameFlow == 1) { // clockwise
 			cpu2Turn = false;
@@ -1104,6 +1120,20 @@ public class OverZeroUnderTwo {
 										// catch a bug
 			gameComplete = true;
 			System.out.println("CPU 3 Wins!");
+		}
+
+		// skip code for CLOCKWISE order
+		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true && gameFlow == 1) {
+			playerTurn = false;
+			cpu1Turn = true;
+			System.out.println("CPU 3 skipped CPU your turn.");
+		}
+
+		// skip code for COUNTER-CLOCKWISE order
+		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true && gameFlow == 2) {
+			cpu2Turn = false;
+			cpu1Turn = true;
+			System.out.println("CPU 2 skipped CPU 2's turn.");
 		}
 
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
