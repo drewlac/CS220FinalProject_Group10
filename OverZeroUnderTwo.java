@@ -212,6 +212,8 @@ public class OverZeroUnderTwo {
 
 	// Use to code player turn.
 	public static void playerGameplay1CPU(Scanner input, Hand playerHand, Hand cpuHand, boolean[] partyRules) {
+		// Set draw to false at the beginning of the player's turn.
+		draw = false;
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
 
 		// Permanently add a Wild Plus Four to player hand every turn for testing
@@ -325,7 +327,7 @@ public class OverZeroUnderTwo {
 		// NOTE: This skip statement shows up if the last card played before winning is
 		// a skip card.
 		// *** Skip card - Player - Single-player ***
-		else if (gamePile.getTopCard().getValue() == 10 && matches > 0 && gameComplete == false) {
+		else if (gamePile.getTopCard().getValue() == 10 && matches > 0 && draw == false && gameComplete == false) {
 			System.out.println("You skipped CPU's turn.");
 			if (matches > 0) {
 				playerTurn = true;
@@ -758,7 +760,7 @@ public class OverZeroUnderTwo {
 			System.out.println("\nThe player has " + playerHand.getSize() + " card. ");
 		}
 
-		playerHand.add(new Card(10, "Red")); // Tester code for a Red Reverse card.
+		playerHand.add(new Card(10, "Red")); // Tester code for a Red Skip card.
 		// checking if any cards match
 		int matches = 0;
 		for (int i = 0; i < playerHand.getSize(); i++) {
@@ -1255,6 +1257,12 @@ public class OverZeroUnderTwo {
 				else if (choice.strip().equalsIgnoreCase("D")) {
 					playerHand.add(gameDeck.getRandomCard());
 					System.out.println("You drew 1 card.");
+					// Set draw to true, which avoids errors related to skip functionality. For
+					// example, if the top card on the discard pile is a Blue Skip and the player
+					// chooses to draw a card when they could have played a card from their hand,
+					// the top card's value is still 10. This would wrongly execute skip code on the
+					// CPU an extra time. This applies to Plus Two and Wild Plus Four cards as well,
+					// since they skip the next player's turn automatically.
 					draw = true;
 					break;
 				} // end else if
