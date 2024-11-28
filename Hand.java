@@ -87,5 +87,30 @@ public class Hand extends Cards{
 		second.add(copyFirst);	
 	
 	}//end switch hands method
+	
+	public ArrayList<Card> getStackableArray(Hand hand){
+		ArrayList<Card> returnList = new ArrayList<Card>();
+		for(Card c : hand.getHandArray()) {
+			if(c.getValue() == 12 || c.getValue() == 14) {
+				returnList.add(c);
+			}
+		}
+		return returnList;
+	}
 
+	public int getStackableCount() {
+		int count = 0;
+		for(Card c : hand1) {
+			if(c.getValue() == 12 || c.getValue() == 14) {
+				count++;
+			}
+		}
+		if(count == 0) {
+			return -1;
+		}
+		else {
+		return count;
+		}
+	}
+	
 } // end class hand
