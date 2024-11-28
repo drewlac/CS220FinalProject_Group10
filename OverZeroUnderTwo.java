@@ -13,6 +13,7 @@ public class OverZeroUnderTwo {
 	private static boolean cpu1Turn = false;
 	private static boolean cpu2Turn = false;
 	private static boolean cpu3Turn = false;
+	private static boolean draw = false;
 	private static byte gameFlow = 1; // 1 for clockwise, 2 for counter clockwise
 	private static Deck gameDeck = new Deck(); // static variable for the deck the game is played on
 	private static DiscardPile gamePile = new DiscardPile(); // static variable for game discard pile
@@ -741,6 +742,8 @@ public class OverZeroUnderTwo {
 	} // End resetGame3CPU method.
 
 	public static void playerGameplay3CPU(Scanner input, Hand playerHand) { // use to code player turn
+		// Set draw to false at the beginning of the player's turn.
+		draw = false;
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
 
 		// prints the player's hand
@@ -797,7 +800,7 @@ public class OverZeroUnderTwo {
 		}
 
 		boolean skipped = false;
-		if (gamePile.getTopCard().getValue() == 10 && matches > 0) {
+		if (gamePile.getTopCard().getValue() == 10 && matches > 0 && draw == false) {
 			skipped = true;
 			if (gameFlow == 1) {
 				System.out.println("You skipped CPU 1's turn.");
@@ -839,7 +842,7 @@ public class OverZeroUnderTwo {
 			}
 		}
 
-		cpuHand.add(new Card(10, "Red"));
+		// cpuHand.add(new Card(10, "Red"));
 		// System.out.println("Playable Count: " + playableCount); //used for
 		// troubleshooting
 
@@ -903,6 +906,7 @@ public class OverZeroUnderTwo {
 
 		// skip code for CLOCKWISE order
 		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 1) {
+			cpu1Turn = false;
 			cpu2Turn = false;
 			cpu3Turn = true;
 			System.out.println("CPU 1 skipped CPU 2's turn.");
@@ -916,7 +920,8 @@ public class OverZeroUnderTwo {
 			 */
 
 		// skip code for COUNTER-CLOCKWISE order
-		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 2) {
+		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn == true && gameFlow == 2) {
+			cpu1Turn = false;
 			cpu3Turn = true;
 			playerTurn = false;
 			System.out.println("CPU 1 skipped your turn.");
@@ -929,19 +934,21 @@ public class OverZeroUnderTwo {
 			 * System.out.println("You skipped CPU3's turn."); }
 			 */
 
-		// cpu ends turn, happens regardless. Switches turn and waits 1 second
-		if (gameFlow == 1) { // clockwise
-			cpu1Turn = false;
-			cpu2Turn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu1Turn = false;
-			playerTurn = true;
-		}
+		else {
+			// cpu ends turn, happens regardless. Switches turn and waits 1 second
+			if (gameFlow == 1) { // clockwise
+				cpu1Turn = false;
+				cpu2Turn = true;
+			} else if (gameFlow == 2) { // counter clockwise
+				cpu1Turn = false;
+				playerTurn = true;
+			}
 
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException c) {
-			c.printStackTrace();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException c) {
+				c.printStackTrace();
+			}
 		}
 
 	} // End cpu1Gameplay3CPU method.
@@ -958,6 +965,7 @@ public class OverZeroUnderTwo {
 			}
 		}
 
+		// cpuHand.add(new Card(10, "Red"));
 		// System.out.println("Playable Count: " + playableCount); //used for
 		// troubleshooting
 
@@ -1021,32 +1029,33 @@ public class OverZeroUnderTwo {
 
 		// skip code for CLOCKWISE order
 		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true && gameFlow == 1) {
+			cpu2Turn = false;
 			cpu3Turn = false;
 			playerTurn = true;
 			System.out.println("CPU 2 skipped CPU 3's turn.");
 		}
 
 		// skip code for COUNTER-CLOCKWISE order
-		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true && gameFlow == 2) {
+		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn == true && gameFlow == 2) {
+			cpu2Turn = false;
 			cpu1Turn = false;
 			playerTurn = true;
 			System.out.println("CPU 2 skipped CPU 1's turn.");
+		} else {
+			// cpu ends turn, happens regardless. Switches turn and waits 1 second
+			if (gameFlow == 1) { // clockwise
+				cpu2Turn = false;
+				cpu3Turn = true;
+			} else if (gameFlow == 2) { // counter clockwise
+				cpu2Turn = false;
+				cpu1Turn = true;
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException c) {
+				c.printStackTrace();
+			}
 		}
-
-		// cpu ends turn, happens regardless. Switches turn and waits 1 second
-		if (gameFlow == 1) { // clockwise
-			cpu2Turn = false;
-			cpu3Turn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu2Turn = false;
-			cpu1Turn = true;
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException c) {
-			c.printStackTrace();
-		}
-
 	}// end cpu2Gameplay3CPU method.
 
 	private static void cpu3Gameplay3CPU(Hand cpuHand) {
@@ -1061,6 +1070,7 @@ public class OverZeroUnderTwo {
 			}
 		}
 
+		// cpuHand.add(new Card(10, "Red"));
 		// System.out.println("Playable Count: " + playableCount); //used for
 		// troubleshooting
 
@@ -1124,32 +1134,34 @@ public class OverZeroUnderTwo {
 
 		// skip code for CLOCKWISE order
 		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true && gameFlow == 1) {
+			cpu3Turn = false;
 			playerTurn = false;
 			cpu1Turn = true;
-			System.out.println("CPU 3 skipped CPU your turn.");
+			System.out.println("CPU 3 skipped your turn.");
 		}
-
 		// skip code for COUNTER-CLOCKWISE order
-		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true && gameFlow == 2) {
+		else if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn == true && gameFlow == 2) {
+			cpu3Turn = false;
 			cpu2Turn = false;
 			cpu1Turn = true;
-			System.out.println("CPU 2 skipped CPU 2's turn.");
+			System.out.println("CPU 3 skipped CPU 2's turn.");
 		}
 
-		// cpu ends turn, happens regardless. Switches turn and waits 1 second
-		if (gameFlow == 1) { // clockwise
-			cpu3Turn = false;
-			playerTurn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu3Turn = false;
-			cpu2Turn = true;
+		else {
+			// cpu ends turn, happens regardless. Switches turn and waits 1 second
+			if (gameFlow == 1) { // clockwise
+				cpu3Turn = false;
+				playerTurn = true;
+			} else if (gameFlow == 2) { // counter clockwise
+				cpu3Turn = false;
+				cpu2Turn = true;
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException c) {
+				c.printStackTrace();
+			}
 		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException c) {
-			c.printStackTrace();
-		}
-
 	} // End cpu3Gameplay3CPU method.
 
 	public static void threeCPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand,
@@ -1161,6 +1173,11 @@ public class OverZeroUnderTwo {
 
 			startGame3CPU(playerHand, cpu1Hand, cpu2Hand, cpu3Hand); // method to start game
 
+			// If the player chooses to play a new game and the previous game was in
+			// counter-clockwise order, reset the order to clockwise.
+			if (gameFlow == 2) {
+				gameFlow = 1;
+			}
 			do { // game will be played inside of this do while loop, and to end the game we will
 					// need to mark gameComplete as true
 
@@ -1238,6 +1255,7 @@ public class OverZeroUnderTwo {
 				else if (choice.strip().equalsIgnoreCase("D")) {
 					playerHand.add(gameDeck.getRandomCard());
 					System.out.println("You drew 1 card.");
+					draw = true;
 					break;
 				} // end else if
 
