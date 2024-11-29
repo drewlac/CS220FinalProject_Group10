@@ -311,7 +311,7 @@ public class OverZeroUnderTwo {
 				System.out.print("Any additional information? ");
 				String answer = input.next();
 				if (answer.strip().equalsIgnoreCase("uno")) {
-					System.out.println("You successfully called uno!");
+					System.out.println("You successfully called Uno!");
 				} else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
 					System.out.println("You forgot to call uno, drawing another card!");
 					playerHand.add(gameDeck.getRandomCard());
@@ -928,7 +928,7 @@ public class OverZeroUnderTwo {
 			System.out.print("Any additional information? ");
 			String answer = input.next();
 			if (answer.strip().equalsIgnoreCase("uno")) {
-				System.out.println("You successfully called uno!");
+				System.out.println("You successfully called Uno!");
 			} else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
 				System.out.println("You forgot to call uno, drawing another card!");
 				playerHand.add(gameDeck.getRandomCard());
@@ -1260,8 +1260,10 @@ public class OverZeroUnderTwo {
 			System.out.println("CPU 1 Wins!");
 		}
 
+		boolean skipped = false;
 		// *** Skip card - CPU1 - Multiplayer ***
-		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu1Turn) {
+		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0) {
+			skipped = true;
 			// skip code for CLOCKWISE order
 			if (gameFlow == 1) {
 				cpu1Turn = false;
@@ -1279,7 +1281,7 @@ public class OverZeroUnderTwo {
 		}
 
 		// *** Plus Two card - CPU1 - Multiplayer ***
-		else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0 && cpu1Turn) {
+		else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0) {
 			if (gameFlow == 1) {
 				// Forces CPU 2 to draw 2 random cards.
 				for (int i = 0; i < 2; i++) {
@@ -1364,26 +1366,33 @@ public class OverZeroUnderTwo {
 				System.out.println("You drew 4 cards and your turn was skipped.");
 			}
 		} // End Wild Plus Four card if
+
 		else {
 			// cpu ends turn, happens regardless. Switches turn and waits 1 second
 			if (gameFlow == 1) { // clockwise
 				cpu1Turn = false;
-				cpu2Turn = true;
+				if (skipped)
+					cpu3Turn = true;
+				else
+					cpu2Turn = true;
 			} else if (gameFlow == 2) { // counter clockwise
 				cpu1Turn = false;
-				playerTurn = true;
+				if (skipped)
+					cpu3Turn = true;
+				else
+					playerTurn = true;
 			}
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException c) {
 				c.printStackTrace();
 			}
-			// Test code to see how many cards CPU has.
-			if (cpuHand.getSize() > 1) {
-				System.out.println("CPU 1 has " + cpuHand.getSize() + " cards.");
-			} else if (cpuHand.getSize() == 1) {
-				System.out.println("CPU 1 has " + cpuHand.getSize() + " card.");
-			}
+		}
+		// Test code to see how many cards CPU has.
+		if (cpuHand.getSize() > 1) {
+			System.out.println("CPU 1 has " + cpuHand.getSize() + " cards.");
+		} else if (cpuHand.getSize() == 1) {
+			System.out.println("CPU 1 has " + cpuHand.getSize() + " card.");
 		}
 
 	} // End cpu1Gameplay3CPU method.
@@ -1494,9 +1503,11 @@ public class OverZeroUnderTwo {
 			System.out.println("CPU 2 Wins!");
 		}
 
+		boolean skipped = false;
 		// *** Skip card - CPU2 - Multiplayer ***
-		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu2Turn) {
+		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0) {
 			// skip code for CLOCKWISE order
+			skipped = true;
 			if (gameFlow == 1) {
 				cpu2Turn = false;
 				cpu3Turn = false;
@@ -1598,29 +1609,35 @@ public class OverZeroUnderTwo {
 				System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
 			}
 		} // End Wild Plus Four card else if
+
 		else {
 			// cpu ends turn, happens regardless. Switches turn and waits 1 second
 			if (gameFlow == 1) { // clockwise
 				cpu2Turn = false;
-				cpu3Turn = true;
+				if (skipped)
+					playerTurn = true;
+				else
+					cpu3Turn = true;
 			} else if (gameFlow == 2) { // counter clockwise
 				cpu2Turn = false;
-				cpu1Turn = true;
+				if (skipped)
+					playerTurn = true;
+				else
+					cpu1Turn = true;
 			}
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException c) {
 				c.printStackTrace();
 			}
-
-			// Test code to see how many cards CPU has.
-			if (cpuHand.getSize() > 1) {
-				System.out.println("CPU 2 has " + cpuHand.getSize() + " cards.");
-			} else if (cpuHand.getSize() == 1) {
-				System.out.println("CPU 2 has " + cpuHand.getSize() + " card.");
-			}
 		}
-	}// end cpu2Gameplay3CPU method.
+		// Test code to see how many cards CPU has.
+		if (cpuHand.getSize() > 1) {
+			System.out.println("CPU 2 has " + cpuHand.getSize() + " cards.");
+		} else if (cpuHand.getSize() == 1) {
+			System.out.println("CPU 2 has " + cpuHand.getSize() + " card.");
+		}
+	} // end cpu2Gameplay3CPU method.
 
 	private static void cpu3Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand) {
 		// creates a hand of playable cards
@@ -1728,9 +1745,11 @@ public class OverZeroUnderTwo {
 			System.out.println("CPU 3 Wins!");
 		}
 
+		boolean skipped = false;
 		// *** Skip card - CPU3 - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 10 && playableCount > 0 && cpu3Turn) {
 			// skip code for CLOCKWISE order
+			skipped = true;
 			if (gameFlow == 1) {
 				cpu3Turn = false;
 				playerTurn = false;
@@ -1837,22 +1856,28 @@ public class OverZeroUnderTwo {
 			// cpu ends turn, happens regardless. Switches turn and waits 1 second
 			if (gameFlow == 1) { // clockwise
 				cpu3Turn = false;
-				playerTurn = true;
+				if (skipped)
+					cpu1Turn = true;
+				else
+					playerTurn = true;
 			} else if (gameFlow == 2) { // counter clockwise
 				cpu3Turn = false;
-				cpu2Turn = true;
+				if (skipped)
+					cpu1Turn = true;
+				else
+					cpu2Turn = true;
 			}
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException c) {
 				c.printStackTrace();
 			}
-			// Test code to see how many cards CPU has.
-			if (cpuHand.getSize() > 1) {
-				System.out.println("CPU 3 has " + cpuHand.getSize() + " cards.");
-			} else if (cpuHand.getSize() == 1) {
-				System.out.println("CPU 3 has " + cpuHand.getSize() + " card.");
-			}
+		}
+		// Test code to see how many cards CPU has.
+		if (cpuHand.getSize() > 1) {
+			System.out.println("CPU 3 has " + cpuHand.getSize() + " cards.");
+		} else if (cpuHand.getSize() == 1) {
+			System.out.println("CPU 3 has " + cpuHand.getSize() + " card.");
 		}
 	} // End cpu3Gameplay3CPU method.
 
