@@ -909,7 +909,7 @@ public class OverZeroUnderTwo {
 			System.out.println("\nThe player has " + playerHand.getSize() + " card. ");
 		}
 
-		playerHand.add(new Card(11, "Red")); // Tester code for a Red Skip card.
+		//playerHand.add(new Card(11, "Red")); // Tester code for a Red Reverse card.
 		// checking if any cards match
 		int matches = 0;
 		for (int i = 0; i < playerHand.getSize(); i++) {
@@ -942,12 +942,14 @@ public class OverZeroUnderTwo {
 			/*
 			 * if (gameFlow == 2) { playerTurn = false; cpu3Turn = true; }
 			 */
+			System.out.println("gameFlow is now: " + gameFlow);
 			System.out.println("The game order was switched to counter-clockwise.");
 		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0 && draw == false) {
 			gameFlow = 1;
 			/*
 			 * if (gameFlow == 1) { playerTurn = false; cpu1Turn = true; }
 			 */
+			System.out.println("gameFlow is now: " + gameFlow);
 			System.out.println("The game order was switched to clockwise.");
 		}
 
@@ -1142,6 +1144,7 @@ public class OverZeroUnderTwo {
 			} // End while
 		} // End Wild Plus Four if
 
+		System.out.println("gameFlow is now: " + gameFlow);
 		// switch turns and wait 1 second
 		if (gameFlow == 1) { // clockwise
 			playerTurn = false;
@@ -1151,8 +1154,8 @@ public class OverZeroUnderTwo {
 			else // regular gameplay
 				cpu1Turn = true;
 		} else if (gameFlow == 2) { // counter clockwise
-			playerTurn = false;
 			cpu1Turn = false;
+			playerTurn = false;
 			if (skipped) // if skip is played
 				cpu2Turn = true;
 			else // regular gameplay
@@ -1239,12 +1242,14 @@ public class OverZeroUnderTwo {
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
 			gameFlow = 2;
 			System.out.println("The game order was switched to counter-clockwise.");
+			System.out.println("gameFlow is now: " + gameFlow);
 			/*
 			 * if (gameFlow == 2) { cpu1Turn = false; playerTurn = true; }
 			 */
 		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
 			gameFlow = 1;
 			System.out.println("The game order was switched to clockwise.");
+			System.out.println("gameFlow is now: " + gameFlow);
 			/*
 			 * if (gameFlow == 1) { cpu1Turn = false; cpu2Turn = true; }
 			 */
@@ -1394,6 +1399,7 @@ public class OverZeroUnderTwo {
 			}
 		} // End Wild Plus Four card if
 
+		System.out.println("gameFlow is now: " + gameFlow);
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
 		if (gameFlow == 1) { // clockwise
 			cpu1Turn = false;
@@ -1487,12 +1493,14 @@ public class OverZeroUnderTwo {
 		// *** Reverse card - CPU2 - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
 			gameFlow = 2;
+			System.out.println("gameFlow is now: " + gameFlow);
 			/*
 			 * if (gameFlow == 2) { cpu2Turn = false; cpu1Turn = true; }
 			 */
 			System.out.println("The game order was switched to counter-clockwise.");
 		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
 			gameFlow = 1;
+			System.out.println("gameFlow is now: " + gameFlow);
 			System.out.println("The game order was switched to clockwise.");
 			/*
 			 * if (gameFlow == 1) { cpu2Turn = false; cpu3Turn = true; }
@@ -1643,18 +1651,21 @@ public class OverZeroUnderTwo {
 			}
 		} // End Wild Plus Four card else if
 
+		System.out.println("gameFlow is now: " + gameFlow);
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
 		if (gameFlow == 1) { // clockwise
 			cpu2Turn = false;
+			cpu1Turn = false;
 			if (skipped)
 				playerTurn = true;
 			else
 				cpu3Turn = true;
 		} else if (gameFlow == 2) { // counter clockwise
 			cpu2Turn = false;
-			if (skipped)
+			cpu3Turn = false;
+			if (skipped) // Skipped gameplay loop
 				playerTurn = true;
-			else
+			else // Regular gameplay loop
 				cpu1Turn = true;
 		}
 		try {
@@ -1733,12 +1744,14 @@ public class OverZeroUnderTwo {
 		// *** Reverse card - CPU3 - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
 			gameFlow = 2;
+			System.out.println("gameFlow is now: " + gameFlow);
 			/*
 			 * if (gameFlow == 2) { cpu3Turn = false; cpu2Turn = true; }
 			 */
 			System.out.println("The game order was switched to counter-clockwise.");
 		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
 			gameFlow = 1;
+			System.out.println("gameFlow is now: " + gameFlow);
 			System.out.println("The game order was switched to clockwise.");
 			/*
 			 * if (gameFlow == 1) { cpu3Turn = false; playerTurn = true; }
@@ -1889,6 +1902,7 @@ public class OverZeroUnderTwo {
 			}
 		} // End Wild Plus Four card else if
 
+		System.out.println("gameFlow is now: " + gameFlow);
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
 		if (gameFlow == 1) { // clockwise
 			cpu3Turn = false;
@@ -1967,7 +1981,8 @@ public class OverZeroUnderTwo {
 					}
 					// Code for CPU3's turn.
 					else if (cpu3Turn && gameComplete == false) {
-						cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand);
+						cpu3Gameplay3CPU(cpu3Hand, playerHand, cpu1Hand, cpu2Hand);
+						// cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand);
 					}
 					// Code for CPU2's turn.
 					else if (cpu2Turn && gameComplete == false) {
@@ -1975,7 +1990,8 @@ public class OverZeroUnderTwo {
 					}
 					// Code for CPU1's turn.
 					else if (cpu1Turn && gameComplete == false) {
-						cpu3Gameplay3CPU(cpu3Hand, playerHand, cpu1Hand, cpu2Hand);
+						cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand);
+						//cpu3Gameplay3CPU(cpu3Hand, playerHand, cpu1Hand, cpu2Hand);
 					}
 
 				}
