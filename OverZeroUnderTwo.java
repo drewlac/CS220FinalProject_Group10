@@ -332,12 +332,12 @@ public class OverZeroUnderTwo {
 			}
 
 			// *** Reverse card - Player - Single-player ***
-			else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0) {
+			else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0 && draw == false) {
 				gameFlow = 2;
 				playerTurn = false;
 				cpu1Turn = true;
 				System.out.println("The game order was switched to counter-clockwise.");
-			} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
+			} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0 && draw == false) {
 				gameFlow = 1;
 				playerTurn = false;
 				cpu1Turn = true;
@@ -345,7 +345,7 @@ public class OverZeroUnderTwo {
 			}
 
 			// *** Wild card - Player - Single-player ***
-			else if (gamePile.getTopCard().getValue() == 13 && matches > 0) {
+			else if (gamePile.getTopCard().getValue() == 13 && matches > 0 && draw == false) {
 				while (true) {
 					try {
 						int colorChoice = 0;
@@ -404,7 +404,7 @@ public class OverZeroUnderTwo {
 
 			// Player plays a plus2 card. Force CPU to draw 2 random cards.
 			// *** Plus Two card - Player - Single-player ***
-			else if (gamePile.getTopCard().getValue() == 12 && playerTurn && matches > 0) {
+			else if (gamePile.getTopCard().getValue() == 12 && playerTurn && matches > 0 && draw == false) {
 				if (partyRules[2]) {
 					System.out.println("Added +2 to the stack!");
 					stackCount += 2;
@@ -419,7 +419,7 @@ public class OverZeroUnderTwo {
 			// colors, add four cards to CPU's hand, and skip CPU's turn. Keep asking for
 			// valid input of 1-4 if the user enters a wrong number or input type.
 			// *** Wild Plus Four card - Player - Single-player ***
-			else if (gamePile.getTopCard().getValue() == 14 && playerTurn && matches > 0) {
+			else if (gamePile.getTopCard().getValue() == 14 && playerTurn && matches > 0 && draw == false) {
 				while (true) {
 					try {
 						int colorChoice = 0;
@@ -937,24 +937,22 @@ public class OverZeroUnderTwo {
 
 		// *** Reverse card - Player - Multiplayer ***
 
-		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0) {
+		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0 && draw == false) {
 			gameFlow = 2;
-			if (gameFlow == 2) {
-				playerTurn = false;
-				cpu3Turn = true;
-			}
+			/*
+			 * if (gameFlow == 2) { playerTurn = false; cpu3Turn = true; }
+			 */
 			System.out.println("The game order was switched to counter-clockwise.");
-		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0) {
+		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0 && draw == false) {
 			gameFlow = 1;
-			if (gameFlow == 1) {
-				playerTurn = false;
-				cpu1Turn = true;
-			}
+			/*
+			 * if (gameFlow == 1) { playerTurn = false; cpu1Turn = true; }
+			 */
 			System.out.println("The game order was switched to clockwise.");
 		}
 
 		// *** Wild card - Player - Multiplayer ***
-		if (gamePile.getTopCard().getValue() == 13 && matches > 0) {
+		if (gamePile.getTopCard().getValue() == 13 && matches > 0 && draw == false) {
 			while (true) {
 				try {
 					int colorChoice = 0;
@@ -1034,7 +1032,7 @@ public class OverZeroUnderTwo {
 
 		boolean skipped = false;
 		// *** Skip card - Player - Multiplayer ***
-		if (gamePile.getTopCard().getValue() == 10 && matches > 0 && draw == false) {
+		if (gamePile.getTopCard().getValue() == 10 && matches > 0 && draw == false && gameComplete == false) {
 			skipped = true;
 			if (gameFlow == 1) {
 				System.out.println("You skipped CPU 1's turn.");
@@ -1044,7 +1042,7 @@ public class OverZeroUnderTwo {
 		}
 
 		// *** Plus Two card - Player - Multiplayer ***
-		if (gamePile.getTopCard().getValue() == 12 && playerTurn && matches > 0) {
+		if (gamePile.getTopCard().getValue() == 12 && playerTurn && matches > 0 && draw == false) {
 			skipped = true;
 			if (gameFlow == 1) {
 				for (int i = 0; i < 2; i++) {
@@ -1060,7 +1058,7 @@ public class OverZeroUnderTwo {
 		} // End Plus Two else if
 
 		// *** Wild Plus Four card - Player - Multiplayer ***
-		if (gamePile.getTopCard().getValue() == 14 && playerTurn && matches > 0) {
+		if (gamePile.getTopCard().getValue() == 14 && playerTurn && matches > 0 && draw == false) {
 			while (true) {
 				try {
 					skipped = true;
