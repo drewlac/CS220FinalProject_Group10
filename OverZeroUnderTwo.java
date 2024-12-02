@@ -221,7 +221,7 @@ public class OverZeroUnderTwo {
 		if (stackCount > 0 && partyRules[2]) {
 			if (playerHand.getStackableCount() > 0) {
 				System.out.println("Stack has " + stackCount + " cards");
-				System.out.println("Do you want to add to stack? (Y/N)");
+				System.out.print("Do you want to add to stack? (Y/N)");
 				boolean answer = getYesNo(input);
 				if (answer) {
 					while (true) {
@@ -230,6 +230,7 @@ public class OverZeroUnderTwo {
 							for (int i = 0; i < stackList.size(); i++) {
 								System.out.println("-Card " + (i + 1) + ": " + stackList.get(i).toString());
 							}
+							System.out.println("Enter the number of the card you would like to play");
 							int choice = input.nextInt();
 							if (choice < 1 || choice > stackList.size()) {
 								throw new RuntimeException();
@@ -265,7 +266,7 @@ public class OverZeroUnderTwo {
 				for (int i = 0; i < stackCount; i++) {
 					playerHand.add(gameDeck.getRandomCard());
 				}
-				System.out.println("You didn't stack and drew" + stackCount + " cards!");
+				System.out.println("You didn't stack and drew " + stackCount + " cards!");
 				stackCount = 0;
 			}
 			// *** SWITCH TURNS ***
@@ -416,12 +417,22 @@ public class OverZeroUnderTwo {
 				if (partyRules[2]) {
 					System.out.println("Added +2 to the stack!");
 					stackCount += 2;
+					
+					// *** SWITCH TURNS ***
+					if (gameFlow == 1) { // clockwise
+						playerTurn = false;
+						cpu1Turn = true;
+					} else if (gameFlow == 2) { // counter clockwise
+						playerTurn = false;
+						cpu1Turn = true;
+					}
 				} else {
 					for (int i = 0; i < 2; i++) {
 						cpuHand.add(gameDeck.getRandomCard());
 					}
-				}
+				
 				System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
+				}
 			}
 			// Player plays a Wild Plus Four card. Change the color to one of the four
 			// colors, add four cards to CPU's hand, and skip CPU's turn. Keep asking for
@@ -805,6 +816,14 @@ public class OverZeroUnderTwo {
 				if (partyRules[2]) {
 					System.out.println("Added +4 cards to the stack");
 					stackCount += 4;
+				}
+				
+				if (gameFlow == 1) { // clockwise
+					cpu1Turn = false;
+					playerTurn = true;
+				} else if (gameFlow == 2) { // counter clockwise
+					cpu1Turn = false;
+					playerTurn = true;
 				}
 
 			} // else if (!(gamePile.getTopCard().getValue() == 10 && playableCount < 1)) { //
