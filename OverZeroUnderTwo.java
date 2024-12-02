@@ -15,7 +15,6 @@ public class OverZeroUnderTwo {
 	private static boolean cpu2Turn = false;
 	private static boolean cpu3Turn = false;
 	private static boolean draw = false;
-	private static boolean cpu1Bluff = false;
 	private static byte gameFlow = 1; // 1 for clockwise, 2 for counter clockwise
 	private static Deck gameDeck = new Deck(); // static variable for the deck the game is played on
 	private static DiscardPile gamePile = new DiscardPile(); // static variable for game discard pile
@@ -43,8 +42,8 @@ public class OverZeroUnderTwo {
 		// used to pass these values into methods
 		boolean[] partyRules = { sevenZero, noBluffing, stacking };
 		/*
-		 * partyRules[0] = sevenZero rule partyRules[1] = no bluffing rule partyRules[2]
-		 * = stacking rule
+		 * partyRules[0] = sevenZero rule partyRules[1] = no bluffing rule partyRules[2] =
+		 * stacking rule
 		 */
 
 		// Initializing variables used by game
@@ -116,7 +115,7 @@ public class OverZeroUnderTwo {
 		// adds one random card to discard pile so there is one card to start with
 		gamePile.addCard(gameDeck.getRandomCard());
 
-		// gamePile.addCard(new Card(11, "Red")); // Tester code to see what happens
+		//gamePile.addCard(new Card(11, "Red")); // Tester code to see what happens
 		// when a specialty card is the first card placed on the discard pile in a game.
 		// System.out.println(gamePile.getTopCard()); Tester print statement to see the
 		// first card placed on the discard pile.
@@ -305,11 +304,11 @@ public class OverZeroUnderTwo {
 				if (playerHand.getCard(i).match(gamePile.getTopCard())) {
 					matches++;
 				}
-				if (playerHand.getCard(i).getValue() == 14) {
+				if(playerHand.getCard(i).getValue()==14) {
 					wildPlus4Count++;
 				}
 			} // if there are matches, getting user input *** PLAYER PLAYS CARD HERE ***
-			int[] matchAmounts = { matches, wildPlus4Count };
+			int[] matchAmounts = {matches, wildPlus4Count};
 			if (matches > 0) {
 				userInput(input, playerHand, matchAmounts, partyRules);
 			} else { // if there are no matches, drawing one card
@@ -418,7 +417,7 @@ public class OverZeroUnderTwo {
 				if (partyRules[2]) {
 					System.out.println("Added +2 to the stack!");
 					stackCount += 2;
-
+					
 					// *** SWITCH TURNS ***
 					if (gameFlow == 1) { // clockwise
 						playerTurn = false;
@@ -431,8 +430,8 @@ public class OverZeroUnderTwo {
 					for (int i = 0; i < 2; i++) {
 						cpuHand.add(gameDeck.getRandomCard());
 					}
-
-					System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
+				
+				System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
 				}
 			}
 			// Player plays a Wild Plus Four card. Change the color to one of the four
@@ -440,39 +439,6 @@ public class OverZeroUnderTwo {
 			// valid input of 1-4 if the user enters a wrong number or input type.
 			// *** Wild Plus Four card - Player - Single-player ***
 			else if (gamePile.getTopCard().getValue() == 14 && playerTurn && matches > 0 && draw == false) {
-				// bluffing for cpu
-				if (partyRules[1] && matches > 0) {
-					cpu1Bluff = true;
-				}
-				//sets color before asking for bluff call
-				if (colorChoice == 1) {
-					System.out.println("CPU 1 played a Red Wild Plus Four Card.");
-					gamePile.addCard(new Card("Red"));
-				} else if (colorChoice == 2) {
-					System.out.println("CPU 1 played a Blue Wild Plus Four Card.");
-					gamePile.addCard(new Card("Blue"));
-				} else if (colorChoice == 3) {
-					System.out.println("CPU 1 played a Green Wild Plus Four Card.");
-					gamePile.addCard(new Card("Green"));
-				} else {
-					System.out.println("CPU 1 played a Yellow Wild Plus Four Card.");
-					gamePile.addCard(new Card("Yellow"));
-				}
-				System.out.println("CPU played a +4 call CPU's Bluff?(Y/N):");
-				boolean call = getYesNo(input);
-				if (call && playableCount > 0) {
-					for (int i = 0; i < 4; i++) {
-						cpuHand.add(gameDeck.getRandomCard());
-					}
-					cpu1Turn = false;
-					playerTurn = true;
-				} else if (call && playableCount == 0) {
-					for (int i = 0; i < 6; i++) {
-						playerHand.add(gameDeck.getRandomCard());
-					}
-					cpu1Turn = false;
-					playerTurn = true;
-				}
 				while (true) {
 					try {
 						int colorChoice = 0;
@@ -566,20 +532,20 @@ public class OverZeroUnderTwo {
 	} // End playerGameplay1CPU method.
 
 	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand, boolean[] partyRules) {
-		Scanner input = new Scanner(System.in);
+
 		if (stackCount > 0 && partyRules[2]) {
-
+			
 			try {
-
+			
 				if (cpuHand.getStackableCount() > 0) {
 					ArrayList<Card> stackList = playerHand.getStackableArray(playerHand);
-
+	
 					// *** PLAY FIRST STACKABLE CARD ***
 					// .get(0) is causing bugs *************************8
 					gamePile.addCard(stackList.get(0)); // play card to game pile
 					System.out.println("CPU 1 played: " + stackList.get(0)); // say which card cpu played
 					cpuHand.remove(stackList.get(0));// remove it from cpuHand
-
+	
 					// *** ADD VALUE TO STACK COUNT ***
 					if (stackList.get(0).getValue() == 12) {
 						System.out.println("+2 added to stack");
@@ -588,7 +554,7 @@ public class OverZeroUnderTwo {
 						System.out.println("+4 added to stack");
 						stackCount += 4;
 					}
-
+	
 				} else { // *** ADD STACK TO CPU HAND AND RESET IT ***
 					for (int i = 0; i < stackCount; i++) {
 						cpuHand.add(gameDeck.getRandomCard());
@@ -596,7 +562,7 @@ public class OverZeroUnderTwo {
 					System.out.println("CPU didn't stack and drew " + stackCount + " cards!");
 					stackCount = 0;
 				}
-
+	
 				// *** SWITCH TURN ***
 				if (gameFlow == 1) { // clockwise
 					cpu1Turn = false;
@@ -606,14 +572,14 @@ public class OverZeroUnderTwo {
 					playerTurn = true;
 				}
 			}
-
-			catch (IndexOutOfBoundsException e) {
+			
+			catch(IndexOutOfBoundsException e) {
 				for (int i = 0; i < stackCount; i++) {
 					cpuHand.add(gameDeck.getRandomCard());
 				}
 				System.out.println("CPU didn't stack and drew " + stackCount + " cards!");
 				stackCount = 0;
-
+				
 				if (gameFlow == 1) { // clockwise
 					cpu1Turn = false;
 					playerTurn = true;
@@ -622,7 +588,7 @@ public class OverZeroUnderTwo {
 					playerTurn = true;
 				}
 			}
-
+			
 		} else { // *** ELSE JUST PLAY REGULAR GAME
 
 			// creates a hand of playable cards
@@ -643,7 +609,7 @@ public class OverZeroUnderTwo {
 					// adds cards to the new hand
 					playableCount++;
 				}
-				if (cpuHand.getCard(i).getValue() == 14) {
+				if (cpuHand.getCard(i).getValue() ==  14) {
 					wildPlus4Amount++;
 				}
 			}
@@ -674,12 +640,11 @@ public class OverZeroUnderTwo {
 					for (int i = 0; i < cpuHand.getSize(); i++) {
 						coinflip = random.nextDouble();
 						// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
-						if (partyRules[1] && playableCount > wildPlus4Amount && cpuHand.getCard(i).getValue() == 14) {
+						if(partyRules[1] && playableCount > wildPlus4Amount && cpuHand.getCard(i).getValue()==14) {
 							System.out.println("CPU: I can't bluff, trying again!");
 						} // skipping bluffing if no bluff rule is activated
-						else if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match
-																										// and
-							// coinflip is good
+						else if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
+																								// coinflip is good
 							gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
 							System.out.println("CPU 1 played: " + cpuHand.getCard(i)); // say which card cpu played
 							cpuHand.remove(cpuHand.getCard(i));// remove it from cpuHand
@@ -765,6 +730,25 @@ public class OverZeroUnderTwo {
 				}
 			}
 
+			// *******Stacking********* Currently broken
+			/*
+			 * // WIP //Checks to see if party rules are in effect, if the previous player
+			 * // played a stackable card else if (partyRules[2] && stackable) {
+			 * System.out.println("Stacking check");// testing to tell us if this is run if
+			 * ((gamePile.getTopCard().getValue() == 12 || gamePile.getTopCard().getValue()
+			 * == 14)) { // <-- I think // this is the // problem if
+			 * (gamePile.getTopCard().getValue() == 12) { stackCount += 2;
+			 * System.out.println("+2 added to stack"); } else { stackCount += 4;
+			 * System.out.println("+4 added to stack"); } } // if the card played is not
+			 * stackable then the current player draws stackCount // number of cards and
+			 * informs player else { for (int n = 0; n < stackCount; n++) {
+			 * cpuHand.add(gameDeck.getRandomCard());
+			 * System.out.println("CPU didn't stack and drew " + stackCount + " cards!"); }
+			 * stackCount = 0; } System.out.println(stackable + " " + stackCount);// testing
+			 * to see if stuff is working // change turn cpu1Turn = false; playerTurn =
+			 * true; }
+			 */
+
 			// *** Plus Two card - CPU1 - Single-player ***
 			else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0) { // plus2
 				// Forces player to draw 2 random cards.
@@ -782,44 +766,10 @@ public class OverZeroUnderTwo {
 			// CPU plays Wild Plus Four card. It then randomly chooses a color, forces the
 			// player to draw 4 cards, and skips the player's turn.
 			else if (gamePile.getTopCard().getValue() == 14 && playableCount > 0) {
-
 				int colorChoice = 0;
 				Random rand = new Random();
 				colorChoice = rand.nextInt(4) + 1; // Generate random number between 1 and 4.
 
-				// bluffing for cpu
-				if (partyRules[1] && playableCount > 0) {
-					cpu1Bluff = true;
-				}
-				//sets color before asking for bluff call
-				if (colorChoice == 1) {
-					System.out.println("CPU 1 played a Red Wild Plus Four Card.");
-					gamePile.addCard(new Card("Red"));
-				} else if (colorChoice == 2) {
-					System.out.println("CPU 1 played a Blue Wild Plus Four Card.");
-					gamePile.addCard(new Card("Blue"));
-				} else if (colorChoice == 3) {
-					System.out.println("CPU 1 played a Green Wild Plus Four Card.");
-					gamePile.addCard(new Card("Green"));
-				} else {
-					System.out.println("CPU 1 played a Yellow Wild Plus Four Card.");
-					gamePile.addCard(new Card("Yellow"));
-				}
-				System.out.println("CPU played a +4 call CPU's Bluff?(Y/N):");
-				boolean call = getYesNo(input);
-				if (call && playableCount > 0) {
-					for (int i = 0; i < 4; i++) {
-						cpuHand.add(gameDeck.getRandomCard());
-					}
-					cpu1Turn = false;
-					playerTurn = true;
-				} else if (call && playableCount == 0) {
-					for (int i = 0; i < 6; i++) {
-						playerHand.add(gameDeck.getRandomCard());
-					}
-					cpu1Turn = false;
-					playerTurn = true;
-				}
 				// System.out.println("CPU colorChoice is " + colorChoice); Test print statement
 				// to confirm CPU can play only the four valid colors.
 				if (colorChoice == 1) {
@@ -867,7 +817,7 @@ public class OverZeroUnderTwo {
 					System.out.println("Added +4 cards to the stack");
 					stackCount += 4;
 				}
-
+				
 				if (gameFlow == 1) { // clockwise
 					cpu1Turn = false;
 					playerTurn = true;
@@ -1126,8 +1076,7 @@ public class OverZeroUnderTwo {
 	} // End resetGame3CPU method.
 
 	// Used to code player turn in multiplayer.
-	public static void playerGameplay3CPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand,
-			boolean[] partyRules) {
+	public static void playerGameplay3CPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand, boolean[] partyRules) {
 		// Set draw to false at the beginning of the player's turn.
 		draw = false;
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
@@ -1151,13 +1100,13 @@ public class OverZeroUnderTwo {
 		for (int i = 0; i < playerHand.getSize(); i++) {
 			if (playerHand.getCard(i).match(gamePile.getTopCard())) {
 				matches++;
-
+				
 			}
-			if (playerHand.getCard(i).getValue() == 14) {
+			if(playerHand.getCard(i).getValue()==14) {
 				wildPlus4Count++;
 			}
 		} // if there are matches, getting user input
-		int[] matchAmounts = { matches, wildPlus4Count };
+		int[] matchAmounts = {matches, wildPlus4Count};
 		if (matches > 0) {
 			userInput(input, playerHand, matchAmounts, partyRules);
 		} else { // if there are no matches, drawing one card
@@ -2189,12 +2138,10 @@ public class OverZeroUnderTwo {
 				if (selection < 0 || selection > playerHand.getSize()) {
 					throw new RuntimeException();
 				} else {
-					if (partyRules[1] && (matchAmounts[0] > matchAmounts[1])
-							&& playerHand.getCard(selection - 1).getValue() == 14) {
-						System.out.println(
-								"You are not allowed to bluff the wild plus 4 card. Please select another card!");
-					} else if (playerHand.getCard(selection - 1).match(gamePile.getTopCard())) {// if card matches top
-																								// card
+					if(partyRules[1] && (matchAmounts[0] > matchAmounts[1]) && playerHand.getCard(selection - 1).getValue()==14) {
+						System.out.println("You are not allowed to bluff the wild plus 4 card. Please select another card!");
+					}
+					else if (playerHand.getCard(selection - 1).match(gamePile.getTopCard())) {// if card matches top card
 						// Playing the selected card
 						gamePile.addCard(playerHand.getCard(selection - 1));
 						System.out.println("You played: " + playerHand.getCard(selection - 1));
