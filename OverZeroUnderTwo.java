@@ -34,15 +34,15 @@ public class OverZeroUnderTwo {
 		boolean sevenZero = getYesNo(input);
 
 		System.out.print("Bluffing (Y/N): ");
-		boolean bluffing = getYesNo(input);
+		boolean noBluffing = getYesNo(input);
 
 		System.out.print("Stacking Rule (Y/N): ");
 		boolean stacking = getYesNo(input);
 
 		// used to pass these values into methods
-		boolean[] partyRules = { sevenZero, bluffing, stacking };
+		boolean[] partyRules = { sevenZero, noBluffing, stacking };
 		/*
-		 * partyRules[0] = sevenZero rule partyRules[1] = bluffing rule partyRules[2] =
+		 * partyRules[0] = sevenZero rule partyRules[1] = no bluffing rule partyRules[2] =
 		 * stacking rule
 		 */
 
@@ -276,7 +276,7 @@ public class OverZeroUnderTwo {
 				playerTurn = false;
 				cpu1Turn = true;
 			}
-		} else { // *** OTHERWISE, PLAY GAME NORMALLY ***
+		} else { // *** OTHERWISE, PLAY GAME NORMALLY *** END STACKING ***
 
 			// Set draw to false at the beginning of the player's turn.
 			draw = false;
@@ -298,13 +298,18 @@ public class OverZeroUnderTwo {
 			}
 			// checking if any cards match
 			int matches = 0;
+			int wildPlus4Count = 0;
 			for (int i = 0; i < playerHand.getSize(); i++) {
 				if (playerHand.getCard(i).match(gamePile.getTopCard())) {
 					matches++;
 				}
+				else if(playerHand.getCard(i).getValue()==14) {
+					wildPlus4Count++;
+				}
 			} // if there are matches, getting user input *** PLAYER PLAYS CARD HERE ***
+			int[] matchAmounts = {matches, wildPlus4Count};
 			if (matches > 0) {
-				userInput(input, playerHand);
+				userInput(input, playerHand, matchAmounts);
 			} else { // if there are no matches, drawing one card
 				System.out.println("You have no matches, so you drew 1 card.");
 				playerHand.add(gameDeck.getRandomCard());
@@ -1045,13 +1050,19 @@ public class OverZeroUnderTwo {
 		// playerHand.add(new Card(11, "Red")); // Tester code for a Red Reverse card.
 		// checking if any cards match
 		int matches = 0;
+		int wildPlus4Count = 0;
 		for (int i = 0; i < playerHand.getSize(); i++) {
 			if (playerHand.getCard(i).match(gamePile.getTopCard())) {
 				matches++;
+				
+			}
+			else if(playerHand.getCard(i).getValue()==14) {
+				wildPlus4Count++;
 			}
 		} // if there are matches, getting user input
+		int[] matchAmounts = {matches, wildPlus4Count};
 		if (matches > 0) {
-			userInput(input, playerHand);
+			userInput(input, playerHand, matchAmounts);
 		} else { // if there are no matches, drawing one card
 			System.out.println("You have no matches, so you drew 1 card.");
 			playerHand.add(gameDeck.getRandomCard());
@@ -2036,7 +2047,7 @@ public class OverZeroUnderTwo {
 		} // end playAgain loop
 	} // End threeCPU method.
 
-	private static void userInput(Scanner input, Hand playerHand) {
+	private static void userInput(Scanner input, Hand playerHand, int[] matchAmounts) {
 
 		// get user input for next int
 		String choice;
