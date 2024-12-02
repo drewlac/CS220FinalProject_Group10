@@ -303,10 +303,11 @@ public class OverZeroUnderTwo {
 				if (playerHand.getCard(i).match(gamePile.getTopCard())) {
 					matches++;
 				}
-				else if(playerHand.getCard(i).getValue()==14) {
+				if(playerHand.getCard(i).getValue()==14) {
 					wildPlus4Count++;
 				}
 			} // if there are matches, getting user input *** PLAYER PLAYS CARD HERE ***
+			System.out.println("\nMatches: " + matches + "\nWild Plus 4 Count: " + wildPlus4Count);
 			int[] matchAmounts = {matches, wildPlus4Count};
 			if (matches > 0) {
 				userInput(input, playerHand, matchAmounts, partyRules);
@@ -568,6 +569,7 @@ public class OverZeroUnderTwo {
 			// else
 			// stackable = false;
 			int playableCount = 0;
+			int wildPlus4Amount = 0;
 			// cpuHand.add(new Card(14, "Wild")); // Added tester code so the CPU always has
 			// a
 			// Wild Plus Four card.
@@ -576,6 +578,9 @@ public class OverZeroUnderTwo {
 				if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
 					// adds cards to the new hand
 					playableCount++;
+				}
+				if (cpuHand.getCard(i).getValue() ==  14) {
+					wildPlus4Amount++;
 				}
 			}
 
@@ -605,7 +610,10 @@ public class OverZeroUnderTwo {
 					for (int i = 0; i < cpuHand.getSize(); i++) {
 						coinflip = random.nextDouble();
 						// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
-						if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
+						if(partyRules[1] && playableCount > wildPlus4Amount && cpuHand.getCard(i).getValue()==14) {
+							System.out.println("CPU: I can't bluff, trying again!");
+						} // skipping bluffing if no bluff rule is activated
+						else if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
 																								// coinflip is good
 							gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
 							System.out.println("CPU 1 played: " + cpuHand.getCard(i)); // say which card cpu played
@@ -1056,7 +1064,7 @@ public class OverZeroUnderTwo {
 				matches++;
 				
 			}
-			else if(playerHand.getCard(i).getValue()==14) {
+			if(playerHand.getCard(i).getValue()==14) {
 				wildPlus4Count++;
 			}
 		} // if there are matches, getting user input
@@ -2092,7 +2100,7 @@ public class OverZeroUnderTwo {
 				if (selection < 0 || selection > playerHand.getSize()) {
 					throw new RuntimeException();
 				} else {
-					if(partyRules[1] && matchAmounts[0] > matchAmounts[1] && playerHand.getCard(selection - 1).getValue()==14) {
+					if(partyRules[1] && (matchAmounts[0] > matchAmounts[1]) && playerHand.getCard(selection - 1).getValue()==14) {
 						System.out.println("You are not allowed to bluff the wild plus 4 card. Please select another card!");
 					}
 					else if (playerHand.getCard(selection - 1).match(gamePile.getTopCard())) {// if card matches top card
