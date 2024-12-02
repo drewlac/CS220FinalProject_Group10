@@ -309,7 +309,7 @@ public class OverZeroUnderTwo {
 			} // if there are matches, getting user input *** PLAYER PLAYS CARD HERE ***
 			int[] matchAmounts = {matches, wildPlus4Count};
 			if (matches > 0) {
-				userInput(input, playerHand, matchAmounts);
+				userInput(input, playerHand, matchAmounts, partyRules);
 			} else { // if there are no matches, drawing one card
 				System.out.println("You have no matches, so you drew 1 card.");
 				playerHand.add(gameDeck.getRandomCard());
@@ -1030,7 +1030,7 @@ public class OverZeroUnderTwo {
 	} // End resetGame3CPU method.
 
 	// Used to code player turn in multiplayer.
-	public static void playerGameplay3CPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand) {
+	public static void playerGameplay3CPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand, boolean[] partyRules) {
 		// Set draw to false at the beginning of the player's turn.
 		draw = false;
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
@@ -1062,7 +1062,7 @@ public class OverZeroUnderTwo {
 		} // if there are matches, getting user input
 		int[] matchAmounts = {matches, wildPlus4Count};
 		if (matches > 0) {
-			userInput(input, playerHand, matchAmounts);
+			userInput(input, playerHand, matchAmounts, partyRules);
 		} else { // if there are no matches, drawing one card
 			System.out.println("You have no matches, so you drew 1 card.");
 			playerHand.add(gameDeck.getRandomCard());
@@ -2004,7 +2004,7 @@ public class OverZeroUnderTwo {
 				if (gameFlow == 1 && gameComplete == false) {// clockwise gameplay
 
 					if (playerTurn && gameComplete == false) {
-						playerGameplay3CPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand);
+						playerGameplay3CPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand, partyRules);
 					} // Code for player's turn
 					else if (cpu1Turn && gameComplete == false) {
 						cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand);
@@ -2023,7 +2023,7 @@ public class OverZeroUnderTwo {
 
 					// Code for player's turn.
 					if (playerTurn && gameComplete == false) {
-						playerGameplay3CPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand);
+						playerGameplay3CPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand, partyRules);
 					}
 					// Code for CPU3's turn.
 					else if (cpu3Turn && gameComplete == false) {
@@ -2047,7 +2047,7 @@ public class OverZeroUnderTwo {
 		} // end playAgain loop
 	} // End threeCPU method.
 
-	private static void userInput(Scanner input, Hand playerHand, int[] matchAmounts) {
+	private static void userInput(Scanner input, Hand playerHand, int[] matchAmounts, boolean[] partyRules) {
 
 		// get user input for next int
 		String choice;
@@ -2092,7 +2092,10 @@ public class OverZeroUnderTwo {
 				if (selection < 0 || selection > playerHand.getSize()) {
 					throw new RuntimeException();
 				} else {
-					if (playerHand.getCard(selection - 1).match(gamePile.getTopCard())) {// if card matches top card
+					if(partyRules[1] && matchAmounts[0] > matchAmounts[1] && playerHand.getCard(selection - 1).getValue()==14) {
+						System.out.println("You are not allowed to bluff the wild plus 4 card. Please select another card!");
+					}
+					else if (playerHand.getCard(selection - 1).match(gamePile.getTopCard())) {// if card matches top card
 						// Playing the selected card
 						gamePile.addCard(playerHand.getCard(selection - 1));
 						System.out.println("You played: " + playerHand.getCard(selection - 1));
