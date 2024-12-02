@@ -92,10 +92,10 @@ public class OverZeroUnderTwo {
 
 		if (coinflip == 1) {
 			playerTurn = true;
-			System.out.println("Player turn is first!");
+			System.out.println("Player's turn is first!");
 		} else if (coinflip == 2) {
 			cpu1Turn = true;
-			System.out.println("CPU turn is first!");
+			System.out.println("CPU 1's turn is first!");
 		} else {
 			System.out.println("Some sort of error, must have got the coinflip wrong :( ");
 		} // end else
@@ -115,12 +115,13 @@ public class OverZeroUnderTwo {
 		// adds one random card to discard pile so there is one card to start with
 		gamePile.addCard(gameDeck.getRandomCard());
 
-		// gamePile.addCard(new Card(13, "Wild")); //Tester code to see what happens
-		// when a Wild card is the first card placed on the discard pile in a game.
+		//gamePile.addCard(new Card(11, "Red")); // Tester code to see what happens
+		// when a specialty card is the first card placed on the discard pile in a game.
 		// System.out.println(gamePile.getTopCard()); Tester print statement to see the
 		// first card placed on the discard pile.
 		// If the top card at the beginning of the game is a Wild card, randomly assign
 		// a color value to the top card.
+		// *** Wild card or Wild Plus Four card - First card - Single-Player ***
 		if (gamePile.getTopCard().getValue() == 13 || gamePile.getTopCard().getValue() == 14) {
 			int colorChoice = 0;
 			Random rand1 = new Random();
@@ -162,6 +163,7 @@ public class OverZeroUnderTwo {
 
 		// If the skip card is the first card on the discard pile, skip the first
 		// player's turn.
+		// *** Skip card - First card - Single-Player ***
 		if (gamePile.getTopCard().getValue() == 10) {
 			if (playerTurn) {
 				System.out.println("First card was a Skip card. Your turn was skipped.");
@@ -174,18 +176,19 @@ public class OverZeroUnderTwo {
 			}
 		}
 		// If the reverse card is the first card on the discard pile, reverse the turn
-		// order and continue.
+		// order and continue. Because the turn order is clockwise by default, the first
+		// card should only switch the order to counter-clockwise.
+		// *** Reverse card - First card - Single-Player ***
 		if (gamePile.getTopCard().getValue() == 11) {
 			if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1) {
 				gameFlow = 2;
+				System.out.println("The first card was a Reverse card.");
 				System.out.println("The game order was switched to counter-clockwise.");
-			} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2) {
-				gameFlow = 1;
-				System.out.println("The game order was switched to clockwise.");
 			}
 		}
 		// If the Plus 2 card is the first card on the discard pile, make the first
 		// player draw 2 cards and skip their turn.
+		// *** Plus 2 card - First card - Single-Player ***
 		if (gamePile.getTopCard().getValue() == 12) {
 			if (playerTurn) {
 				System.out.println("First card was a Plus Two card.\nYou drew 2 cards and your turn was skipped.");
@@ -313,7 +316,7 @@ public class OverZeroUnderTwo {
 				if (answer.strip().equalsIgnoreCase("uno")) {
 					System.out.println("You successfully called Uno!");
 				} else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
-					System.out.println("You forgot to call uno, drawing another card!");
+					System.out.println("You forgot to call Uno, drawing another card!");
 					playerHand.add(gameDeck.getRandomCard());
 				}
 			}
@@ -816,7 +819,7 @@ public class OverZeroUnderTwo {
 
 				if (playerTurn && gameComplete == false) {
 					playerGameplay1CPU(input, playerHand, cpu1Hand, partyRules);
-				} // code for players turn
+				} // code for player's turn
 				else if (cpu1Turn && gameComplete == false) {
 					cpu1Gameplay1CPU(cpu1Hand, playerHand, partyRules);
 				} // code for cpu's turn
@@ -841,16 +844,16 @@ public class OverZeroUnderTwo {
 
 		if (coinflip == 1) {
 			playerTurn = true;
-			System.out.println("Player turn is first!");
+			System.out.println("Player's turn is first!");
 		} else if (coinflip == 2) {
 			cpu1Turn = true;
-			System.out.println("CPU 1 turn is first!");
+			System.out.println("CPU 1's turn is first!");
 		} else if (coinflip == 3) {
 			cpu2Turn = true;
-			System.out.println("CPU 2 turn is first!");
+			System.out.println("CPU 2's turn is first!");
 		} else if (coinflip == 4) {
 			cpu3Turn = true;
-			System.out.println("CPU 3 turn is first!");
+			System.out.println("CPU 3's turn is first!");
 		} else {
 			System.out.println("Some sort of error, must have got the coinflip wrong :( ");
 		} // end else
@@ -879,6 +882,136 @@ public class OverZeroUnderTwo {
 
 		// adds one random card to discard pile so there is one card to start with
 		gamePile.addCard(gameDeck.getRandomCard());
+		// gamePile.addCard(new Card(12, "Red")); // Tester code to see what happens
+		// when a specialty card is the first card placed on the discard pile in a game.
+
+		// If the top card at the beginning of the game is a Wild or Wild Plus Four
+		// card, randomly assign a color value to the top card.
+		// *** Wild card or Wild Plus Four card - First card - Multiplayer ***
+		if (gamePile.getTopCard().getValue() == 13 || gamePile.getTopCard().getValue() == 14) {
+			int colorChoice = 0;
+			Random rand2 = new Random();
+			colorChoice = rand2.nextInt(4) + 1; // Generate random number between 1 and 4.
+			if (gamePile.getTopCard().getValue() == 13) {
+				System.out.println("The first card of the game was a Wild card.");
+			}
+			if (gamePile.getTopCard().getValue() == 14 && playerTurn) {
+				System.out
+						.println("First card was a Wild Plus Four card.\nYou drew 4 cards and your turn was skipped.");
+				for (int i = 0; i < 4; i++) {
+					playerHand.add(gameDeck.getRandomCard());
+				}
+				playerTurn = false;
+				cpu1Turn = true;
+			} else if (gamePile.getTopCard().getValue() == 14 && cpu1Turn) {
+				System.out.println(
+						"First card was a Wild Plus Four card.\nCPU 1 drew 4 cards and their turn was skipped.");
+				for (int i = 0; i < 4; i++) {
+					cpu1Hand.add(gameDeck.getRandomCard());
+				}
+				cpu1Turn = false;
+				cpu2Turn = true;
+			} else if (gamePile.getTopCard().getValue() == 14 && cpu2Turn) {
+				System.out.println(
+						"First card was a Wild Plus Four card.\nCPU 2 drew 4 cards and their turn was skipped.");
+				for (int i = 0; i < 4; i++) {
+					cpu2Hand.add(gameDeck.getRandomCard());
+				}
+				cpu2Turn = false;
+				cpu3Turn = true;
+			} else if (gamePile.getTopCard().getValue() == 14 && cpu3Turn) {
+				System.out.println(
+						"First card was a Wild Plus Four card.\nCPU 3 drew 4 cards and their turn was skipped.");
+				for (int i = 0; i < 4; i++) {
+					cpu3Hand.add(gameDeck.getRandomCard());
+				}
+				cpu3Turn = false;
+				playerTurn = true;
+			}
+			if (colorChoice == 1) {
+				System.out.println("The first card is now a Blue Card.\n");
+				gamePile.addCard(new Card("Blue"));
+			} else if (colorChoice == 2) {
+				System.out.println("The first card is now a Green Card.\n");
+				gamePile.addCard(new Card("Green"));
+			} else if (colorChoice == 3) {
+				System.out.println("The first card is now a Red Card.\n");
+				gamePile.addCard(new Card("Red"));
+			} else if (colorChoice == 4) {
+				System.out.println("The first card is now a Yellow Card.\n");
+				gamePile.addCard(new Card("Yellow"));
+			}
+		} // End Wild if
+
+		// If the skip card is the first card on the discard pile, skip the first
+		// player's turn.
+		// *** Skip card - First card - Multiplayer ***
+		if (gamePile.getTopCard().getValue() == 10) {
+			if (playerTurn) {
+				System.out.println("First card was a Skip card. Your turn was skipped.");
+				playerTurn = false;
+				cpu1Turn = true;
+			} else if (cpu1Turn) {
+				System.out.println("First card was a Skip card. CPU 1's turn was skipped.");
+				cpu1Turn = false;
+				cpu2Turn = true;
+			} else if (cpu2Turn) {
+				System.out.println("First card was a Skip card. CPU 2's turn was skipped.");
+				cpu2Turn = false;
+				cpu3Turn = true;
+			} else if (cpu3Turn) {
+				System.out.println("First card was a Skip card. CPU 3's turn was skipped.");
+				cpu3Turn = false;
+				playerTurn = true;
+			}
+		} // End Skip if
+
+		// If the reverse card is the first card on the discard pile, reverse the turn
+		// order and continue. Because the turn order is clockwise by default, the first
+		// card should only switch the order to counter-clockwise.
+		// *** Reverse card - First card - Multiplayer ***
+		if (gamePile.getTopCard().getValue() == 11) {
+			if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1) {
+				gameFlow = 2;
+				System.out.println("The first card was a Reverse card.");
+				System.out.println("The game order was switched to counter-clockwise.");
+			}
+		} // End Reverse if
+
+		// If the Plus 2 card is the first card on the discard pile, make the first
+		// player draw 2 cards and skip their turn.
+		// *** Plus 2 card - First card - Multiplayer ***
+		if (gamePile.getTopCard().getValue() == 12) {
+			if (playerTurn) {
+				System.out.println("First card was a Plus Two card.\nYou drew 2 cards and your turn was skipped.");
+				for (int i = 0; i < 2; i++) {
+					playerHand.add(gameDeck.getRandomCard());
+				}
+				playerTurn = false;
+				cpu1Turn = true;
+			} else if (cpu1Turn) {
+				System.out.println("First card was a Plus Two card.\nCPU 1 drew 2 cards and their turn was skipped.");
+				for (int i = 0; i < 2; i++) {
+					cpu1Hand.add(gameDeck.getRandomCard());
+				}
+				cpu1Turn = false;
+				cpu2Turn = true;
+			} else if (cpu2Turn) {
+				System.out.println("First card was a Plus Two card.\nCPU 2 drew 2 cards and their turn was skipped.");
+				for (int i = 0; i < 2; i++) {
+					cpu2Hand.add(gameDeck.getRandomCard());
+				}
+				cpu2Turn = false;
+				cpu3Turn = true;
+			} else if (cpu3Turn) {
+				System.out.println("First card was a Plus Two card.\nCPU 3 drew 2 cards and their turn was skipped.");
+				for (int i = 0; i < 2; i++) {
+					cpu3Hand.add(gameDeck.getRandomCard());
+				}
+				cpu3Turn = false;
+				playerTurn = true;
+			}
+		} // End Plus 2 if
 
 	} // end method startGame3CPU method.
 
@@ -909,7 +1042,7 @@ public class OverZeroUnderTwo {
 			System.out.println("\nThe player has " + playerHand.getSize() + " card. ");
 		}
 
-		//playerHand.add(new Card(11, "Red")); // Tester code for a Red Reverse card.
+		// playerHand.add(new Card(11, "Red")); // Tester code for a Red Reverse card.
 		// checking if any cards match
 		int matches = 0;
 		for (int i = 0; i < playerHand.getSize(); i++) {
@@ -930,7 +1063,7 @@ public class OverZeroUnderTwo {
 			if (answer.strip().equalsIgnoreCase("uno")) {
 				System.out.println("You successfully called Uno!");
 			} else if (!answer.strip().equalsIgnoreCase("uno") || answer.isEmpty()) {
-				System.out.println("You forgot to call uno, drawing another card!");
+				System.out.println("You forgot to call Uno, drawing another card!");
 				playerHand.add(gameDeck.getRandomCard());
 			}
 		}
@@ -939,17 +1072,9 @@ public class OverZeroUnderTwo {
 
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0 && draw == false) {
 			gameFlow = 2;
-			/*
-			 * if (gameFlow == 2) { playerTurn = false; cpu3Turn = true; }
-			 */
-			System.out.println("gameFlow is now: " + gameFlow);
 			System.out.println("The game order was switched to counter-clockwise.");
 		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches > 0 && draw == false) {
 			gameFlow = 1;
-			/*
-			 * if (gameFlow == 1) { playerTurn = false; cpu1Turn = true; }
-			 */
-			System.out.println("gameFlow is now: " + gameFlow);
 			System.out.println("The game order was switched to clockwise.");
 		}
 
@@ -967,26 +1092,18 @@ public class OverZeroUnderTwo {
 						if (colorChoice == 1) {
 							System.out.println("You played a Blue Wild card.");
 							gamePile.addCard(new Card("Blue"));
-							// cpu1Turn = true;
-							// playerTurn = false;
 							break;
 						} else if (colorChoice == 2) {
 							System.out.println("You played a Green Wild card.");
 							gamePile.addCard(new Card("Green"));
-							// cpu1Turn = true;
-							// playerTurn = false;
 							break;
 						} else if (colorChoice == 3) {
 							System.out.println("You played a Red Wild card.");
 							gamePile.addCard(new Card("Red"));
-							// cpu1Turn = true;
-							// playerTurn = false;
 							break;
 						} else if (colorChoice == 4) {
 							System.out.println("You played a Yellow Wild card.");
 							gamePile.addCard(new Card("Yellow"));
-							// cpu1Turn = true;
-							// playerTurn = false;
 							break;
 						}
 					}
@@ -995,26 +1112,18 @@ public class OverZeroUnderTwo {
 						if (colorChoice == 1) {
 							System.out.println("You played a Blue Wild card.");
 							gamePile.addCard(new Card("Blue"));
-							// cpu3Turn = true;
-							// playerTurn = false;
 							break;
 						} else if (colorChoice == 2) {
 							System.out.println("You played a Green Wild card.");
 							gamePile.addCard(new Card("Green"));
-							// cpu3Turn = true;
-							// playerTurn = false;
 							break;
 						} else if (colorChoice == 3) {
 							System.out.println("You played a Red Wild card.");
 							gamePile.addCard(new Card("Red"));
-							// cpu3Turn = true;
-							// playerTurn = false;
 							break;
 						} else if (colorChoice == 4) {
 							System.out.println("You played a Yellow Wild card.");
 							gamePile.addCard(new Card("Yellow"));
-							// cpu3Turn = true;
-							// playerTurn = false;
 							break;
 						}
 					} else {
@@ -1144,7 +1253,6 @@ public class OverZeroUnderTwo {
 			} // End while
 		} // End Wild Plus Four if
 
-		System.out.println("gameFlow is now: " + gameFlow);
 		// switch turns and wait 1 second
 		if (gameFlow == 1) { // clockwise
 			playerTurn = false;
@@ -1161,16 +1269,6 @@ public class OverZeroUnderTwo {
 			else // regular gameplay
 				cpu3Turn = true;
 		}
-
-		// reverse test
-		/*
-		 * if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && matches > 0) {
-		 * gameFlow = 2; playerTurn = false; cpu1Turn = true;
-		 * System.out.println("The game order was switched to counter-clockwise."); }
-		 * else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && matches >
-		 * 0) { gameFlow = 1; playerTurn = false; cpu3Turn = true;
-		 * System.out.println("The game order was switched to clockwise."); }
-		 */
 
 		try {
 			Thread.sleep(1000);
@@ -1242,17 +1340,9 @@ public class OverZeroUnderTwo {
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
 			gameFlow = 2;
 			System.out.println("The game order was switched to counter-clockwise.");
-			System.out.println("gameFlow is now: " + gameFlow);
-			/*
-			 * if (gameFlow == 2) { cpu1Turn = false; playerTurn = true; }
-			 */
 		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
 			gameFlow = 1;
 			System.out.println("The game order was switched to clockwise.");
-			System.out.println("gameFlow is now: " + gameFlow);
-			/*
-			 * if (gameFlow == 1) { cpu1Turn = false; cpu2Turn = true; }
-			 */
 		}
 
 		// *** Wild card - CPU1 - Multiplayer ***
@@ -1276,12 +1366,6 @@ public class OverZeroUnderTwo {
 				System.out.println("CPU 1 played a Yellow Wild Card.");
 				gamePile.addCard(new Card("Yellow"));
 			}
-
-			// May not need this section to switch turns correctly. *** Possibly remove? ***
-			/*
-			 * if (gameFlow == 1) { cpu1Turn = false; cpu2Turn = true; } else if (gameFlow
-			 * == 2) { cpu1Turn = false; playerTurn = true; }
-			 */
 		} // End Wild card if
 
 		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
@@ -1296,16 +1380,10 @@ public class OverZeroUnderTwo {
 			skipped = true;
 			// skip code for CLOCKWISE order
 			if (gameFlow == 1) {
-				// cpu1Turn = false;
-				// cpu2Turn = false;
-				// cpu3Turn = true;
 				System.out.println("CPU 1 skipped CPU 2's turn.");
 			}
 			// skip code for COUNTER-CLOCKWISE order
 			if (gameFlow == 2) {
-				// cpu1Turn = false;
-				// cpu3Turn = true;
-				// playerTurn = false;
 				System.out.println("CPU 1 skipped your turn.");
 			}
 		}
@@ -1399,7 +1477,6 @@ public class OverZeroUnderTwo {
 			}
 		} // End Wild Plus Four card if
 
-		System.out.println("gameFlow is now: " + gameFlow);
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
 		if (gameFlow == 1) { // clockwise
 			cpu1Turn = false;
@@ -1493,18 +1570,10 @@ public class OverZeroUnderTwo {
 		// *** Reverse card - CPU2 - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
 			gameFlow = 2;
-			System.out.println("gameFlow is now: " + gameFlow);
-			/*
-			 * if (gameFlow == 2) { cpu2Turn = false; cpu1Turn = true; }
-			 */
 			System.out.println("The game order was switched to counter-clockwise.");
 		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
 			gameFlow = 1;
-			System.out.println("gameFlow is now: " + gameFlow);
 			System.out.println("The game order was switched to clockwise.");
-			/*
-			 * if (gameFlow == 1) { cpu2Turn = false; cpu3Turn = true; }
-			 */
 		}
 
 		// *** Wild card - CPU2 - Multiplayer ***
@@ -1528,12 +1597,6 @@ public class OverZeroUnderTwo {
 				System.out.println("CPU 2 played a Yellow Wild Card.");
 				gamePile.addCard(new Card("Yellow"));
 			}
-
-			// May not need this section to switch turns correctly. *** Possibly remove? ***
-			/*
-			 * if (gameFlow == 1) { cpu2Turn = false; cpu3Turn = true; } else if (gameFlow
-			 * == 2) { cpu2Turn = false; cpu1Turn = true; }
-			 */
 		} // End Wild card if
 
 		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
@@ -1548,16 +1611,10 @@ public class OverZeroUnderTwo {
 			// skip code for CLOCKWISE order
 			skipped = true;
 			if (gameFlow == 1) {
-				// cpu2Turn = false;
-				// cpu3Turn = false;
-				// playerTurn = true;
 				System.out.println("CPU 2 skipped CPU 3's turn.");
 			}
 			// skip code for COUNTER-CLOCKWISE order
 			if (gameFlow == 2) {
-				// cpu2Turn = false;
-				// cpu1Turn = false;
-				// playerTurn = true;
 				System.out.println("CPU 2 skipped CPU 1's turn.");
 			}
 		}
@@ -1651,7 +1708,6 @@ public class OverZeroUnderTwo {
 			}
 		} // End Wild Plus Four card else if
 
-		System.out.println("gameFlow is now: " + gameFlow);
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
 		if (gameFlow == 1) { // clockwise
 			cpu2Turn = false;
@@ -1744,18 +1800,10 @@ public class OverZeroUnderTwo {
 		// *** Reverse card - CPU3 - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
 			gameFlow = 2;
-			System.out.println("gameFlow is now: " + gameFlow);
-			/*
-			 * if (gameFlow == 2) { cpu3Turn = false; cpu2Turn = true; }
-			 */
 			System.out.println("The game order was switched to counter-clockwise.");
 		} else if (gamePile.getTopCard().getValue() == 11 && gameFlow == 2 && playableCount > 0) {
 			gameFlow = 1;
-			System.out.println("gameFlow is now: " + gameFlow);
 			System.out.println("The game order was switched to clockwise.");
-			/*
-			 * if (gameFlow == 1) { cpu3Turn = false; playerTurn = true; }
-			 */
 		}
 
 		// *** Wild card - CPU3 - Multiplayer ***
@@ -1779,12 +1827,6 @@ public class OverZeroUnderTwo {
 				System.out.println("CPU 3 played a Yellow Wild Card.");
 				gamePile.addCard(new Card("Yellow"));
 			}
-
-			// May not need this section to switch turns correctly. *** Possibly remove? ***
-			/*
-			 * if (gameFlow == 1) { cpu3Turn = false; playerTurn = true; } else if (gameFlow
-			 * == 2) { cpu3Turn = false; cpu2Turn = true; }
-			 */
 		} // End Wild card if
 
 		if (cpuHand.getSize() == 0) { // if CPU has no cards, end game **This check is added after cards are played to
@@ -1799,16 +1841,10 @@ public class OverZeroUnderTwo {
 			// skip code for CLOCKWISE order
 			skipped = true;
 			if (gameFlow == 1) {
-				// cpu3Turn = false;
-				// playerTurn = false;
-				// cpu1Turn = true;
 				System.out.println("CPU 3 skipped your turn.");
 			}
 			// skip code for COUNTER-CLOCKWISE order
 			if (gameFlow == 2) {
-				// cpu3Turn = false;
-				// cpu2Turn = false;
-				// cpu1Turn = true;
 				System.out.println("CPU 3 skipped CPU 2's turn.");
 			}
 		}
@@ -1902,7 +1938,6 @@ public class OverZeroUnderTwo {
 			}
 		} // End Wild Plus Four card else if
 
-		System.out.println("gameFlow is now: " + gameFlow);
 		// cpu ends turn, happens regardless. Switches turn and waits 1 second
 		if (gameFlow == 1) { // clockwise
 			cpu3Turn = false;
@@ -1944,7 +1979,7 @@ public class OverZeroUnderTwo {
 
 			// If the player chooses to play a new game and the previous game was in
 			// counter-clockwise order, reset the order to clockwise.
-			if (gameFlow == 2) {
+			if (!(gamePile.getTopCard().getValue() == 11) && gameFlow == 2) {
 				gameFlow = 1;
 			}
 			do { // game will be played inside of this do while loop, and to end the game we will
@@ -1982,7 +2017,6 @@ public class OverZeroUnderTwo {
 					// Code for CPU3's turn.
 					else if (cpu3Turn && gameComplete == false) {
 						cpu3Gameplay3CPU(cpu3Hand, playerHand, cpu1Hand, cpu2Hand);
-						// cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand);
 					}
 					// Code for CPU2's turn.
 					else if (cpu2Turn && gameComplete == false) {
@@ -1991,7 +2025,6 @@ public class OverZeroUnderTwo {
 					// Code for CPU1's turn.
 					else if (cpu1Turn && gameComplete == false) {
 						cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand);
-						//cpu3Gameplay3CPU(cpu3Hand, playerHand, cpu1Hand, cpu2Hand);
 					}
 
 				}
