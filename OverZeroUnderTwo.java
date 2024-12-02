@@ -307,7 +307,6 @@ public class OverZeroUnderTwo {
 					wildPlus4Count++;
 				}
 			} // if there are matches, getting user input *** PLAYER PLAYS CARD HERE ***
-			System.out.println("\nMatches: " + matches + "\nWild Plus 4 Count: " + wildPlus4Count);
 			int[] matchAmounts = {matches, wildPlus4Count};
 			if (matches > 0) {
 				userInput(input, playerHand, matchAmounts, partyRules);
@@ -524,41 +523,61 @@ public class OverZeroUnderTwo {
 	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand, boolean[] partyRules) {
 
 		if (stackCount > 0 && partyRules[2]) {
-			if (cpuHand.getStackableCount() > 0) {
-				ArrayList<Card> stackList = playerHand.getStackableArray(playerHand);
-
-				// *** PLAY FIRST STACKABLE CARD ***
-				// .get(0) is causing bugs *************************8
-				gamePile.addCard(stackList.get(0)); // play card to game pile
-				System.out.println("CPU 1 played: " + stackList.get(0)); // say which card cpu played
-				cpuHand.remove(stackList.get(0));// remove it from cpuHand
-
-				// *** ADD VALUE TO STACK COUNT ***
-				if (stackList.get(0).getValue() == 12) {
-					System.out.println("+2 added to stack");
-					stackCount += 2;
-				} else if (stackList.get(0).getValue() == 14) {
-					System.out.println("+4 added to stack");
-					stackCount += 4;
+			
+			try {
+			
+				if (cpuHand.getStackableCount() > 0) {
+					ArrayList<Card> stackList = playerHand.getStackableArray(playerHand);
+	
+					// *** PLAY FIRST STACKABLE CARD ***
+					// .get(0) is causing bugs *************************8
+					gamePile.addCard(stackList.get(0)); // play card to game pile
+					System.out.println("CPU 1 played: " + stackList.get(0)); // say which card cpu played
+					cpuHand.remove(stackList.get(0));// remove it from cpuHand
+	
+					// *** ADD VALUE TO STACK COUNT ***
+					if (stackList.get(0).getValue() == 12) {
+						System.out.println("+2 added to stack");
+						stackCount += 2;
+					} else if (stackList.get(0).getValue() == 14) {
+						System.out.println("+4 added to stack");
+						stackCount += 4;
+					}
+	
+				} else { // *** ADD STACK TO CPU HAND AND RESET IT ***
+					for (int i = 0; i < stackCount; i++) {
+						cpuHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU didn't stack and drew " + stackCount + " cards!");
+					stackCount = 0;
 				}
-
-			} else { // *** ADD STACK TO CPU HAND AND RESET IT ***
+	
+				// *** SWITCH TURN ***
+				if (gameFlow == 1) { // clockwise
+					cpu1Turn = false;
+					playerTurn = true;
+				} else if (gameFlow == 2) { // counter clockwise
+					cpu1Turn = false;
+					playerTurn = true;
+				}
+			}
+			
+			catch(IndexOutOfBoundsException e) {
 				for (int i = 0; i < stackCount; i++) {
 					cpuHand.add(gameDeck.getRandomCard());
 				}
 				System.out.println("CPU didn't stack and drew " + stackCount + " cards!");
 				stackCount = 0;
+				
+				if (gameFlow == 1) { // clockwise
+					cpu1Turn = false;
+					playerTurn = true;
+				} else if (gameFlow == 2) { // counter clockwise
+					cpu1Turn = false;
+					playerTurn = true;
+				}
 			}
-
-			// *** SWITCH TURN ***
-			if (gameFlow == 1) { // clockwise
-				cpu1Turn = false;
-				playerTurn = true;
-			} else if (gameFlow == 2) { // counter clockwise
-				cpu1Turn = false;
-				playerTurn = true;
-			}
-
+			
 		} else { // *** ELSE JUST PLAY REGULAR GAME
 
 			// creates a hand of playable cards
