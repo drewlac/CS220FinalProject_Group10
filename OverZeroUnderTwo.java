@@ -14,6 +14,7 @@ public class OverZeroUnderTwo {
 	private static boolean cpu1Turn = false;
 	private static boolean cpu2Turn = false;
 	private static boolean cpu3Turn = false;
+
 	private static boolean draw = false;
 	private static byte gameFlow = 1; // 1 for clockwise, 2 for counter clockwise
 	private static Deck gameDeck = new Deck(); // static variable for the deck the game is played on
@@ -29,6 +30,7 @@ public class OverZeroUnderTwo {
 
 		// Party Rules Add On
 		System.out.println("Optional Party Rules:");
+
 
 		System.out.print("7-0 Rule (Y/N): ");
 		boolean sevenZero = getYesNo(input);
