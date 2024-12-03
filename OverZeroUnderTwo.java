@@ -33,7 +33,7 @@ public class OverZeroUnderTwo {
 		System.out.print("7-0 Rule (Y/N): ");
 		boolean sevenZero = getYesNo(input);
 
-		System.out.print("Bluffing (Y/N): ");
+		System.out.print("No bluffing (Y/N): ");
 		boolean noBluffing = getYesNo(input);
 
 		System.out.print("Stacking Rule (Y/N): ");
@@ -304,7 +304,7 @@ public class OverZeroUnderTwo {
 				if (playerHand.getCard(i).match(gamePile.getTopCard())) {
 					matches++;
 				}
-				if(playerHand.getCard(i).getValue()==14) {
+				if(playerHand.getCard(i).getValue() == 14 || playerHand.getCard(i).getValue() == 13) {
 					wildPlus4Count++;
 				}
 			} // if there are matches, getting user input *** PLAYER PLAYS CARD HERE ***
@@ -609,7 +609,7 @@ public class OverZeroUnderTwo {
 					// adds cards to the new hand
 					playableCount++;
 				}
-				if (cpuHand.getCard(i).getValue() ==  14) {
+				if (cpuHand.getCard(i).getValue() ==  14 || cpuHand.getCard(i).getValue() == 13) {
 					wildPlus4Amount++;
 				}
 			}
@@ -1099,10 +1099,9 @@ public class OverZeroUnderTwo {
 		int wildPlus4Count = 0;
 		for (int i = 0; i < playerHand.getSize(); i++) {
 			if (playerHand.getCard(i).match(gamePile.getTopCard())) {
-				matches++;
-				
+				matches++;	
 			}
-			if(playerHand.getCard(i).getValue()==14) {
+			if(playerHand.getCard(i).getValue()==14 || playerHand.getCard(i).getValue() == 13) {
 				wildPlus4Count++;
 			}
 		} // if there are matches, getting user input
@@ -1390,12 +1389,16 @@ public class OverZeroUnderTwo {
 	public static void cpu1Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu2Hand, Hand cpu3Hand, boolean[] partyRules) {
 		// creates a hand of playable cards
 		int playableCount = 0;
+		int wildPlus4Amount = 0;
 
 		// checks cards in hand to see if they are playable
 		for (int i = 0; i < cpuHand.getSize(); i++) {
 			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
 				// adds cards to the new hand
 				playableCount++;
+			}
+			if (cpuHand.getCard(i).getValue() ==  14 || cpuHand.getCard(i).getValue() == 13) {
+				wildPlus4Amount++;
 			}
 		}
 
@@ -1425,8 +1428,12 @@ public class OverZeroUnderTwo {
 				// cpu flips a coin to see if they play each playable card
 				for (int i = 0; i < cpuHand.getSize(); i++) {
 					coinflip = random.nextDouble();
-					// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
-					if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
+					
+					if(partyRules[1] && playableCount > wildPlus4Amount && cpuHand.getCard(i).getValue()==14) {
+						System.out.println("CPU 1: I can't bluff, trying again!");
+					} // skipping bluffing if no bluff rule is activated
+
+					else if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
 																							// coinflip is good
 						gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
 						System.out.println("CPU 1 played: " + cpuHand.getCard(i)); // say which card cpu played
@@ -1436,7 +1443,7 @@ public class OverZeroUnderTwo {
 						} // print out uno if only one card left
 						cardPlayed = true;
 						break;
-					} // end if
+						} // end if
 				} // end for loop
 
 				if (cardPlayed) {
@@ -1669,12 +1676,17 @@ public class OverZeroUnderTwo {
 	public static void cpu2Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu1Hand, Hand cpu3Hand, boolean[] partyRules) {
 		// creates a hand of playable cards
 		int playableCount = 0;
+		int wildPlus4Amount = 0;
+
 
 		// checks cards in hand to see if they are playable
 		for (int i = 0; i < cpuHand.getSize(); i++) {
 			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
 				// adds cards to the new hand
 				playableCount++;
+			}
+			if (cpuHand.getCard(i).getValue() ==  14 || cpuHand.getCard(i).getValue() == 13) {
+				wildPlus4Amount++;
 			}
 		}
 
@@ -1704,8 +1716,11 @@ public class OverZeroUnderTwo {
 				// cpu flips a coin to see if they play each playable card
 				for (int i = 0; i < cpuHand.getSize(); i++) {
 					coinflip = random.nextDouble();
-					// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
-					if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
+					
+					if(partyRules[1] && playableCount > wildPlus4Amount && cpuHand.getCard(i).getValue()==14) {
+							System.out.println("CPU 2: I can't bluff, trying again!");
+					} // skipping bluffing if no bluff rule is activated
+					else if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
 																							// coinflip is good
 						gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
 						System.out.println("CPU 2 played: " + cpuHand.getCard(i)); // say which card cpu played
@@ -1945,12 +1960,17 @@ public class OverZeroUnderTwo {
 	public static void cpu3Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, boolean[] partyRules) {
 		// creates a hand of playable cards
 		int playableCount = 0;
+		int wildPlus4Amount = 0;
+
 
 		// checks cards in hand to see if they are playable
 		for (int i = 0; i < cpuHand.getSize(); i++) {
 			if (cpuHand.getCard(i).match(gamePile.getTopCard())) {
 				// adds cards to the new hand
 				playableCount++;
+			}
+			if (cpuHand.getCard(i).getValue() ==  14 || cpuHand.getCard(i).getValue() == 13) {
+				wildPlus4Amount++;
 			}
 		}
 
@@ -1980,8 +2000,10 @@ public class OverZeroUnderTwo {
 				// cpu flips a coin to see if they play each playable card
 				for (int i = 0; i < cpuHand.getSize(); i++) {
 					coinflip = random.nextDouble();
-					// System.out.println("Coinflip: " + coinflip); //used for troubleshooting
-					if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
+					if(partyRules[1] && playableCount > wildPlus4Amount && cpuHand.getCard(i).getValue()==14) {
+						System.out.println("CPU: I can't bluff, trying again!");
+					} // skipping bluffing if no bluff rule is activated
+					else if (cpuHand.getCard(i).match(gamePile.getTopCard()) && coinflip < 0.5) {// if cards match and
 																							// coinflip is good
 						gamePile.addCard(cpuHand.getCard(i)); // play card to game pile
 						System.out.println("CPU 3 played: " + cpuHand.getCard(i)); // say which card cpu played
