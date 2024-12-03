@@ -1124,6 +1124,59 @@ public class OverZeroUnderTwo {
 				playerHand.add(gameDeck.getRandomCard());
 			}
 		}
+		
+		// *** 0-7 Rule *** - Player 
+
+		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7)) {
+			
+			System.out.println("0-7 rule activated");
+			
+			if(gamePile.getTopCard().getValue() == 0) {
+				
+				if(gameFlow == 1) {
+					System.out.println("Hands rotated clockwise!");
+					Hand.switchHands(playerHand, cpu1Hand);
+					Hand.switchHands(playerHand, cpu2Hand);
+					Hand.switchHands(playerHand, cpu3Hand);
+
+				}
+				else if(gameFlow == 2) {
+					System.out.println("Hans rotated counter-clockwise");
+					Hand.switchHands(playerHand, cpu3Hand);
+					Hand.switchHands(playerHand, cpu2Hand);
+					Hand.switchHands(playerHand, cpu1Hand);
+				}
+				
+			} // end 0 rule
+			
+			else if(gamePile.getTopCard().getValue() == 7) {
+				System.out.println("-1: CPU 1's Hand");
+				System.out.println("-2: CPU 2's Hand");
+				System.out.println("-3: CPU 3's Hand");
+				System.out.print("\n Enter which hand you would like to swap with: ");
+				
+				while(true) {
+					try {
+					
+						int ans = input.nextInt();
+						if(ans != 1 || ans != 2 || ans != 3) {
+							throw new RuntimeException();
+						}
+						switch(ans) {
+							case 1 -> Hand.switchHands(playerHand, cpu1Hand);
+							case 2 -> Hand.switchHands(playerHand, cpu2Hand);
+							case 3 -> Hand.switchHands(playerHand, cpu3Hand);
+						}
+						break; //end loop if successful
+					}
+					
+					catch(RuntimeException e) {System.out.print("\nAnswer must be 1, 2, or 3. Try again : ");}
+				
+				} // end while loop
+			
+			} // end 7 rule
+				
+		}
 
 		// *** Reverse card - Player - Multiplayer ***
 
@@ -1334,7 +1387,7 @@ public class OverZeroUnderTwo {
 		}
 	} // End playerGameplay3CPU method.
 
-	public static void cpu1Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu2Hand, Hand cpu3Hand) {
+	public static void cpu1Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu2Hand, Hand cpu3Hand, boolean[] partyRules) {
 		// creates a hand of playable cards
 		int playableCount = 0;
 
@@ -1392,6 +1445,54 @@ public class OverZeroUnderTwo {
 
 			} // end else
 		} // end while
+		
+		// *** 0-7 Rule *** - CPU1
+		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7)) {
+			
+			System.out.println("0-7 rule activated");
+			
+			if(gamePile.getTopCard().getValue() == 0) {
+				
+				if(gameFlow == 1) {
+					System.out.println("Hands rotated clockwise!");
+					Hand.switchHands(playerHand, cpuHand);
+					Hand.switchHands(playerHand, cpu2Hand);
+					Hand.switchHands(playerHand, cpu3Hand);
+
+				}
+				else if(gameFlow == 2) {
+					System.out.println("Hans rotated counter-clockwise");
+					Hand.switchHands(playerHand, cpu3Hand);
+					Hand.switchHands(playerHand, cpu2Hand);
+					Hand.switchHands(playerHand, cpuHand);
+				}
+				
+			}// end 0 rule
+		
+			else if(gamePile.getTopCard().getValue() == 7) {
+				
+				Random rand = new Random();
+				int ranInt = rand.nextInt(3 - 1 + 1) + 1;
+				
+				switch(ranInt) {
+					case 1 -> Hand.switchHands(cpuHand, playerHand); //System.out.println("CPU 1 switch hands with the player!");
+					case 2 -> Hand.switchHands(cpuHand, cpu2Hand);
+					case 3 -> Hand.switchHands(cpuHand, cpu3Hand);
+				}
+				
+				switch(ranInt) {
+					case 1 -> System.out.println("CPU 1 switched hands with the player!");
+					case 2 -> System.out.println("CPU 1 switched hands with the CPU 2!");
+					case 3 -> System.out.println("CPU 1 switched hands with the CPU 3!");
+				}
+				
+				
+			} // end 7 rule
+
+		
+		} // end 0-7 rule
+		
+
 
 		// *** Reverse card - CPU1 - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
@@ -1565,7 +1666,7 @@ public class OverZeroUnderTwo {
 
 	} // End cpu1Gameplay3CPU method.
 
-	public static void cpu2Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu1Hand, Hand cpu3Hand) {
+	public static void cpu2Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu1Hand, Hand cpu3Hand, boolean[] partyRules) {
 		// creates a hand of playable cards
 		int playableCount = 0;
 
@@ -1623,6 +1724,52 @@ public class OverZeroUnderTwo {
 
 			} // end else
 		} // end while
+		
+		// *** 0-7 Rule *** - CPU1
+		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7)) {
+			
+			System.out.println("0-7 rule activated");
+			
+			if(gamePile.getTopCard().getValue() == 0) {
+				
+				if(gameFlow == 1) {
+					System.out.println("Hands rotated clockwise!");
+					Hand.switchHands(playerHand, cpu1Hand);
+					Hand.switchHands(playerHand, cpuHand);
+					Hand.switchHands(playerHand, cpu3Hand);
+
+				}
+				else if(gameFlow == 2) {
+					System.out.println("Hans rotated counter-clockwise");
+					Hand.switchHands(playerHand, cpu3Hand);
+					Hand.switchHands(playerHand, cpuHand);
+					Hand.switchHands(playerHand, cpu1Hand);
+				}
+				
+			}// end 0 rule
+		
+			else if(gamePile.getTopCard().getValue() == 7) {
+				
+				Random rand = new Random();
+				int ranInt = rand.nextInt(3 - 1 + 1) + 1;
+				
+				switch(ranInt) {
+					case 1 -> Hand.switchHands(cpuHand, playerHand); //System.out.println("CPU 1 switch hands with the player!");
+					case 2 -> Hand.switchHands(cpuHand, cpu1Hand);
+					case 3 -> Hand.switchHands(cpuHand, cpu3Hand);
+				}
+				
+				switch(ranInt) {
+					case 1 -> System.out.println("CPU 2 switched hands with the player!");
+					case 2 -> System.out.println("CPU 2 switched hands with the CPU 1!");
+					case 3 -> System.out.println("CPU 2 switched hands with the CPU 3!");
+				}
+				
+				
+			} // end 7 rule
+
+		
+		} // end 0-7 rule
 
 		// *** Reverse card - CPU2 - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
@@ -1795,7 +1942,7 @@ public class OverZeroUnderTwo {
 		}
 	} // end cpu2Gameplay3CPU method.
 
-	public static void cpu3Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand) {
+	public static void cpu3Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, boolean[] partyRules) {
 		// creates a hand of playable cards
 		int playableCount = 0;
 
@@ -1853,6 +2000,52 @@ public class OverZeroUnderTwo {
 
 			} // end else
 		} // end while
+		
+		// *** 0-7 Rule *** - CPU1
+		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7)) {
+			
+			System.out.println("0-7 rule activated");
+			
+			if(gamePile.getTopCard().getValue() == 0) {
+				
+				if(gameFlow == 1) {
+					System.out.println("Hands rotated clockwise!");
+					Hand.switchHands(playerHand, cpu1Hand);
+					Hand.switchHands(playerHand, cpu2Hand);
+					Hand.switchHands(playerHand, cpuHand);
+
+				}
+				else if(gameFlow == 2) {
+					System.out.println("Hans rotated counter-clockwise");
+					Hand.switchHands(playerHand, cpuHand);
+					Hand.switchHands(playerHand, cpu2Hand);
+					Hand.switchHands(playerHand, cpu1Hand);
+				}
+				
+			}// end 0 rule
+		
+			else if(gamePile.getTopCard().getValue() == 7) {
+				
+				Random rand = new Random();
+				int ranInt = rand.nextInt(3 - 1 + 1) + 1;
+				
+				switch(ranInt) {
+					case 1 -> Hand.switchHands(cpuHand, playerHand); //System.out.println("CPU 1 switch hands with the player!");
+					case 2 -> Hand.switchHands(cpuHand, cpu1Hand);
+					case 3 -> Hand.switchHands(cpuHand, cpu2Hand);
+				}
+				
+				switch(ranInt) {
+					case 1 -> System.out.println("CPU 3 switched hands with the player!");
+					case 2 -> System.out.println("CPU 3 switched hands with the CPU 1!");
+					case 3 -> System.out.println("CPU 3 switched hands with the CPU 2!");
+				}
+				
+				
+			} // end 7 rule
+
+		
+		} // end 0-7 rule
 
 		// *** Reverse card - CPU3 - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 11 && gameFlow == 1 && playableCount > 0) {
@@ -2053,13 +2246,13 @@ public class OverZeroUnderTwo {
 						playerGameplay3CPU(input, playerHand, cpu1Hand, cpu2Hand, cpu3Hand, partyRules);
 					} // Code for player's turn
 					else if (cpu1Turn && gameComplete == false) {
-						cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand);
+						cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand, partyRules);
 					} // Code for CPU1's turn.
 					else if (cpu2Turn && gameComplete == false) {
-						cpu2Gameplay3CPU(cpu2Hand, playerHand, cpu1Hand, cpu3Hand);
+						cpu2Gameplay3CPU(cpu2Hand, playerHand, cpu1Hand, cpu3Hand, partyRules);
 					} // Code for CPU2's turn.
 					else if (cpu3Turn && gameComplete == false) {
-						cpu3Gameplay3CPU(cpu3Hand, playerHand, cpu1Hand, cpu2Hand);
+						cpu3Gameplay3CPU(cpu3Hand, playerHand, cpu1Hand, cpu2Hand, partyRules);
 					} // Code for CPU3's turn.
 					else {
 					} // catch errors and exceptions
@@ -2073,15 +2266,15 @@ public class OverZeroUnderTwo {
 					}
 					// Code for CPU3's turn.
 					else if (cpu3Turn && gameComplete == false) {
-						cpu3Gameplay3CPU(cpu3Hand, playerHand, cpu1Hand, cpu2Hand);
+						cpu3Gameplay3CPU(cpu3Hand, playerHand, cpu1Hand, cpu2Hand, partyRules);
 					}
 					// Code for CPU2's turn.
 					else if (cpu2Turn && gameComplete == false) {
-						cpu2Gameplay3CPU(cpu2Hand, playerHand, cpu1Hand, cpu3Hand);
+						cpu2Gameplay3CPU(cpu2Hand, playerHand, cpu1Hand, cpu3Hand, partyRules);
 					}
 					// Code for CPU1's turn.
 					else if (cpu1Turn && gameComplete == false) {
-						cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand);
+						cpu1Gameplay3CPU(cpu1Hand, playerHand, cpu2Hand, cpu3Hand, partyRules);
 					}
 
 				}
