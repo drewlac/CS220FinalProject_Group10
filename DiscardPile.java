@@ -22,10 +22,16 @@ public class DiscardPile extends Cards{
 	}
 	
 	@Override
-	public void print() {}
+	public void print() {
+		System.out.println(this.toString());
+	}
 	
 	@Override
 	public String toString() {
-		return "";
+		String returnString = "Discard Pile:\n";
+		for(Card c : discard1) {
+			returnString += c.toString() + "\n";
+		}
+		return returnString;
 	}
 }

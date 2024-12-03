@@ -43,12 +43,18 @@ public class Deck extends Cards{
 	}// end constructor
 	
 	@Override
-	public String toString() { //needs to be completed
-		return "";
+	public String toString() { 
+		String returnString = "Deck:\n";
+		for(Card c : deck1) {
+			returnString += c.toString() + "\n";
+		}
+		return returnString;
 	}
 	
 	@Override
-	public void print() {} //needs to be completed
+	public void print() {
+		System.out.println(this.toString());
+	} 
 
 	private Card newCard(int i, String string) {
 		return new Card(i, string);

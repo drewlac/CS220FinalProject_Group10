@@ -47,11 +47,20 @@ public class Hand extends Cards{
 		return hand1.size();
 	}
 	
-	public String toString() { //needs to be completed
-		return "";
+	@Override
+	public String toString() { 
+		
+		String returnString = "Hand:\n";
+		for(Card c : hand1) {
+			returnString += c.toString() + "\n";
+		}
+		return returnString;
 	}
 	
-	public void print() {}//needs to be completed
+	@Override
+	public void print() {
+		System.out.println(this.toString());
+	}
 	
 	public void sort() {
 		hand1.sort(null);
