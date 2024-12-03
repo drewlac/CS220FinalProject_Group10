@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class DiscardPile extends Cards{
 
 	// discard1 ArrayList holds up to the total amount of cards in the deck.
-	private static ArrayList<Card> discard1 = new ArrayList<>(76);
+	private static ArrayList<Card> discard1 = new ArrayList<>(108);
 
 	// addCard() method adds a card to the discard1 ArrayList.
 	public void addCard(Card c) {
