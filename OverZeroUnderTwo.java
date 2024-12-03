@@ -64,7 +64,7 @@ public class OverZeroUnderTwo {
 				}
 				break;
 			} catch (RuntimeException E) {
-				System.out.println("Error, input must be 1 or 2. Enter again: ");
+				System.out.print("\nError, input must be 1 or 2. Enter again: ");
 			}
 		}
 
@@ -538,7 +538,7 @@ public class OverZeroUnderTwo {
 			try {
 			
 				if (cpuHand.getStackableCount() > 0) {
-					ArrayList<Card> stackList = playerHand.getStackableArray(playerHand);
+					ArrayList<Card> stackList = cpuHand.getStackableArray(cpuHand);
 	
 					// *** PLAY FIRST STACKABLE CARD ***
 					// .get(0) is causing bugs *************************8
@@ -1077,6 +1077,75 @@ public class OverZeroUnderTwo {
 
 	// Used to code player turn in multiplayer.
 	public static void playerGameplay3CPU(Scanner input, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, Hand cpu3Hand, boolean[] partyRules) {
+		
+		// *** STACKING ***
+		if (stackCount > 0 && partyRules[2]) {
+			if (playerHand.getStackableCount() > 0) {
+				System.out.println("Stack has " + stackCount + " cards");
+				System.out.print("Do you want to add to stack? (Y/N)");
+				boolean answer = getYesNo(input);
+				if (answer) {
+					while (true) {
+						try {
+							ArrayList<Card> stackList = playerHand.getStackableArray(playerHand);
+							for (int i = 0; i < stackList.size(); i++) {
+								System.out.println("-Card " + (i + 1) + ": " + stackList.get(i).toString());
+							}
+							System.out.println("Enter the number of the card you would like to play");
+							int choice = input.nextInt();
+							if (choice < 1 || choice > stackList.size()) {
+								throw new RuntimeException();
+							}
+							// *** PLAY CARD AND DISCARD IT, ADD TO STACKING ***
+							gamePile.addCard(stackList.get(choice - 1));
+							System.out.println("You played: " + stackList.get(choice - 1));
+							playerHand.remove(stackList.get(choice - 1));
+
+							// *** ADD TO STACK COUNT ***
+							if (stackList.get(choice - 1).getValue() == 12) {
+								System.out.println("+2 added to stack");
+								stackCount += 2;
+							} else if (stackList.get(choice - 1).getValue() == 14) {
+								System.out.println("+4 added to stack");
+								stackCount += 4;
+							}
+							break;
+						} catch (RuntimeException e) {
+							System.out.println("Choice must be between 1 and max cards");
+						} // end catch
+					} // end while
+				} // end if answer yes
+				else { // if answer no
+					for (int i = 0; i < stackCount; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You didn't stack and drew " + stackCount + " cards!");
+					stackCount = 0;
+				} // end else
+			} // end if stackable cards
+			else {
+				for (int i = 0; i < stackCount; i++) {
+					playerHand.add(gameDeck.getRandomCard());
+				}
+				System.out.println("You didn't stack and drew " + stackCount + " cards!");
+				stackCount = 0;
+			}
+			
+			if (gameFlow == 1) { // clockwise
+				playerTurn = false;
+				cpu3Turn = false;
+				cpu1Turn = true;
+			} 
+			else if (gameFlow == 2) { // counter clockwise
+				cpu1Turn = false;
+				playerTurn = false;
+				cpu3Turn = true;
+			}
+
+		}
+		else { // *** OTHERWISE, PLAY GAME NORMALLY *** END STACKING ***
+		
+		
 		// Set draw to false at the beginning of the player's turn.
 		draw = false;
 		System.out.println("\nThe top card on the pile is: " + gamePile.getTopCard() + "\n");
@@ -1361,24 +1430,26 @@ public class OverZeroUnderTwo {
 				} // end catch
 			} // End while
 		} // End Wild Plus Four if
+		
+		//put else end brack here
 
-		// switch turns and wait 1 second
-		if (gameFlow == 1) { // clockwise
-			playerTurn = false;
-			cpu3Turn = false;
-			if (skipped) // if skip is played
-				cpu2Turn = true;
-			else // regular gameplay
-				cpu1Turn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu1Turn = false;
-			playerTurn = false;
-			if (skipped) // if skip is played
-				cpu2Turn = true;
-			else // regular gameplay
-				cpu3Turn = true;
+			// switch turns and wait 1 second
+			if (gameFlow == 1) { // clockwise
+				playerTurn = false;
+				cpu3Turn = false;
+				if (skipped) // if skip is played
+					cpu2Turn = true;
+				else // regular gameplay
+					cpu1Turn = true;
+			} else if (gameFlow == 2) { // counter clockwise
+				cpu1Turn = false;
+				playerTurn = false;
+				if (skipped) // if skip is played
+					cpu2Turn = true;
+				else // regular gameplay
+					cpu3Turn = true;
+			}
 		}
-
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException c) {
@@ -1387,6 +1458,76 @@ public class OverZeroUnderTwo {
 	} // End playerGameplay3CPU method.
 
 	public static void cpu1Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu2Hand, Hand cpu3Hand, boolean[] partyRules) {
+		
+		// *** STACKING *** 
+		if (stackCount > 0 && partyRules[2]) {
+			
+			try {
+			
+				if (cpuHand.getStackableCount() > 0) {
+					ArrayList<Card> stackList = cpuHand.getStackableArray(cpuHand);
+	
+					// *** PLAY FIRST STACKABLE CARD ***
+					// .get(0) is causing bugs *************************8
+					gamePile.addCard(stackList.get(0)); // play card to game pile
+					System.out.println("CPU 1 played: " + stackList.get(0)); // say which card cpu played
+					cpuHand.remove(stackList.get(0));// remove it from cpuHand
+	
+					// *** ADD VALUE TO STACK COUNT ***
+					if (stackList.get(0).getValue() == 12) {
+						System.out.println("+2 added to stack");
+						stackCount += 2;
+					} else if (stackList.get(0).getValue() == 14) {
+						System.out.println("+4 added to stack");
+						stackCount += 4;
+					}
+	
+				} else { // *** ADD STACK TO CPU HAND AND RESET IT ***
+					for (int i = 0; i < stackCount; i++) {
+						cpuHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 1 didn't stack and drew " + stackCount + " cards!");
+					stackCount = 0;
+				}
+	
+				// *** SWITCH TURN ***
+				if (gameFlow == 1) { // clockwise
+					cpu1Turn = false;
+					playerTurn = false;
+					cpu2Turn = true;
+					
+				} 
+				else if (gameFlow == 2) { // counter clockwise
+					cpu1Turn = false;
+					cpu2Turn = false;
+					playerTurn = true;
+				}
+			}
+			
+			catch(IndexOutOfBoundsException e) {
+				for (int i = 0; i < stackCount; i++) {
+					cpuHand.add(gameDeck.getRandomCard());
+				}
+				System.out.println("CPU  1 didn't stack and drew " + stackCount + " cards!");
+				stackCount = 0;
+				
+				// *** SWITCH TURN ***
+				if (gameFlow == 1) { // clockwise
+					cpu1Turn = false;
+					playerTurn = false;
+					cpu2Turn = true;
+					
+				} 
+				else if (gameFlow == 2) { // counter clockwise
+					cpu1Turn = false;
+					cpu2Turn = false;
+					playerTurn = true;
+				}
+			} // end catch
+			
+		} else { // *** ELSE JUST PLAY REGULAR GAME
+		
+		
 		// creates a hand of playable cards
 		int playableCount = 0;
 		int wildPlus4Amount = 0;
@@ -1642,22 +1783,24 @@ public class OverZeroUnderTwo {
 			}
 		} // End Wild Plus Four card if
 
-		// cpu ends turn, happens regardless. Switches turn and waits 1 second
-		if (gameFlow == 1) { // clockwise
-			cpu1Turn = false;
-			playerTurn = false;
-			if (skipped)
-				cpu3Turn = true;
-			else
-				cpu2Turn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu1Turn = false;
-			cpu2Turn = false;
-			if (skipped)
-				cpu3Turn = true;
-			else
-				playerTurn = true;
+			// cpu ends turn, happens regardless. Switches turn and waits 1 second
+			if (gameFlow == 1) { // clockwise
+				cpu1Turn = false;
+				playerTurn = false;
+				if (skipped)
+					cpu3Turn = true;
+				else
+					cpu2Turn = true;
+			} else if (gameFlow == 2) { // counter clockwise
+				cpu1Turn = false;
+				cpu2Turn = false;
+				if (skipped)
+					cpu3Turn = true;
+				else
+					playerTurn = true;
+			}
 		}
+		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException c) {
@@ -1674,6 +1817,76 @@ public class OverZeroUnderTwo {
 	} // End cpu1Gameplay3CPU method.
 
 	public static void cpu2Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu1Hand, Hand cpu3Hand, boolean[] partyRules) {
+		
+		// *** STACKING *** 
+		if (stackCount > 0 && partyRules[2]) {
+			
+			try {
+			
+				if (cpuHand.getStackableCount() > 0) {
+					ArrayList<Card> stackList = cpuHand.getStackableArray(cpuHand);
+	
+					// *** PLAY FIRST STACKABLE CARD ***
+					// .get(0) is causing bugs *************************8
+					gamePile.addCard(stackList.get(0)); // play card to game pile
+					System.out.println("CPU 2 played: " + stackList.get(0)); // say which card cpu played
+					cpuHand.remove(stackList.get(0));// remove it from cpuHand
+	
+					// *** ADD VALUE TO STACK COUNT ***
+					if (stackList.get(0).getValue() == 12) {
+						System.out.println("+2 added to stack");
+						stackCount += 2;
+					} else if (stackList.get(0).getValue() == 14) {
+						System.out.println("+4 added to stack");
+						stackCount += 4;
+					}
+	
+				} else { // *** ADD STACK TO CPU HAND AND RESET IT ***
+					for (int i = 0; i < stackCount; i++) {
+						cpuHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 didn't stack and drew " + stackCount + " cards!");
+					stackCount = 0;
+				}
+	
+				// *** SWITCH TURN ***
+				if (gameFlow == 1) { // clockwise
+					cpu2Turn = false;
+					cpu1Turn = false;
+					cpu3Turn = true;
+					
+				} else if (gameFlow == 2) { // counter clockwise
+					cpu2Turn = false;
+					cpu3Turn = false;
+					cpu1Turn = true;
+				}
+			}
+			
+			catch(IndexOutOfBoundsException e) {
+				for (int i = 0; i < stackCount; i++) {
+					cpuHand.add(gameDeck.getRandomCard());
+				}
+				System.out.println("CPU  2 didn't stack and drew " + stackCount + " cards!");
+				stackCount = 0;
+				
+				// *** SWITCH TURN ***
+				if (gameFlow == 1) { // clockwise
+					cpu2Turn = false;
+					cpu1Turn = false;
+					cpu3Turn = true;
+					
+				} else if (gameFlow == 2) { // counter clockwise
+					cpu2Turn = false;
+					cpu3Turn = false;
+					cpu1Turn = true;
+				}
+				
+			} // end catch
+			
+		} else { // *** ELSE JUST PLAY REGULAR GAME
+		
+		
+		
 		// creates a hand of playable cards
 		int playableCount = 0;
 		int wildPlus4Amount = 0;
@@ -1927,22 +2140,26 @@ public class OverZeroUnderTwo {
 			}
 		} // End Wild Plus Four card else if
 
-		// cpu ends turn, happens regardless. Switches turn and waits 1 second
-		if (gameFlow == 1) { // clockwise
-			cpu2Turn = false;
-			cpu1Turn = false;
-			if (skipped)
-				playerTurn = true;
-			else
-				cpu3Turn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu2Turn = false;
-			cpu3Turn = false;
-			if (skipped) // Skipped gameplay loop
-				playerTurn = true;
-			else // Regular gameplay loop
-				cpu1Turn = true;
+			// cpu ends turn, happens regardless. Switches turn and waits 1 second
+			if (gameFlow == 1) { // clockwise
+				cpu2Turn = false;
+				cpu1Turn = false;
+				if (skipped)
+					playerTurn = true;
+				else
+					cpu3Turn = true;
+			} else if (gameFlow == 2) { // counter clockwise
+				cpu2Turn = false;
+				cpu3Turn = false;
+				if (skipped) // Skipped gameplay loop
+					playerTurn = true;
+				else // Regular gameplay loop
+					cpu1Turn = true;
+			}
+		
+		//end else goes here , code beyond is always executed
 		}
+		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException c) {
@@ -1958,6 +2175,78 @@ public class OverZeroUnderTwo {
 	} // end cpu2Gameplay3CPU method.
 
 	public static void cpu3Gameplay3CPU(Hand cpuHand, Hand playerHand, Hand cpu1Hand, Hand cpu2Hand, boolean[] partyRules) {
+		
+		// *** STACKING *** 
+		if (stackCount > 0 && partyRules[2]) {
+			
+			try {
+			
+				if (cpuHand.getStackableCount() > 0) {
+					ArrayList<Card> stackList = cpuHand.getStackableArray(cpuHand);
+	
+					// *** PLAY FIRST STACKABLE CARD ***
+					// .get(0) is causing bugs *************************8
+					gamePile.addCard(stackList.get(0)); // play card to game pile
+					System.out.println("CPU 3 played: " + stackList.get(0)); // say which card cpu played
+					cpuHand.remove(stackList.get(0));// remove it from cpuHand
+	
+					// *** ADD VALUE TO STACK COUNT ***
+					if (stackList.get(0).getValue() == 12) {
+						System.out.println("+2 added to stack");
+						stackCount += 2;
+					} else if (stackList.get(0).getValue() == 14) {
+						System.out.println("+4 added to stack");
+						stackCount += 4;
+					}
+	
+				} else { // *** ADD STACK TO CPU HAND AND RESET IT ***
+					for (int i = 0; i < stackCount; i++) {
+						cpuHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 3 didn't stack and drew " + stackCount + " cards!");
+					stackCount = 0;
+				}
+	
+				// *** SWITCH TURN ***
+				if (gameFlow == 1) { // clockwise
+					cpu3Turn = false;
+					cpu2Turn = false;
+					playerTurn = true;
+					
+				} 
+				else if (gameFlow == 2) { // counter clockwise
+					cpu3Turn = false;
+					playerTurn = false;
+					cpu2Turn = true;
+				}
+			}
+			
+			catch(IndexOutOfBoundsException e) {
+				for (int i = 0; i < stackCount; i++) {
+					cpuHand.add(gameDeck.getRandomCard());
+				}
+				System.out.println("CPU  3 didn't stack and drew " + stackCount + " cards!");
+				stackCount = 0;
+				
+				// *** SWITCH TURN ***
+				if (gameFlow == 1) { // clockwise
+					cpu3Turn = false;
+					cpu2Turn = false;
+					playerTurn = true;
+					
+				} 
+				else if (gameFlow == 2) { // counter clockwise
+					cpu3Turn = false;
+					playerTurn = false;
+					cpu2Turn = true;
+				}
+			} // end catch
+			
+		} else { // *** ELSE JUST PLAY REGULAR GAME
+		
+		
+		
+		
 		// creates a hand of playable cards
 		int playableCount = 0;
 		int wildPlus4Amount = 0;
@@ -2210,22 +2499,26 @@ public class OverZeroUnderTwo {
 			}
 		} // End Wild Plus Four card else if
 
-		// cpu ends turn, happens regardless. Switches turn and waits 1 second
-		if (gameFlow == 1) { // clockwise
-			cpu3Turn = false;
-			cpu2Turn = false;
-			if (skipped)
-				cpu1Turn = true;
-			else
-				playerTurn = true;
-		} else if (gameFlow == 2) { // counter clockwise
-			cpu3Turn = false;
-			playerTurn = false;
-			if (skipped)
-				cpu1Turn = true;
-			else
-				cpu2Turn = true;
+			// cpu ends turn, happens regardless. Switches turn and waits 1 second
+			if (gameFlow == 1) { // clockwise
+				cpu3Turn = false;
+				cpu2Turn = false;
+				if (skipped)
+					cpu1Turn = true;
+				else
+					playerTurn = true;
+			} else if (gameFlow == 2) { // counter clockwise
+				cpu3Turn = false;
+				playerTurn = false;
+				if (skipped)
+					cpu1Turn = true;
+				else
+					cpu2Turn = true;
+			}
+			
+		//put end bracket here, all code after is always executed	
 		}
+		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException c) {
