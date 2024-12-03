@@ -42,8 +42,9 @@ public class OverZeroUnderTwo {
 		// used to pass these values into methods
 		boolean[] partyRules = { sevenZero, noBluffing, stacking };
 		/*
-		 * partyRules[0] = sevenZero rule partyRules[1] = no bluffing rule partyRules[2] =
-		 * stacking rule
+		 * partyRules[0] = sevenZero rule 
+		 * partyRules[1] = no bluffing rule
+		 * partyRules[2] = stacking rule
 		 */
 
 		// Initializing variables used by game
@@ -532,7 +533,8 @@ public class OverZeroUnderTwo {
 	} // End playerGameplay1CPU method.
 
 	public static void cpu1Gameplay1CPU(Hand cpuHand, Hand playerHand, boolean[] partyRules) {
-
+		
+		// *** STACKING ***
 		if (stackCount > 0 && partyRules[2]) {
 			
 			try {
