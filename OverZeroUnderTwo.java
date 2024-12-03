@@ -1231,7 +1231,7 @@ public class OverZeroUnderTwo {
 					try {
 					
 						int ans = input.nextInt();
-						if(ans != 1 || ans != 2 || ans != 3) {
+						if(ans != 1 && ans != 2 && ans != 3) {
 							throw new RuntimeException();
 						}
 						switch(ans) {
@@ -1337,18 +1337,24 @@ public class OverZeroUnderTwo {
 		// *** Plus Two card - Player - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 12 && playerTurn && matches > 0 && draw == false) {
 			skipped = true;
-			if (gameFlow == 1) {
-				for (int i = 0; i < 2; i++) {
-					cpu1Hand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
-			} else if (gameFlow == 2) {
-				for (int i = 0; i < 2; i++) {
-					cpu3Hand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("CPU 3 drew 2 cards and their turn was skipped.");
+			if(partyRules[2]) {
+				System.out.println("Added +2 to the stack!");
+				stackCount += 2;
 			}
-		} // End Plus Two else if
+			else {
+				if (gameFlow == 1) {
+					for (int i = 0; i < 2; i++) {
+						cpu1Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
+				} else if (gameFlow == 2) {
+					for (int i = 0; i < 2; i++) {
+						cpu3Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 3 drew 2 cards and their turn was skipped.");
+				}
+			}	
+		} // End Plus Two if
 
 		// *** Wild Plus Four card - Player - Multiplayer ***
 		if (gamePile.getTopCard().getValue() == 14 && playerTurn && matches > 0 && draw == false) {
@@ -1364,67 +1370,83 @@ public class OverZeroUnderTwo {
 					if (colorChoice == 1 && gameFlow == 1) {
 						System.out.println("You played a Blue Wild Plus Four card.");
 						gamePile.addCard(new Card("Blue"));
-						for (int i = 0; i < 4; i++) {
-							cpu1Hand.add(gameDeck.getRandomCard());
-						}
-						System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						if (partyRules[2] == false) {
+							for (int i = 0; i < 4; i++) {
+								cpu1Hand.add(gameDeck.getRandomCard());
+							}
+							System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						}	
 						break;
 					} else if (colorChoice == 2 && gameFlow == 1) {
 						System.out.println("You played a Green Wild Plus Four card.");
 						gamePile.addCard(new Card("Green"));
-						for (int i = 0; i < 4; i++) {
-							cpu1Hand.add(gameDeck.getRandomCard());
-						}
-						System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						if (partyRules[2] == false) {
+							for (int i = 0; i < 4; i++) {
+								cpu1Hand.add(gameDeck.getRandomCard());
+							}
+							System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						}	
 						break;
 					} else if (colorChoice == 3 & gameFlow == 1) {
 						System.out.println("You played a Red Wild Plus Four card.");
 						gamePile.addCard(new Card("Red"));
-						for (int i = 0; i < 4; i++) {
-							cpu1Hand.add(gameDeck.getRandomCard());
-						}
-						System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						if (partyRules[2] == false) {
+							for (int i = 0; i < 4; i++) {
+								cpu1Hand.add(gameDeck.getRandomCard());
+							}
+							System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						}	
 						break;
 					} else if (colorChoice == 4 && gameFlow == 1) {
 						System.out.println("You played a Yellow Wild Plus Four card.");
 						gamePile.addCard(new Card("Yellow"));
-						for (int i = 0; i < 4; i++) {
-							cpu1Hand.add(gameDeck.getRandomCard());
-						}
-						System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						if (partyRules[2] == false) {
+							for (int i = 0; i < 4; i++) {
+								cpu1Hand.add(gameDeck.getRandomCard());
+							}
+							System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+						}	
 						break;
 					} // If the gameFlow is 2, skip CPU3's turn and make CPU3 draw four cards.
 					else if (colorChoice == 1 && gameFlow == 2) {
 						System.out.println("You played a Blue Wild Plus Four card.");
 						gamePile.addCard(new Card("Blue"));
-						for (int i = 0; i < 4; i++) {
-							cpu3Hand.add(gameDeck.getRandomCard());
-						}
-						System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
+						if (partyRules[2] == false) {
+							for (int i = 0; i < 4; i++) {
+								cpu3Hand.add(gameDeck.getRandomCard());
+							}
+							System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
+						}	
 						break;
 					} else if (colorChoice == 2 && gameFlow == 2) {
 						System.out.println("You played a Green Wild Plus Four card.");
 						gamePile.addCard(new Card("Green"));
-						for (int i = 0; i < 4; i++) {
-							cpu3Hand.add(gameDeck.getRandomCard());
-						}
-						System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
+						if (partyRules[2] == false) {
+							for (int i = 0; i < 4; i++) {
+								cpu3Hand.add(gameDeck.getRandomCard());
+							}
+							System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
+						}	
 						break;
 					} else if (colorChoice == 3 & gameFlow == 2) {
 						System.out.println("You played a Red Wild Plus Four card.");
 						gamePile.addCard(new Card("Red"));
-						for (int i = 0; i < 4; i++) {
-							cpu3Hand.add(gameDeck.getRandomCard());
-						}
-						System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
+						if (partyRules[2] == false) {
+							for (int i = 0; i < 4; i++) {
+								cpu3Hand.add(gameDeck.getRandomCard());
+							}
+							System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
+						}	
 						break;
 					} else if (colorChoice == 4 && gameFlow == 2) {
 						System.out.println("You played a Yellow Wild Plus Four card.");
 						gamePile.addCard(new Card("Yellow"));
-						for (int i = 0; i < 4; i++) {
-							cpu3Hand.add(gameDeck.getRandomCard());
-						}
-						System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
+						if (partyRules[2] == false) {
+							for (int i = 0; i < 4; i++) {
+								cpu3Hand.add(gameDeck.getRandomCard());
+							}
+							System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
+						}	
 						break;
 					} else {
 						throw new InputMismatchException();
@@ -1433,6 +1455,10 @@ public class OverZeroUnderTwo {
 					System.out.print("Answer must be an integer between 1 and 4!\n");
 				} // end catch
 			} // End while
+			if (partyRules[2]) {
+				System.out.println("Added +4 cards to the stack");
+				stackCount += 4;
+			}
 		} // End Wild Plus Four if
 		
 		//put else end brack here
@@ -1599,7 +1625,7 @@ public class OverZeroUnderTwo {
 		} // end while
 		
 		// *** 0-7 Rule *** - CPU1
-		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7)) {
+		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7) && cardPlayed == true) {
 			
 			System.out.println("0-7 rule activated");
 			
@@ -1700,19 +1726,25 @@ public class OverZeroUnderTwo {
 
 		// *** Plus Two card - CPU1 - Multiplayer ***
 		else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0) {
-			skipped = true;
-			if (gameFlow == 1) {
-				// Forces CPU 2 to draw 2 random cards.
-				for (int i = 0; i < 2; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
+			if(partyRules[2]) {
+				System.out.println("+2 added to stack");
+				stackCount += 2;
+			}
+			else {
+				skipped = true;
+				if (gameFlow == 1) {
+					// Forces CPU 2 to draw 2 random cards.
+					for (int i = 0; i < 2; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 2 cards and their turn was skipped.");
+				} else if (gameFlow == 2) {
+					// Forces player to draw 2 random cards.
+					for (int i = 0; i < 2; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 2 cards and your turn was skipped.");
 				}
-				System.out.println("CPU 2 drew 2 cards and their turn was skipped.");
-			} else if (gameFlow == 2) {
-				// Forces player to draw 2 random cards.
-				for (int i = 0; i < 2; i++) {
-					playerHand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("You drew 2 cards and your turn was skipped.");
 			}
 		} // End Plus Two else if
 
@@ -1729,61 +1761,81 @@ public class OverZeroUnderTwo {
 			if (colorChoice == 1 && gameFlow == 1) {
 				System.out.println("CPU 1 played a Blue Wild Plus Four Card.");
 				gamePile.addCard(new Card("Blue"));
-				for (int i = 0; i < 4; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
 			} else if (colorChoice == 2 && gameFlow == 1) {
 				System.out.println("CPU 1 played a Green Wild Plus Four Card.");
 				gamePile.addCard(new Card("Green"));
-				for (int i = 0; i < 4; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
 			} else if (colorChoice == 3 && gameFlow == 1) {
 				System.out.println("CPU 1 played a Red Wild Plus Four Card.");
 				gamePile.addCard(new Card("Red"));
-				for (int i = 0; i < 4; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
 			} else if (colorChoice == 4 && gameFlow == 1) {
 				System.out.println("CPU 1 played a Yellow Wild Plus Four Card.");
 				gamePile.addCard(new Card("Yellow"));
-				for (int i = 0; i < 4; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
 			}
 			// If gameFlow is 2, skip player's turn and make them draw four cards.
 			else if (colorChoice == 1 && gameFlow == 2) {
 				System.out.println("CPU 1 played a Blue Wild Plus Four Card.");
 				gamePile.addCard(new Card("Blue"));
-				for (int i = 0; i < 4; i++) {
-					playerHand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 4 cards and your turn was skipped.");
 				}
-				System.out.println("You drew 4 cards and your turn was skipped.");
 			} else if (colorChoice == 2 && gameFlow == 2) {
 				System.out.println("CPU 1 played a Green Wild Plus Four Card.");
 				gamePile.addCard(new Card("Green"));
-				for (int i = 0; i < 4; i++) {
-					playerHand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 4 cards and your turn was skipped.");
 				}
-				System.out.println("You drew 4 cards and your turn was skipped.");
 			} else if (colorChoice == 3 && gameFlow == 2) {
 				System.out.println("CPU 1 played a Red Wild Plus Four Card.");
 				gamePile.addCard(new Card("Red"));
-				for (int i = 0; i < 4; i++) {
-					playerHand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 4 cards and your turn was skipped.");
 				}
-				System.out.println("You drew 4 cards and your turn was skipped.");
 			} else if (colorChoice == 4 && gameFlow == 2) {
 				System.out.println("CPU 1 played a Yellow Wild Plus Four Card.");
 				gamePile.addCard(new Card("Yellow"));
-				for (int i = 0; i < 4; i++) {
-					playerHand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 4 cards and your turn was skipped.");
 				}
-				System.out.println("You drew 4 cards and your turn was skipped.");
+			}
+			if (partyRules[2]) {
+				System.out.println("Added +4 cards to the stack");
+				stackCount += 4;
 			}
 		} // End Wild Plus Four card if
 
@@ -1958,7 +2010,7 @@ public class OverZeroUnderTwo {
 		} // end while
 		
 		// *** 0-7 Rule *** - CPU1
-		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7)) {
+		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7) && cardPlayed == true) {
 			
 			System.out.println("0-7 rule activated");
 			
@@ -2057,19 +2109,25 @@ public class OverZeroUnderTwo {
 
 		// *** Plus Two card - CPU2 - Multiplayer ***
 		else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0) { // plus2
-			skipped = true;
-			if (gameFlow == 1) {
-				// Forces CPU 3 to draw 2 random cards.
-				for (int i = 0; i < 2; i++) {
-					cpu3Hand.add(gameDeck.getRandomCard());
+			if(partyRules[2]) {
+				System.out.println("+2 added to stack");
+				stackCount += 2;
+			}
+			else {
+				skipped = true;
+				if (gameFlow == 1) {
+					// Forces CPU 3 to draw 2 random cards.
+					for (int i = 0; i < 2; i++) {
+						cpu3Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 3 drew 2 cards and their turn was skipped.");
+				} else if (gameFlow == 2) {
+					// Forces CPU 1 to draw 2 random cards.
+					for (int i = 0; i < 2; i++) {
+						cpu1Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 3 drew 2 cards and their turn was skipped.");
-			} else if (gameFlow == 2) {
-				// Forces CPU 1 to draw 2 random cards.
-				for (int i = 0; i < 2; i++) {
-					cpu1Hand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("CPU 1 drew 2 cards and their turn was skipped.");
 			}
 		} // End Plus Two else if
 
@@ -2086,61 +2144,81 @@ public class OverZeroUnderTwo {
 			if (colorChoice == 1 && gameFlow == 1) {
 				System.out.println("CPU 2 played a Blue Wild Plus Four Card.");
 				gamePile.addCard(new Card("Blue"));
-				for (int i = 0; i < 4; i++) {
-					cpu3Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu3Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
 			} else if (colorChoice == 2 && gameFlow == 1) {
 				System.out.println("CPU 2 played a Green Wild Plus Four Card.");
 				gamePile.addCard(new Card("Green"));
-				for (int i = 0; i < 4; i++) {
-					cpu3Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu3Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
 			} else if (colorChoice == 3 && gameFlow == 1) {
 				System.out.println("CPU 2 played a Red Wild Plus Four Card.");
 				gamePile.addCard(new Card("Red"));
-				for (int i = 0; i < 4; i++) {
-					cpu3Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu3Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
 			} else if (colorChoice == 4 && gameFlow == 1) {
 				System.out.println("CPU 2 played a Yellow Wild Plus Four Card.");
 				gamePile.addCard(new Card("Yellow"));
-				for (int i = 0; i < 4; i++) {
-					cpu3Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu3Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 3 drew 4 cards and their turn was skipped.");
 			}
 			// If gameFlow is 2, skip CPU1's turn and make them draw four cards.
 			else if (colorChoice == 1 && gameFlow == 2) {
 				System.out.println("CPU 2 played a Blue Wild Plus Four Card.");
 				gamePile.addCard(new Card("Blue"));
-				for (int i = 0; i < 4; i++) {
-					cpu1Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu1Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
 			} else if (colorChoice == 2 && gameFlow == 2) {
 				System.out.println("CPU 2 played a Green Wild Plus Four Card.");
 				gamePile.addCard(new Card("Green"));
-				for (int i = 0; i < 4; i++) {
-					cpu1Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu1Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
 			} else if (colorChoice == 3 && gameFlow == 2) {
 				System.out.println("CPU 2 played a Red Wild Plus Four Card.");
 				gamePile.addCard(new Card("Red"));
-				for (int i = 0; i < 4; i++) {
-					cpu1Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu1Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
 			} else if (colorChoice == 4 && gameFlow == 2) {
 				System.out.println("CPU 2 played a Yellow Wild Plus Four Card.");
 				gamePile.addCard(new Card("Yellow"));
-				for (int i = 0; i < 4; i++) {
-					cpu1Hand.add(gameDeck.getRandomCard());
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu1Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
 				}
-				System.out.println("CPU 1 drew 4 cards and their turn was skipped.");
+			}
+			if (partyRules[2]) {
+				System.out.println("Added +4 cards to the stack");
+				stackCount += 4;
 			}
 		} // End Wild Plus Four card else if
 
@@ -2317,7 +2395,7 @@ public class OverZeroUnderTwo {
 		} // end while
 		
 		// *** 0-7 Rule *** - CPU1
-		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7)) {
+		if (partyRules[0] && (gamePile.getTopCard().getValue() == 0 || gamePile.getTopCard().getValue() == 7) && cardPlayed == true) {
 			
 			System.out.println("0-7 rule activated");
 			
@@ -2416,19 +2494,25 @@ public class OverZeroUnderTwo {
 
 		// *** Plus Two card - CPU3 - Multiplayer ***
 		else if (gamePile.getTopCard().getValue() == 12 && playableCount > 0) { // plus2
-			skipped = true;
-			if (gameFlow == 1) {
-				// Forces player to draw 2 random cards.
-				for (int i = 0; i < 2; i++) {
-					playerHand.add(gameDeck.getRandomCard());
+			if(partyRules[2]) {
+				System.out.println("+2 added to stack");
+				stackCount += 2;
+			}
+			else {
+				skipped = true;
+				if (gameFlow == 1) {
+					// Forces player to draw 2 random cards.
+					for (int i = 0; i < 2; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 2 cards and your turn was skipped.");
+				} else if (gameFlow == 2) {
+					// Forces CPU 2 to draw 2 random cards.
+					for (int i = 0; i < 2; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 2 cards and their turn was skipped.");
 				}
-				System.out.println("You drew 2 cards and your turn was skipped.");
-			} else if (gameFlow == 2) {
-				// Forces CPU 2 to draw 2 random cards.
-				for (int i = 0; i < 2; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("CPU 2 drew 2 cards and their turn was skipped.");
 			}
 		} // End Plus Two else if
 
@@ -2445,61 +2529,81 @@ public class OverZeroUnderTwo {
 			if (colorChoice == 1 && gameFlow == 1) {
 				System.out.println("CPU 3 played a Blue Wild Plus Four Card.");
 				gamePile.addCard(new Card("Blue"));
-				for (int i = 0; i < 4; i++) {
-					playerHand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("You drew 4 cards and your turn was skipped.");
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 4 cards and your turn was skipped.");
+				}	
 			} else if (colorChoice == 2 && gameFlow == 1) {
 				System.out.println("CPU 3 played a Green Wild Plus Four Card.");
 				gamePile.addCard(new Card("Green"));
-				for (int i = 0; i < 4; i++) {
-					playerHand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("You drew 4 cards and your turn was skipped.");
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 4 cards and your turn was skipped.");
+				}	
 			} else if (colorChoice == 3 && gameFlow == 1) {
 				System.out.println("CPU 3 played a Red Wild Plus Four Card.");
 				gamePile.addCard(new Card("Red"));
-				for (int i = 0; i < 4; i++) {
-					playerHand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("You drew 4 cards and your turn was skipped.");
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 4 cards and your turn was skipped.");
+				}	
 			} else if (colorChoice == 4 && gameFlow == 1) {
 				System.out.println("CPU 3 played a Yellow Wild Plus Four Card.");
 				gamePile.addCard(new Card("Yellow"));
-				for (int i = 0; i < 4; i++) {
-					playerHand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("You drew 4 cards and your turn was skipped.");
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						playerHand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("You drew 4 cards and your turn was skipped.");
+				}	
 			}
 			// If gameFlow is 2, skip CPU2's turn and make them draw four cards.
 			else if (colorChoice == 1 && gameFlow == 2) {
 				System.out.println("CPU 3 played a Blue Wild Plus Four Card.");
 				gamePile.addCard(new Card("Blue"));
-				for (int i = 0; i < 4; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
+				}	
 			} else if (colorChoice == 2 && gameFlow == 2) {
 				System.out.println("CPU 3 played a Green Wild Plus Four Card.");
 				gamePile.addCard(new Card("Green"));
-				for (int i = 0; i < 4; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
+				}	
 			} else if (colorChoice == 3 && gameFlow == 2) {
 				System.out.println("CPU 3 played a Red Wild Plus Four Card.");
 				gamePile.addCard(new Card("Red"));
-				for (int i = 0; i < 4; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
+				}	
 			} else if (colorChoice == 4 && gameFlow == 2) {
 				System.out.println("CPU 3 played a Yellow Wild Plus Four Card.");
 				gamePile.addCard(new Card("Yellow"));
-				for (int i = 0; i < 4; i++) {
-					cpu2Hand.add(gameDeck.getRandomCard());
-				}
-				System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
+				if (partyRules[2] == false) {
+					for (int i = 0; i < 4; i++) {
+						cpu2Hand.add(gameDeck.getRandomCard());
+					}
+					System.out.println("CPU 2 drew 4 cards and their turn was skipped.");
+				}	
+			}
+			if (partyRules[2]) {
+				System.out.println("Added +4 cards to the stack");
+				stackCount += 4;
 			}
 		} // End Wild Plus Four card else if
 
