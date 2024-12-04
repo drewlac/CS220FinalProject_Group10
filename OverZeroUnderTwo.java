@@ -1230,7 +1230,7 @@ public class OverZeroUnderTwo {
 					System.out.println("-1: CPU 1's Hand");
 					System.out.println("-2: CPU 2's Hand");
 					System.out.println("-3: CPU 3's Hand");
-					System.out.print("\n Enter which hand you would like to swap with: ");
+					System.out.print("\nEnter which hand you would like to swap with: ");
 
 					while (true) {
 						try {
